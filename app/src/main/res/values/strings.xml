@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">GOcery</string>
+    <string name="app_tagline">All your groceries in one place</string>
+    <string name="logo_desc">GOcery App logo with text</string>
+    <string name="bg_desc">Grocery Stock Image by Thomas Lee </string>
+
+    <!-- Authentication Strings -->
+    <string name="sign_up_text">Don\'t have an account?</string>
+    <string name="sign_up_link">Register here</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm">Confirm Password</string>
+    <string name="prompt_address">Household Address</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_sign_up">Sign Up</string>
+    <string name="action_sign_in_short">Sign In</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_email">Not a valid email address</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- Manage Household   -->
+    <string name="home_lbl">Household Address</string>
+    <string name="members_lbl">Family Members</string>
+    <string name="profile_desc">Profile Icon</string>
+    <string name="add_desc">Add Icon</string>
+    <string name="member1">Father</string>
+    <string name="RB1">Admin</string>
+    <string name="RB2">Family Representative</string>
+    <string name="save_btn">Save Changes</string>
+    <string name="add_btn">Add Member</string>
+    <string name="remove_btn">Remove Member</string>
+    <string name="cancel_txt">Cancel</string>
+
+    <!-- Grocery Strings -->
+    <string name="CurrentGroceryList">Current Grocery List</string>
+    <string name="CompletedPurchases">Completed Purchases</string>
+    <string name="ItemInList">Items in list</string>
+    <string name="UpdatedBy">Updated By</string>
+    <string name="LastUpdatedOn">Last Updated On</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dummy_address">No. 8, Jalan Joran Empat 19/24D, 40300, Shah Alam, Selangor</string>
+</resources>

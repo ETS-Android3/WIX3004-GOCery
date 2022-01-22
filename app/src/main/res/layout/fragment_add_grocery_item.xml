@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/ContentMargin"
+    tools:context=".grocerylist.AddGroceryItemFragment">
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabtn_groceryAdd_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADD NEW ITEM"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ItemMargin"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Item Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_itemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_itemQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ItemMargin"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Quantity">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_itemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_itemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ItemMargin"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Descripton">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_itemDescription"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:id="@+id/iv_itemImagePreview"
+                    android:layout_width="0dp"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:layout_height="103dp"
+                    android:paddingRight="@dimen/ItemMargin"
+                    android:layout_marginBottom="@dimen/ItemMargin"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <ImageView
+                    android:id="@+id/iv_locationImagePreview"
+                    android:layout_width="0dp"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:layout_height="103dp"
+                    android:paddingLeft="@dimen/ItemMargin"
+                    android:layout_marginBottom="@dimen/ItemMargin"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <Button
+                    android:id="@+id/btn_attachImage"
+                    android:layout_width="0dp"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ItemMargin"
+                    android:layout_gravity="center"
+                    android:text="Image" />
+
+                <Button
+                    android:id="@+id/btn_attachLocation"
+                    android:layout_width="0dp"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ItemMargin"
+                    android:layout_gravity="center"
+                    android:text="Location" />
+            </TableRow>
+
+<!--            <TableRow-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="fill_parent">-->
+<!--                <EditText-->
+<!--                    android:id="@+id/et_imagePath"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:ems="10"-->
+<!--                    android:hint="IMAGE PATH"-->
+<!--                    android:inputType="textPersonName"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:text="" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/et_locationData"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:ems="10"-->
+<!--                    android:hint="LOCATION DATA"-->
+<!--                    android:inputType="textPersonName"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:text="" />-->
+<!--            </TableRow>-->
+        </TableLayout>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

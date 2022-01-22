@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_initial"
+    app:startDestination="@id/landingFragment">
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.example.gocery.authentication.LandingFragment"
+        android:label="fragment_landing_fragement"
+        tools:layout="@layout/fragment_landing_fragement" />
+    <fragment
+        android:id="@+id/DestSignIn"
+        android:name="com.example.gocery.authentication.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/DestSignUp"
+        android:name="com.example.gocery.authentication.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+    <include app:graph="@navigation/grocery_navigation" />
+    <fragment
+        android:id="@+id/DestSelectProfile"
+        android:name="com.example.gocery.authentication.SelectProfileFragment"
+        android:label="fragment_select_profile"
+        tools:layout="@layout/fragment_select_profile" >
+        <action
+            android:id="@+id/action_auth_to_home"
+            app:destination="@id/grocery_navigation" />
+    </fragment>
+    <fragment
+        android:id="@+id/DestHome"
+        android:name="com.example.gocery.grocerylist.GroceryHomeFragment"
+        android:label="fragment_grocery_home"
+        tools:layout="@layout/fragment_grocery_home" />
+</navigation>
