@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "421344601942",
+    "firebase_url": "https://gocery-825ca-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "gocery-825ca",
+    "storage_bucket": "gocery-825ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421344601942:android:baa0a97e0e0586928758f7",
+        "android_client_info": {
+          "package_name": "com.example.goceryreceiptocr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421344601942-70b04s1uuufedhmvmpi9r3dh7ai8h5e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANxMjbFeoxN-otLXvKPvM0w-crIvmDRvY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421344601942-70b04s1uuufedhmvmpi9r3dh7ai8h5e4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
