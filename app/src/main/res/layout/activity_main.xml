@@ -24,9 +24,12 @@
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="Get Image"
-        android:text="Get Image"
-        app:icon="@drawable/ic_baseline_add_24"
+        android:contentDescription="@string/receipt_ocr_get_image_fab"
+        android:text="@string/receipt_ocr_get_image_fab"
+        android:textColor="@color/white"
+        android:tint="@color/white"
+        app:backgroundTint="@color/gocery_theme"
+        app:icon="@drawable/ic_baseline_add_white_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -42,11 +45,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:contentDescription="Take Image from Camera"
+        android:contentDescription="@string/receipt_ocr_take_image_from_camera_btn"
+        app:backgroundTint="@color/gocery_theme"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/btnGetImage"
         app:layout_constraintEnd_toEndOf="@+id/btnGetImage"
-        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
+        app:tint="@color/white" />
 
     <!--Action name text for btnTakeImageFromCamera-->
     <!--Make sure that you are constraining this
@@ -56,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Take from Camera"
+        android:text="@string/receipt_ocr_take_from_camera_textview"
         app:layout_constraintBottom_toBottomOf="@+id/btnTakeImageFromCamera"
         app:layout_constraintEnd_toStartOf="@+id/btnTakeImageFromCamera"
         app:layout_constraintTop_toTopOf="@+id/btnTakeImageFromCamera" />
@@ -73,12 +78,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:contentDescription="Choose Image from Gallery"
+        android:contentDescription="@string/receipt_ocr_choose_image_from_gallery_btn"
+        app:backgroundTint="@color/gocery_theme"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/btnTakeImageFromCamera"
         app:layout_constraintEnd_toEndOf="@+id/btnTakeImageFromCamera"
         app:layout_constraintStart_toStartOf="@+id/btnTakeImageFromCamera"
-        app:srcCompat="@drawable/ic_baseline_image_24" />
+        app:srcCompat="@drawable/ic_baseline_image_24"
+        app:tint="@color/white" />
 
     <!--Action name text for btnChooseImageFromGallery-->
     <!--Make sure that you are constraining this Text
@@ -88,42 +95,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Choose from Gallery"
+        android:text="@string/receipt_ocr_choose_from_gallery_textview"
         app:layout_constraintBottom_toBottomOf="@+id/btnChooseImageFromGallery"
         app:layout_constraintEnd_toStartOf="@+id/btnChooseImageFromGallery"
         app:layout_constraintTop_toTopOf="@+id/btnChooseImageFromGallery" />
-
-    <!--    &lt;!&ndash;Floating action button for btnChooseImageFromDrive&ndash;&gt;-->
-    <!--    &lt;!&ndash;Make sure that you are constraining this button-->
-    <!--        to the add Alarm FAB button&ndash;&gt;-->
-    <!--    &lt;!&ndash;Make sure to add backgroundTint attribute to match-->
-    <!--         the entire application color&ndash;&gt;-->
-    <!--    &lt;!&ndash;because after changing the base application theme-->
-    <!--         the color of the FAB is set Blue as default&ndash;&gt;-->
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/btnChooseImageFromDrive"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginBottom="24dp"-->
-    <!--        android:contentDescription="Choose Image from Drive"-->
-    <!--        app:fabSize="normal"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/btnChooseImageFromGallery"-->
-    <!--        app:layout_constraintEnd_toEndOf="@+id/btnChooseImageFromGallery"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/btnChooseImageFromGallery"-->
-    <!--        app:srcCompat="@drawable/ic_baseline_add_to_drive_24" />-->
-
-    <!--    &lt;!&ndash;Action name text for btnChooseImageFromDrive&ndash;&gt;-->
-    <!--    &lt;!&ndash;Make sure that you are constraining this Text-->
-    <!--         to the add Person FAB button&ndash;&gt;-->
-    <!--    <TextView-->
-    <!--        android:id="@+id/TVChooseImageFromDrive"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginEnd="8dp"-->
-    <!--        android:text="Choose from Drive"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@+id/btnChooseImageFromDrive"-->
-    <!--        app:layout_constraintEnd_toStartOf="@+id/btnChooseImageFromDrive"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/btnChooseImageFromDrive" />-->
 
     <ScrollView
         android:id="@+id/SVOCRResult"
@@ -142,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="The extracted texts will appear here."
+            android:text="@string/receipt_ocr_scrollview"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -170,10 +145,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:alpha="0.25"
-            android:contentDescription="Selected Image"
-            android:src="@drawable/ic_baseline_photo_camera_24"
-            app:tint="@color/black" />
+            android:contentDescription="@string/receipt_ocr_selected_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_photo_camera_24" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -185,11 +159,29 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
-        android:text="OCR RESULT"
+        android:text="@string/receipt_ocr_header"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/CVSelectedImage"
-        app:layout_constraintBottom_toTopOf="@+id/SVOCRResult" />
+        app:layout_constraintBottom_toTopOf="@+id/SVOCRResult"
+        app:layout_constraintTop_toBottomOf="@+id/CVSelectedImage" />
+
+    <Button
+        android:id="@+id/btnCopyText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="32dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/receipt_ocr_copy_text_btn"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:backgroundTint="@color/gocery_theme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SVOCRResult"
+        app:layout_constraintVertical_bias="0.083" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
