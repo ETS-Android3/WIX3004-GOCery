@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">GoceryReceiptOCR</string>
+
+    <!-- Receipt OCR module -->
+    <string name="receipt_ocr_get_image_fab">Get Image</string>
+    <string name="receipt_ocr_take_image_from_camera_btn">Take Image from Camera</string>
+    <string name="receipt_ocr_take_from_camera_textview">Take from Camera</string>
+    <string name="receipt_ocr_choose_image_from_gallery_btn">Choose Image from Gallery</string>
+    <string name="receipt_ocr_choose_from_gallery_textview">Choose from Gallery</string>
+    <string name="receipt_ocr_scrollview">The extracted texts will appear here.</string>
+    <string name="receipt_ocr_selected_image_imageview">Selected Image</string>
+    <string name="receipt_ocr_header">RECEIPT OCR RESULT</string>
+    <string name="receipt_ocr_selected_image">Selected Image</string>
+    <string name="receipt_ocr_copy_text_btn">Copy Text</string>
 </resources>

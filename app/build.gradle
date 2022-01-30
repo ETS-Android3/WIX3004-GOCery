@@ -24,8 +24,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -51,4 +53,12 @@ dependencies {
 
     // ML Vision API
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'
+
+    // Image Cropper
+    implementation 'com.squareup.picasso:picasso:2.71828'
+//    implementation 'com.github.CanHub:Android-Image-Cropper:4.0.0'
+//    implementation 'com.github.yalantis:ucrop:2.2.6'
+    implementation 'com.github.krokyze:ucropnedit:2.2.6-2'
+//    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
 }
