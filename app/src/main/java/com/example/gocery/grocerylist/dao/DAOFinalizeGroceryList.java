@@ -45,6 +45,4 @@ public class DAOFinalizeGroceryList {
         return databaseReferenceGroceryTrip.child(currentUser).child(tripKey).setValue(groceryTrip);
     }
 
-
-
 }

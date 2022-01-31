@@ -43,7 +43,6 @@ public class AddGroceryItemFragment extends Fragment {
     final int REQUEST_IMAGE = 1;
     Uri imageUri;
     ImageView imageView;
-    String fileUrl;
 
     FloatingActionButton btnSave;
     Button btnAttachImage;
@@ -214,7 +213,5 @@ public class AddGroceryItemFragment extends Fragment {
             imageUri = null;
             imageView.setImageURI(null);
         }
-
-
     }
 }

@@ -30,6 +30,7 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
     List<GroceryItem> groceryItems;
     Context context;
     LayoutInflater inflater;
+    StorageReference storageReference;
 
     public CurrentGroceryListAdapter(Context context) {
         this.context = context;
@@ -40,6 +41,7 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         this.context = context;
         this.groceryItems = groceryItems;
         inflater = LayoutInflater.from(context);
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     public void setCurrentGroceryItems(ArrayList<GroceryItem> groceryItems) {
@@ -102,21 +104,19 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
             holder.checkBox.setChecked(false);
         }
 
-        Log.e("image", gi.getImage() == null ? "null" : gi.getImage());
+
         if(gi.getImage() == null || gi.getImage() == ""){
             itemImage.setVisibility(View.GONE);
         }else{
             itemImage.setVisibility(View.VISIBLE);
-            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            StorageReference storageReference = firebaseStorage.getReference();
             storageReference.child(""+gi.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     Glide.with(context)
-                            .load(uri)
-                            .placeholder(R.drawable.spinning_loading)
-                            .error(R.drawable.gocery_logo_only)
-                            .into(itemImage);
+                        .load(uri)
+                        .placeholder(R.drawable.spinning_loading)
+                        .error(R.drawable.gocery_logo_only)
+                        .into(itemImage);
                 }
             });
         }
@@ -131,7 +131,7 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
 
             String key = gi.getKey();
             DAOCurrentGroceryItem dao = new DAOCurrentGroceryItem();
-            dao.update(key, hashMap).addOnFailureListener(er->{
+            dao.update(key, hashMap, null).addOnFailureListener(er->{
                 Toast.makeText(v.getContext(), "Error", Toast.LENGTH_SHORT).show();
             })
             ;

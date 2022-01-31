@@ -68,7 +68,14 @@ public class DAOCurrentGroceryItem {
         return databaseReference.child(currentUser).push().setValue(groceryItem);
     }
 
-    public Task<Void> update(String key, HashMap<String, Object> hashMap){
+    public Task<Void> update(String key, HashMap<String, Object> hashMap, @Nullable String imagePath){
+
+        //update image
+        if(imagePath != null){
+            storageReference.child(hashMap.get("image").toString()).delete();
+            hashMap.put("image", imagePath);
+        }
+
         return databaseReference.child(currentUser).child(key).updateChildren(hashMap);
     }
 
