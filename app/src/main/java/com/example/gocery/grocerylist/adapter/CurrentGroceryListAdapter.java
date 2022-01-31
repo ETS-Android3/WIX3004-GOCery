@@ -1,6 +1,7 @@
 package com.example.gocery.grocerylist.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.gocery.R;
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -36,6 +41,10 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         this.context = context;
         this.groceryItems = groceryItems;
         inflater = LayoutInflater.from(context);
+
+        FirebaseApp firebaseApp = FirebaseApp.initializeApp(context);
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
+        storageReference = firebaseStorage.getReference();
     }
 
     public void setCurrentGroceryItems(ArrayList<GroceryItem> groceryItems) {
@@ -97,35 +106,19 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         }
 
         Log.e("image", gi.getImage() == null ? "null" : gi.getImage());
-        if(gi.getImage() == null){
+        if(gi.getImage() == null || gi.getImage() == ""){
             itemImage.setVisibility(View.GONE);
         }else{
-//            storageReference = FirebaseStorage.getInstance().getReference(gi.getImage());
-//
-//            try{
-//                final File localFile = File.createTempFile(gi.getImage(),"jpeg");
-//                storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-//                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-//                    itemImage.setImageBitmap(bitmap);
-//                });
-//
-//            }catch (Exception e){
-//
-//            }
-
-
-
-//            String name = gi.getImage();
-//            Log.e("IMAGE FUCKING NAME:", name);
-//            storageReference = FirebaseStorage.getInstance().getReference();
-//            storageReference.child(name).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                @Override
-//                public void onSuccess(Uri uri) {
-//
-//                }
-//            }).addOnFailureListener(e -> {
-//                Log.e("Image Fail", "fail to display image" );
-//            });
+            storageReference.child(""+gi.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context)
+                            .load(uri)
+                            .placeholder(R.drawable.spinning_loading)
+                            .error(R.drawable.gocery_logo_only)
+                            .into(itemImage);
+                }
+            });
         }
 
         holder.checkBox.setOnClickListener(v->{

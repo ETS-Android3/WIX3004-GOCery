@@ -22,10 +22,13 @@ import com.example.gocery.R;
 
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,10 +38,6 @@ import java.util.Locale;
 public class AddGroceryItemFragment extends Fragment {
 
 
-//    public AddGroceryItemFragment() {
-//        // Required empty public constructor
-//    }
-
     final int REQUEST_IMAGE = 1;
     Uri imageUri;
     ImageView imageView;
@@ -47,7 +46,6 @@ public class AddGroceryItemFragment extends Fragment {
     FloatingActionButton btnSave;
     Button btnAttachImage;
     TextInputEditText itemName, itemQuantity, itemDesc;
-//    EditText imgPath, locationData;
 
     // database and storage
     DAOCurrentGroceryItem dao;
@@ -60,7 +58,6 @@ public class AddGroceryItemFragment extends Fragment {
         itemName = view.findViewById(R.id.tiet_itemName);
         itemQuantity = view.findViewById(R.id.tiet_itemQuantity);
         itemDesc = view.findViewById(R.id.tiet_itemDescription);
-//        imgPath = view.findViewById(R.id.et_imagePath);
 //        locationData = view.findViewById(R.id.et_locationData);
 
         btnAttachImage = view.findViewById(R.id.btn_attachImage);
@@ -79,26 +76,90 @@ public class AddGroceryItemFragment extends Fragment {
                 progressDialog.setTitle("Saving Data...");
                 progressDialog.show();
 
-
-                String file = null;
-                if(imageUri != null){
-                    file =  uploadImage();
-                }
                 if(validate(v)){
-                    // saving data to database
-                    GroceryItem gi = new GroceryItem(
+
+//                    if(imageUri != null){
+//                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_M_dd_HH_mm_ss", Locale.UK);
+//                        Date now = new Date();
+//                        String fileName = "grocery_image/"+formatter.format(now);
+//
+//                        storageReference = FirebaseStorage.getInstance().getReference(fileName);
+//                        storageReference.putFile(imageUri).addOnSuccessListener(suc->{
+//
+//
+//                            GroceryItem gi = new GroceryItem(
+//                                    itemName.getText().toString(),
+//                                    Integer.parseInt(itemQuantity.getText().toString()),
+//                                    false, // set checkbox to false
+//                                    itemDesc.getText().toString(), //nullable
+//                                    fileName,
+//                                    null,
+//                                    null
+//                            );
+//
+//                            dao.add(gi).addOnSuccessListener(succ->{
+//                                if(progressDialog.isShowing()){
+//                                    progressDialog.dismiss();
+//                                }
+//                                Toast.makeText(getActivity(), "upload success", Toast.LENGTH_SHORT).show();
+//                                Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
+//
+//                            }).addOnFailureListener(er->{
+//                                if(progressDialog.isShowing()){
+//                                    progressDialog.dismiss();
+//                                }
+//                                Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+//                            });
+//
+//
+//                        }).addOnFailureListener(er->{
+//                            Toast.makeText(getActivity(), "upload failed", Toast.LENGTH_SHORT).show();
+//                        });
+//                    }else{
+//
+//                        // saving data to database without image
+//                        GroceryItem gi = new GroceryItem(
+//                                itemName.getText().toString(),
+//                                Integer.parseInt(itemQuantity.getText().toString()),
+//                                false, // set checkbox to false
+//                                itemDesc.getText().toString(), //nullable
+//                                null,
+//                                null,
+//                                null
+//                        );
+//
+//                        dao.add(gi).addOnSuccessListener(suc->{
+//                            if(progressDialog.isShowing()){
+//                                progressDialog.dismiss();
+//                            }
+//                            Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
+//
+//                        }).addOnFailureListener(er->{
+//                            if(progressDialog.isShowing()){
+//                                progressDialog.dismiss();
+//                            }
+//                            Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+//                        });
+//
+//                    }
+
+                    // saving data to database without image
+                    GroceryItem groceryItem = new GroceryItem(
                             itemName.getText().toString(),
                             Integer.parseInt(itemQuantity.getText().toString()),
                             false, // set checkbox to false
                             itemDesc.getText().toString(), //nullable
-                            file, // file path
+                            null,
                             null,
                             null
                     );
-                    dao.add(gi).addOnSuccessListener(suc->{
+
+                    dao.add(groceryItem, imageUri).addOnSuccessListener(suc->{
                         if(progressDialog.isShowing()){
                             progressDialog.dismiss();
                         }
+                        Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
+
                     }).addOnFailureListener(er->{
                         if(progressDialog.isShowing()){
                             progressDialog.dismiss();
@@ -107,8 +168,6 @@ public class AddGroceryItemFragment extends Fragment {
                     });
 
 
-
-                    Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
                 }else{
                     Toast.makeText(getActivity(), "Form Incomplete", Toast.LENGTH_SHORT).show();
                 }
@@ -163,25 +222,6 @@ public class AddGroceryItemFragment extends Fragment {
     }
 
 
-    public String uploadImage(){
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.UK);
-        Date now = new Date();
-        Log.e("IMAGE EXT", imageUri.toString());
-        String fileName = "grocery_image/"+formatter.format(now);
-        this.fileUrl = fileName;
-
-        storageReference = FirebaseStorage.getInstance().getReference(fileName);
-        storageReference.putFile(imageUri).addOnSuccessListener(suc->{
-            Toast.makeText(getActivity(), "upload success", Toast.LENGTH_SHORT).show();
-        }).addOnFailureListener(er->{
-            Toast.makeText(getActivity(), "upload failed", Toast.LENGTH_SHORT).show();
-            this.fileUrl = null;
-        });
-
-        return this.fileUrl;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -189,6 +229,9 @@ public class AddGroceryItemFragment extends Fragment {
         if(requestCode == REQUEST_IMAGE && data != null && data.getData() != null){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
+        }else{
+            imageUri = null;
+            imageView.setImageURI(null);
         }
 
 
