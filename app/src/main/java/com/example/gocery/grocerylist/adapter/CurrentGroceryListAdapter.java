@@ -30,7 +30,6 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
     List<GroceryItem> groceryItems;
     Context context;
     LayoutInflater inflater;
-    StorageReference storageReference;
 
     public CurrentGroceryListAdapter(Context context) {
         this.context = context;
@@ -41,10 +40,6 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         this.context = context;
         this.groceryItems = groceryItems;
         inflater = LayoutInflater.from(context);
-
-        FirebaseApp firebaseApp = FirebaseApp.initializeApp(context);
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
-        storageReference = firebaseStorage.getReference();
     }
 
     public void setCurrentGroceryItems(ArrayList<GroceryItem> groceryItems) {
@@ -87,11 +82,13 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         TextView itemDesc = convertView.findViewById(R.id.tv_itemDesc);
         TextView itemAmount = convertView.findViewById(R.id.tv_itemAmount);
         ImageView itemImage = convertView.findViewById(R.id.iv_imageItem);
+        TextView requesterName = convertView.findViewById(R.id.tv_requestedUser);
 
 
         // Set the items
         itemName.setText(gi.getName());
         itemAmount.setText(gi.getQuantity()+"x");
+        requesterName.setText(gi.getCreatedBy());
 
         if(!gi.getDescription().equalsIgnoreCase("")){
             itemDesc.setText(gi.getDescription());
@@ -109,6 +106,9 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         if(gi.getImage() == null || gi.getImage() == ""){
             itemImage.setVisibility(View.GONE);
         }else{
+            itemImage.setVisibility(View.VISIBLE);
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getReference();
             storageReference.child(""+gi.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {

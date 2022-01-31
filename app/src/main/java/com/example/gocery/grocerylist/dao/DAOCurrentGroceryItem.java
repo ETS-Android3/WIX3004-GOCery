@@ -63,6 +63,11 @@ public class DAOCurrentGroceryItem {
 
     }
 
+    public Task<Void> add(GroceryItem groceryItem)
+    {
+        return databaseReference.child(currentUser).push().setValue(groceryItem);
+    }
+
     public Task<Void> update(String key, HashMap<String, Object> hashMap){
         return databaseReference.child(currentUser).child(key).updateChildren(hashMap);
     }

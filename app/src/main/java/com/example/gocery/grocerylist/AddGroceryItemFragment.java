@@ -26,10 +26,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -77,96 +79,75 @@ public class AddGroceryItemFragment extends Fragment {
                 progressDialog.show();
 
                 if(validate(v)){
+                    String creatorName = "CREATOR_NAME";
 
-//                    if(imageUri != null){
-//                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_M_dd_HH_mm_ss", Locale.UK);
-//                        Date now = new Date();
-//                        String fileName = "grocery_image/"+formatter.format(now);
-//
-//                        storageReference = FirebaseStorage.getInstance().getReference(fileName);
-//                        storageReference.putFile(imageUri).addOnSuccessListener(suc->{
-//
-//
-//                            GroceryItem gi = new GroceryItem(
-//                                    itemName.getText().toString(),
-//                                    Integer.parseInt(itemQuantity.getText().toString()),
-//                                    false, // set checkbox to false
-//                                    itemDesc.getText().toString(), //nullable
-//                                    fileName,
-//                                    null,
-//                                    null
-//                            );
-//
-//                            dao.add(gi).addOnSuccessListener(succ->{
-//                                if(progressDialog.isShowing()){
-//                                    progressDialog.dismiss();
-//                                }
-//                                Toast.makeText(getActivity(), "upload success", Toast.LENGTH_SHORT).show();
-//                                Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
-//
-//                            }).addOnFailureListener(er->{
-//                                if(progressDialog.isShowing()){
-//                                    progressDialog.dismiss();
-//                                }
-//                                Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
-//                            });
-//
-//
-//                        }).addOnFailureListener(er->{
-//                            Toast.makeText(getActivity(), "upload failed", Toast.LENGTH_SHORT).show();
-//                        });
-//                    }else{
-//
-//                        // saving data to database without image
-//                        GroceryItem gi = new GroceryItem(
-//                                itemName.getText().toString(),
-//                                Integer.parseInt(itemQuantity.getText().toString()),
-//                                false, // set checkbox to false
-//                                itemDesc.getText().toString(), //nullable
-//                                null,
-//                                null,
-//                                null
-//                        );
-//
-//                        dao.add(gi).addOnSuccessListener(suc->{
-//                            if(progressDialog.isShowing()){
-//                                progressDialog.dismiss();
-//                            }
-//                            Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
-//
-//                        }).addOnFailureListener(er->{
-//                            if(progressDialog.isShowing()){
-//                                progressDialog.dismiss();
-//                            }
-//                            Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
-//                        });
-//
-//                    }
+                    if(imageUri != null){
+                        String currentUser = "user_"+ FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        Timestamp ts = new Timestamp(System.currentTimeMillis());
+                        String fileName = "grocery_image/"+currentUser+"/"+creatorName+"-"+ts.getTime();
 
-                    // saving data to database without image
-                    GroceryItem groceryItem = new GroceryItem(
-                            itemName.getText().toString(),
-                            Integer.parseInt(itemQuantity.getText().toString()),
-                            false, // set checkbox to false
-                            itemDesc.getText().toString(), //nullable
-                            null,
-                            null,
-                            null
-                    );
+                        storageReference = FirebaseStorage.getInstance().getReference(fileName);
+                        storageReference.putFile(imageUri).addOnSuccessListener(suc->{
 
-                    dao.add(groceryItem, imageUri).addOnSuccessListener(suc->{
-                        if(progressDialog.isShowing()){
-                            progressDialog.dismiss();
-                        }
-                        Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
 
-                    }).addOnFailureListener(er->{
-                        if(progressDialog.isShowing()){
-                            progressDialog.dismiss();
-                        }
-                        Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                            GroceryItem groceryItem = new GroceryItem(
+                                    itemName.getText().toString(),
+                                    Integer.parseInt(itemQuantity.getText().toString()),
+                                    false, // set checkbox to false
+                                    itemDesc.getText().toString(), //nullable
+                                    fileName,
+                                    null,
+                                    null
+                            );
+                            groceryItem.setCreatedBy(creatorName);
 
+                            dao.add(groceryItem).addOnSuccessListener(succ->{
+                                if(progressDialog.isShowing()){
+                                    progressDialog.dismiss();
+                                }
+                                Toast.makeText(getActivity(), "upload success", Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
+
+                            }).addOnFailureListener(er->{
+                                if(progressDialog.isShowing()){
+                                    progressDialog.dismiss();
+                                }
+                                Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+
+
+                        }).addOnFailureListener(er->{
+                            Toast.makeText(getActivity(), "upload failed image", Toast.LENGTH_SHORT).show();
+                        });
+
+                    }else{
+
+                        // saving data to database without image
+                        GroceryItem groceryItem = new GroceryItem(
+                                itemName.getText().toString(),
+                                Integer.parseInt(itemQuantity.getText().toString()),
+                                false, // set checkbox to false
+                                itemDesc.getText().toString(), //nullable
+                                null,
+                                null,
+                                null
+                        );
+
+                        groceryItem.setCreatedBy(creatorName);
+
+                        dao.add(groceryItem).addOnSuccessListener(suc->{
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+                            Navigation.findNavController(view).navigate(R.id.nav_groceryItemAdded);
+                        }).addOnFailureListener(er->{
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+                            Toast.makeText(getActivity(), ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+
+                    }
 
                 }else{
                     Toast.makeText(getActivity(), "Form Incomplete", Toast.LENGTH_SHORT).show();

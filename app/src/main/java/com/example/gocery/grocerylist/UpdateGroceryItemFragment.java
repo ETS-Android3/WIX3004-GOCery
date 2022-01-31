@@ -60,7 +60,6 @@ public class UpdateGroceryItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
         itemName = view.findViewById(R.id.tiet_itemName);
         itemQuantity = view.findViewById(R.id.tiet_itemQuantity);
         itemDesc = view.findViewById(R.id.tiet_itemDescription);
@@ -116,7 +115,39 @@ public class UpdateGroceryItemFragment extends Fragment {
 
     private void setItemData(String item_key) {
         this.itemKey = item_key;
-        dao.getSingle(item_key).addValueEventListener(new ValueEventListener() {
+//        dao.getSingle(item_key).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                GroceryItem groceryItem = snapshot.getValue(GroceryItem.class);
+////                Log.e("CURRENT ITEM", groceryItem.toString());
+//                itemName.setText(groceryItem.getName());
+//                itemQuantity.setText(""+groceryItem.getQuantity());
+//                itemDesc.setText(groceryItem.getDescription());
+//
+//                // firebase image?
+//                FirebaseApp firebaseApp = FirebaseApp.initializeApp(getContext());
+//                firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
+//                StorageReference storageReference = firebaseStorage.getReference();
+//
+//                storageReference.child(""+groceryItem.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//                        Glide.with(getContext())
+//                                .load(uri)
+//                                .placeholder(R.drawable.spinning_loading)
+//                                .error(R.drawable.gocery_logo_only)
+//                                .into(imageView);
+//                    }
+//                });
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+
+        dao.getSingle(item_key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 GroceryItem groceryItem = snapshot.getValue(GroceryItem.class);
@@ -145,8 +176,12 @@ public class UpdateGroceryItemFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
+
+
     }
 
     @Override
