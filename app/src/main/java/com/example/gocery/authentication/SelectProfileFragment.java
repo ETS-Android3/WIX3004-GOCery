@@ -13,21 +13,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.gocery.R;
 import com.example.gocery.manageprofiles.model.ProfileData;
 import com.example.gocery.manageprofiles.adapter.ProfileDataAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class SelectProfileFragment extends Fragment {
-
+    FirebaseAuth mAuth;
     public SelectProfileFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        mAuth = FirebaseAuth.getInstance();
         //initializes the profile list recycler view
         RecyclerView ProfileList = view.findViewById(R.id.RVProfileList);
         ArrayList<ProfileData> profileDataArrayList = new ArrayList<>();
@@ -48,9 +51,17 @@ public class SelectProfileFragment extends Fragment {
         BTNTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.DestSignIn);
                 Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
-//                Navigation.findNavController(view).navigate(R.id.DestHome);
+            }
+        });
+
+        Button BTNSignOut = view.findViewById(R.id.BTNSignOut);
+        BTNSignOut.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                Toast.makeText(getActivity(), "You have been signed out", Toast.LENGTH_SHORT).show();;
+                Navigation.findNavController(view).navigate(R.id.DestLanding);
             }
         });
 

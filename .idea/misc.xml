@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/activity_main.xml" value="0.2682291666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_edit_profile.xml" value="0.33" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_grocery_home.xml" value="0.228125" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_select_profile.xml" value="0.2682291666666667" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="16" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="16" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

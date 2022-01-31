@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.gocery.R;
+import com.example.gocery.manageprofiles.dao.DAOHousehold;
+import com.example.gocery.manageprofiles.model.Household;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -81,8 +83,16 @@ public class SignUpFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        Toast.makeText(getActivity(), "User registered successfully!", Toast.LENGTH_SHORT).show();;
-                        Navigation.findNavController(view).navigate(R.id.DestSignIn);
+                        Toast.makeText(getActivity(), "User registered successfully!", Toast.LENGTH_SHORT).show();
+                        DAOHousehold daoHousehold = new DAOHousehold();
+                        Household household = new Household(address);
+                        daoHousehold.add(household).addOnSuccessListener(v -> {
+                            Toast.makeText(getActivity(), "Household added successfully!", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(view).navigate(R.id.DestSignIn);
+                        }).addOnFailureListener(err -> {
+                            Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+
                     }else{
                         Toast.makeText(getActivity(), "Registration Error: "+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
