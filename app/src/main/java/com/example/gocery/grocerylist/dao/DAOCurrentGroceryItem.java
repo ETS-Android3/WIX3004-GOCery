@@ -72,7 +72,9 @@ public class DAOCurrentGroceryItem {
 
         //update image
         if(imagePath != null){
-            storageReference.child(hashMap.get("image").toString()).delete();
+            if(hashMap.get("image") != null){
+                storageReference.child(hashMap.get("image").toString()).delete();
+            }
             hashMap.put("image", imagePath);
         }
 

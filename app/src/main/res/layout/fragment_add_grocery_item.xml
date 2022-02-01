@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/primary_green"
     android:padding="@dimen/ContentMargin"
     tools:context=".grocerylist.AddGroceryItemFragment">
 
@@ -31,61 +32,60 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ADD NEW ITEM"
-            android:textStyle="bold"
-            android:textSize="20dp"
             android:layout_marginBottom="15dp"
-            android:textColor="@color/black"/>
+            android:text="ADD NEW ITEM"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_itemName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ItemMargin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Item Name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_itemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                />
+                android:backgroundTint="@color/primary_green"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_itemQuantity"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ItemMargin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Quantity">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_itemQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                />
+                android:backgroundTint="@color/primary_green"
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_itemDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ItemMargin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Descripton">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_itemDescription"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:inputType="text"
-                />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,75 +96,78 @@
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
+
                 <ImageView
                     android:id="@+id/iv_itemImagePreview"
                     android:layout_width="0dp"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="103dp"
-                    android:paddingRight="@dimen/ItemMargin"
                     android:layout_marginBottom="@dimen/ItemMargin"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:paddingRight="@dimen/ItemMargin"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <ImageView
                     android:id="@+id/iv_locationImagePreview"
                     android:layout_width="0dp"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="103dp"
-                    android:paddingLeft="@dimen/ItemMargin"
                     android:layout_marginBottom="@dimen/ItemMargin"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:paddingLeft="@dimen/ItemMargin"
                     tools:src="@tools:sample/backgrounds/scenic" />
             </TableRow>
 
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
+
                 <Button
                     android:id="@+id/btn_attachImage"
                     android:layout_width="0dp"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/ItemMargin"
                     android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/ItemMargin"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/primary_green"
                     android:text="Image" />
 
                 <Button
                     android:id="@+id/btn_attachLocation"
                     android:layout_width="0dp"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/ItemMargin"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/ItemMargin"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/primary_green"
                     android:text="Location" />
             </TableRow>
 
-<!--            <TableRow-->
-<!--                android:layout_width="fill_parent"-->
-<!--                android:layout_height="fill_parent">-->
-<!--                <EditText-->
-<!--                    android:id="@+id/et_imagePath"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:ems="10"-->
-<!--                    android:hint="IMAGE PATH"-->
-<!--                    android:inputType="textPersonName"-->
-<!--                    android:minHeight="48dp"-->
-<!--                    android:text="" />-->
+            <!--            <TableRow-->
+            <!--                android:layout_width="fill_parent"-->
+            <!--                android:layout_height="fill_parent">-->
+            <!--                <EditText-->
+            <!--                    android:id="@+id/et_imagePath"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:ems="10"-->
+            <!--                    android:hint="IMAGE PATH"-->
+            <!--                    android:inputType="textPersonName"-->
+            <!--                    android:minHeight="48dp"-->
+            <!--                    android:text="" />-->
 
-<!--                <EditText-->
-<!--                    android:id="@+id/et_locationData"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:ems="10"-->
-<!--                    android:hint="LOCATION DATA"-->
-<!--                    android:inputType="textPersonName"-->
-<!--                    android:minHeight="48dp"-->
-<!--                    android:text="" />-->
-<!--            </TableRow>-->
+            <!--                <EditText-->
+            <!--                    android:id="@+id/et_locationData"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:ems="10"-->
+            <!--                    android:hint="LOCATION DATA"-->
+            <!--                    android:inputType="textPersonName"-->
+            <!--                    android:minHeight="48dp"-->
+            <!--                    android:text="" />-->
+            <!--            </TableRow>-->
         </TableLayout>
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

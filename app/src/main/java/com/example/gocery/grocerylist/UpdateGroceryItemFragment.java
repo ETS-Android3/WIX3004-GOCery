@@ -200,20 +200,21 @@ public class UpdateGroceryItemFragment extends Fragment {
                 itemDesc.setText(groceryItem.getDescription());
 
                 // firebase image
-                FirebaseApp firebaseApp = FirebaseApp.initializeApp(getContext());
-                firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
-                StorageReference storageReference = firebaseStorage.getReference();
-                storageReference.child(""+groceryItem.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(getContext())
-                            .load(uri)
-                            .placeholder(R.drawable.spinning_loading)
-                            .error(R.drawable.gocery_logo_only)
-                            .into(imageView);
-                    }
-                });
-
+                if(groceryItem.getImage() != null){
+                    FirebaseApp firebaseApp = FirebaseApp.initializeApp(getContext());
+                    firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
+                    StorageReference storageReference = firebaseStorage.getReference();
+                    storageReference.child(""+groceryItem.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(getContext())
+                                    .load(uri)
+                                    .placeholder(R.drawable.spinning_loading)
+                                    .error(R.drawable.gocery_logo_only)
+                                    .into(imageView);
+                        }
+                    });
+                }
             }
 
             @Override

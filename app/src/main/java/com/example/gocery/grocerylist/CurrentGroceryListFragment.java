@@ -104,7 +104,6 @@ public class CurrentGroceryListFragment extends Fragment {
         });
 
 
-
         btnCompleteGrocery = view.findViewById(R.id.fabtn_completeGrocery);
         btnCompleteGrocery.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.nav_finalizeGroceryList);
