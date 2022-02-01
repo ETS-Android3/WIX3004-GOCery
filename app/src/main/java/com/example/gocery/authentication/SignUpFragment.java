@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.gocery.R;
+import com.example.gocery.manageprofiles.dao.DAOHousehold;
+import com.example.gocery.manageprofiles.dao.DAOProfile;
+import com.example.gocery.manageprofiles.model.Household;
+import com.example.gocery.manageprofiles.model.UserProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -81,13 +85,39 @@ public class SignUpFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        Toast.makeText(getActivity(), "User registered successfully!", Toast.LENGTH_SHORT).show();;
+                        Toast.makeText(getActivity(), "User registered successfully!", Toast.LENGTH_SHORT).show();
+                        String userID = task.getResult().getUser().getUid();
+                        createHousehold(userID, address);
+                        createDefaultProfile(userID);
                         Navigation.findNavController(view).navigate(R.id.DestSignIn);
+
                     }else{
                         Toast.makeText(getActivity(), "Registration Error: "+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
+    }
+
+    public void createHousehold(String userID, String address){
+        DAOHousehold daoHousehold = new DAOHousehold();
+        Household household = new Household(address, userID);
+        daoHousehold.add(household, userID).addOnSuccessListener(v -> {
+            Toast.makeText(getActivity(), "Household added successfully!", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(err -> {
+            Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void createDefaultProfile(String userID){
+        DAOProfile daoProfile = new DAOProfile();
+        UserProfile userProfile = new UserProfile("User", R.drawable.ic_baseline_account_circle_24, null, false, false);
+        daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
+            Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(err -> {
+            Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+
+
     }
 }

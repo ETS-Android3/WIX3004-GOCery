@@ -43,8 +43,6 @@ public class SignInFragment extends Fragment {
         BTNSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.DestSignUp);
-//                Navigation.findNavController(view).navigate(R.id.DestSelectProfile);
                 loginUser(view);
             }
         });

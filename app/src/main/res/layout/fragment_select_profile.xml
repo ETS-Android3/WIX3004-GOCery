@@ -24,8 +24,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RVProfileList"
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/RVProfileList"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="1dp"-->
+<!--        android:layout_marginTop="29dp"-->
+<!--        android:layout_marginEnd="1dp"-->
+<!--        android:foregroundGravity="center"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/TVLandingTitle"-->
+<!--        app:flow_horizontalAlign="center"-->
+<!--        >-->
+
+<!--    </androidx.recyclerview.widget.RecyclerView>-->
+
+    <ListView
+        android:id="@+id/LVProfiles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -36,33 +52,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TVLandingTitle"
         app:flow_horizontalAlign="center"
-        >
+        />
+<!--    <Button-->
+<!--        android:id="@+id/BTNTemp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="158dp"-->
+<!--        android:layout_marginTop="100dp"-->
+<!--        android:layout_marginEnd="159dp"-->
+<!--        android:backgroundTint="@color/primary_green"-->
+<!--        android:text="Proceed"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.444"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/LVProfiles" />-->
 
-    </androidx.recyclerview.widget.RecyclerView>
+<!--    <TextView-->
+<!--        android:id="@+id/TVTemp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="138dp"-->
+<!--        android:layout_marginTop="11dp"-->
+<!--        android:layout_marginEnd="139dp"-->
+<!--        android:text="Temp proceed button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/BTNTemp" />-->
 
     <Button
-        android:id="@+id/BTNTemp"
+        android:id="@+id/BTNSignOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="159dp"
-        android:backgroundTint="@color/primary_green"
-        android:text="Proceed"
+        android:layout_marginStart="153dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginBottom="90dp"
+        android:text="Sign Out"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RVProfileList" />
-
-    <TextView
-        android:id="@+id/TVTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="139dp"
-        android:text="Temp proceed button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BTNTemp" />
+        app:layout_constraintTop_toBottomOf="@+id/LVProfiles" />
 </androidx.constraintlayout.widget.ConstraintLayout>
