@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/activity_main.xml" value="0.2682291666666667" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_current_grocery_list.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_edit_profile.xml" value="0.33" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_grocery_home.xml" value="0.228125" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/WIX3004-Gocery/app/src/main/res/layout/fragment_select_profile.xml" value="0.2682291666666667" />

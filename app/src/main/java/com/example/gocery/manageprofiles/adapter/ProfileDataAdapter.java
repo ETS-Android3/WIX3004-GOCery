@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gocery.R;
-import com.example.gocery.manageprofiles.model.ProfileData;
+import com.example.gocery.manageprofiles.model.UserProfile;
 
 import java.util.ArrayList;
 
 public class ProfileDataAdapter extends RecyclerView.Adapter<ProfileDataAdapter.RecyclerViewHolder> {
-    private ArrayList<ProfileData> profileDataArrayList;
+    private ArrayList<UserProfile> userProfileArrayList;
     private Context mccontext;
 
-    public ProfileDataAdapter(ArrayList<ProfileData> profileDataArrayList, Context mcontext){
-        this.profileDataArrayList = profileDataArrayList;
+    public ProfileDataAdapter(ArrayList<UserProfile> userProfileArrayList, Context mcontext){
+        this.userProfileArrayList = userProfileArrayList;
         this.mccontext = mcontext;
     }
 
@@ -35,14 +35,14 @@ public class ProfileDataAdapter extends RecyclerView.Adapter<ProfileDataAdapter.
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position){
         // Sets the data for TV and IV
-        ProfileData profileData = profileDataArrayList.get(position);
-        holder.TVProfile.setText(profileData.getUsername());
-        holder.IVProfile.setImageResource(profileData.getImgId());
+        UserProfile userProfile = userProfileArrayList.get(position);
+        holder.TVProfile.setText(userProfile.getUsername());
+        holder.IVProfile.setImageResource(userProfile.getImgId());
     }
 
     @Override
     public int getItemCount(){
-        return profileDataArrayList.size();
+        return userProfileArrayList.size();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder{
