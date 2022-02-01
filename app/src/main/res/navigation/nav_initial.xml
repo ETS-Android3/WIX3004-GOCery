@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_initial"
-    app:startDestination="@id/landingFragment">
+    app:startDestination="@id/DestLanding">
 
     <fragment
-        android:id="@+id/landingFragment"
+        android:id="@+id/DestLanding"
         android:name="com.example.gocery.authentication.LandingFragment"
         android:label="fragment_landing_fragement"
         tools:layout="@layout/fragment_landing_fragement" />
@@ -30,9 +30,4 @@
             android:id="@+id/action_auth_to_home"
             app:destination="@id/grocery_navigation" />
     </fragment>
-    <fragment
-        android:id="@+id/DestHome"
-        android:name="com.example.gocery.grocerylist.GroceryHomeFragment"
-        android:label="fragment_grocery_home"
-        tools:layout="@layout/fragment_grocery_home" />
 </navigation>
