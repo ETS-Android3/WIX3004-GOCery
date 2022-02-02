@@ -9,10 +9,16 @@
         android:id="@+id/expenseHomeFragment"
         android:name="com.example.gocery.expense_tracker.ExpenseHomeFragment"
         android:label="Manage Expenses"
-        tools:layout="@layout/fragment_expense_home" />
+        tools:layout="@layout/fragment_expense_home"
+        />
     <fragment
         android:id="@+id/addExpenseFragment"
         android:name="com.example.gocery.expense_tracker.AddExpenseFragment"
         android:label="Add New Expense"
         tools:layout="@layout/fragment_add_expense" />
+    <fragment
+        android:id="@+id/updateExpenseFragment"
+        android:name="com.example.gocery.expense_tracker.UpdateExpenseFragment"
+        android:label="Update Expense Record"
+        tools:layout="@layout/fragment_update_expense" />
 </navigation>

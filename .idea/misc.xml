@@ -6,10 +6,12 @@
         <entry key="app/src/main/res/layout/activity_add_expense.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25229831157069105" />
         <entry key="app/src/main/res/layout/category_list_item.xml" value="0.23645833333333333" />
-        <entry key="app/src/main/res/layout/expenses_lv_item.xml" value="0.2957427536231884" />
+        <entry key="app/src/main/res/layout/expense_type_dropdown_item.xml" value="0.2463768115942029" />
+        <entry key="app/src/main/res/layout/expenses_lv_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_add_expense.xml" value="0.30480072463768115" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.2866847826086957" />
         <entry key="app/src/main/res/layout/fragment_expense_home.xml" value="0.27522687717543043" />
+        <entry key="app/src/main/res/layout/fragment_update_expense.xml" value="0.3523571554834083" />
         <entry key="app/src/main/res/menu/menu_bottom.xml" value="0.3807291666666667" />
       </map>
     </option>

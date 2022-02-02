@@ -16,7 +16,7 @@
             android:id="@+id/TBMainAct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/gocery_theme"
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
             app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />

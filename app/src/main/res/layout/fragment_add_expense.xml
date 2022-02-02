@@ -9,23 +9,23 @@
         android:id="@+id/TVAddExpense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ADD NEW EXPENSE"
-        android:textStyle="bold"
-        android:textSize="20dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:textColor="@color/black"/>
+        android:text="ADD NEW EXPENSE"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TILExpenseName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
         android:layout_below="@id/TVAddExpense"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
         android:hint="@string/expense_name">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/TILExpenseName"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
         android:hint="@string/expense_date">
 
@@ -62,23 +62,28 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Reference: https://www.geeksforgeeks.org/exposed-drop-down-menu-in-android/    -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TILExpenseType"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/TILExpenseDate"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
-
         android:hint="@string/expense_type">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ETExpenseType"
+        <!-- Inside text input layout add
+             an auto complete text view
+             and make its input type to none-->
+        <AutoCompleteTextView
+            android:id="@+id/ACTVExpenseType"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="TextContrastCheck" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="text"
+            android:text="Choose Type" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/TILExpenseType"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
         android:hint="@string/expense_desc"
         android:minHeight="120dp">
@@ -111,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/TILExpenseDesc"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
         android:hint="@string/expense_total_cost">
 
@@ -126,12 +131,13 @@
 
     <Button
         android:id="@+id/BtnAddExpense"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="43dp"
+        android:backgroundTint="@color/gocery_theme"
         android:text="Add Expense" />
 
 </RelativeLayout>

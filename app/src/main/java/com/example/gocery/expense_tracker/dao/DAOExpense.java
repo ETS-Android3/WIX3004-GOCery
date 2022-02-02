@@ -8,11 +8,11 @@ import com.google.firebase.database.Query;
 
 import java.util.HashMap;
 
-public class DAONewExpense {
+public class DAOExpense {
 
     private DatabaseReference databaseReference;
 
-    public DAONewExpense() {
+    public DAOExpense() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         databaseReference = db.getReference(Expense.class.getSimpleName());
     }
@@ -36,4 +36,5 @@ public class DAONewExpense {
     public Query getSingle(String item_key) {
         return databaseReference.child(item_key);
     }
+
 }
