@@ -16,18 +16,18 @@ import com.example.gocery.R;
 import com.example.gocery.manageprofiles.model.UserProfile;
 import com.google.firebase.storage.StorageReference;
 
-public class UserProfileAdapter extends BaseAdapter {
+public class ManageProfileAdapter extends BaseAdapter {
     List<UserProfile> userProfileList;
     Context context;
     LayoutInflater inflater;
     StorageReference storageReference;
 
-    public UserProfileAdapter(Context context){
+    public ManageProfileAdapter(Context context){
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
-    public UserProfileAdapter(Context context, List<UserProfile> userProfiles){
+    public ManageProfileAdapter(Context context, List<UserProfile> userProfiles){
         this.context = context;
         userProfileList = userProfiles;
         inflater = LayoutInflater.from(context);
@@ -57,7 +57,7 @@ public class UserProfileAdapter extends BaseAdapter {
 
         if(convertView == null){
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.profile_card, parent, false);
+            convertView = inflater.inflate(R.layout.household_member_card, parent, false);
         }
 
         TextView TVProfile = convertView.findViewById(R.id.TVProfile);

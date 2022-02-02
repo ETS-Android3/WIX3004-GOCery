@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/CVHousehold"
+    android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:layout_margin="8dp"
+    android:layout_marginStart="103dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="56dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/TVLabelAddress"
+    style="@style/household_cards"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+    >
+
+        <ImageView
+            android:id="@+id/IVProfile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:contentDescription="Father"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/ic_launcher"
+        />
+
+        <TextView
+            android:id="@+id/TVProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Father"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            style="@style/household_cards.text"
+        />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

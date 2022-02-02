@@ -29,5 +29,22 @@
         <action
             android:id="@+id/action_auth_to_home"
             app:destination="@id/grocery_navigation" />
+        <action
+            android:id="@+id/action_to_household_temp"
+            app:destination="@id/DestHousehold" />
     </fragment>
+    <fragment
+        android:id="@+id/DestHousehold"
+        android:name="com.example.gocery.manageprofiles.ManageHouseholdFragment"
+        android:label="fragment_manage_household"
+        tools:layout="@layout/fragment_manage_household" >
+        <action
+            android:id="@+id/action_manage_to_add"
+            app:destination="@id/DestAddProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/DestAddProfile"
+        android:name="com.example.gocery.manageprofiles.AddProfileFragment"
+        android:label="fragment_add_profile"
+        tools:layout="@layout/fragment_add_profile"/>
 </navigation>

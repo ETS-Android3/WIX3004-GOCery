@@ -28,11 +28,12 @@
     <string name="add_desc">Add Icon</string>
     <string name="member1">Father</string>
     <string name="RB1">Admin</string>
-    <string name="RB2">Family Representative</string>
+    <string name="RB2">Family representative</string>
     <string name="save_btn">Save Changes</string>
     <string name="add_btn">Add Member</string>
     <string name="remove_btn">Remove Member</string>
     <string name="cancel_txt">Cancel</string>
+    <string name="lock_txt">Lock Profile</string>
 
     <!-- Grocery Strings -->
     <string name="CurrentGroceryList">Current Grocery List</string>

@@ -2,59 +2,65 @@ package com.example.gocery.manageprofiles;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.example.gocery.R;
+import com.example.gocery.manageprofiles.adapter.ManageProfileAdapter;
+import com.example.gocery.manageprofiles.dao.DAOProfile;
+import com.example.gocery.manageprofiles.model.UserProfile;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ManageHouseholdFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class ManageHouseholdFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    FirebaseAuth mAuth;
+    DAOProfile daoProfile = new DAOProfile();
+    ListView memberList;
+    ManageProfileAdapter adapter;
+    ArrayList<UserProfile> userProfileArrayList = new ArrayList<>();
+    FloatingActionButton FABAddMember;
 
     public ManageHouseholdFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ManageHouseholdFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ManageHouseholdFragment newInstance(String param1, String param2) {
-        ManageHouseholdFragment fragment = new ManageHouseholdFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        //Empty constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        FABAddMember = view.findViewById(R.id.FABAddMember);
+        mAuth = FirebaseAuth.getInstance();
+        memberList = view.findViewById(R.id.LVMembers);
+        adapter = new ManageProfileAdapter(getContext(), userProfileArrayList);
+        memberList.setAdapter(adapter);
+        loadData();
+
+        memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserProfile userProfile = (UserProfile) adapter.getItem(position);
+                //Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
+                //Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+
+            }
+        });
+
+        FABAddMember.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_manage_to_add);
+        });
+
     }
 
     @Override
@@ -62,5 +68,25 @@ public class ManageHouseholdFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_manage_household, container, false);
+    }
+
+    public void loadData(){
+        daoProfile.get(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot data : snapshot.getChildren()){
+                    UserProfile userProfile = data.getValue(UserProfile.class);
+                    userProfileArrayList.add(userProfile);
+                }
+                adapter.setUserProfileList(userProfileArrayList);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

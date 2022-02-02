@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +17,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.gocery.R;
-import com.example.gocery.grocerylist.model.GroceryItem;
 import com.example.gocery.manageprofiles.adapter.UserProfileAdapter;
 import com.example.gocery.manageprofiles.dao.DAOProfile;
 import com.example.gocery.manageprofiles.model.UserProfile;
-import com.example.gocery.manageprofiles.adapter.ProfileDataAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,18 +53,12 @@ public class SelectProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
-                Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
+//                Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
+                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
 
             }
         });
 
-//        Button BTNTemp = view.findViewById(R.id.BTNTemp);
-//        BTNTemp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
-//            }
-//        });
 
         Button BTNSignOut = view.findViewById(R.id.BTNSignOut);
         BTNSignOut.setOnClickListener(new View.OnClickListener(){

@@ -15,7 +15,6 @@ public class DAOProfile {
     public DAOProfile(){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         databaseReference = db.getReference(UserProfile.class.getSimpleName());
-
     }
 
     public Task<Void>add(UserProfile userProfile, String userID){
