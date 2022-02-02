@@ -48,8 +48,8 @@
                 android:id="@+id/tiet_itemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                />
+                android:backgroundTint="@color/primary_green"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,8 +65,8 @@
                 android:id="@+id/tiet_itemQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                />
+                android:backgroundTint="@color/primary_green"
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,8 +83,8 @@
                 android:id="@+id/tiet_itemDescription"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:inputType="text"
-                />
+                android:backgroundTint="@color/primary_green"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,22 +117,25 @@
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
+
                 <Button
                     android:id="@+id/btn_attachImage"
                     android:layout_width="0dp"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/ItemMargin"
                     android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/ItemMargin"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/primary_green"
                     android:text="Image" />
 
                 <Button
                     android:id="@+id/btn_attachLocation"
                     android:layout_width="0dp"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/ItemMargin"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/ItemMargin"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/primary_green"
                     android:text="Location" />
             </TableRow>
 

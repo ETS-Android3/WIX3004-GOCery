@@ -15,12 +15,19 @@ public class GroceryItem {
     private String image;
     private String locationLat;
     private String locationLong;
+    private String createdBy;
     private Boolean status;
 
     public GroceryItem() {
     }
 
-    public GroceryItem(String name, int quantity, Boolean status,@Nullable String description, @Nullable String image,@Nullable String locationLat,@Nullable String locationLong) {
+    public GroceryItem(String name,
+                       int quantity,
+                       Boolean status,
+                       @Nullable String description,
+                       @Nullable String image,
+                       @Nullable String locationLat,
+                       @Nullable String locationLong) {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
@@ -92,6 +99,14 @@ public class GroceryItem {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override

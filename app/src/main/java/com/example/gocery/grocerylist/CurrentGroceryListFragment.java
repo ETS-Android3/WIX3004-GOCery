@@ -36,13 +36,11 @@ public class CurrentGroceryListFragment extends Fragment {
     ListView listView;
     CurrentGroceryListAdapter adapter;
 
-//    SwipeRefreshLayout swipeRefreshLayout;
     DAOCurrentGroceryItem dao;
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        swipeRefreshLayout = view.findViewById(R.id.swipe_currentGroceryList);
         dao = new DAOCurrentGroceryItem();
 
         listView = view.findViewById(R.id.lv_currentGroceryList);
@@ -74,7 +72,13 @@ public class CurrentGroceryListFragment extends Fragment {
                     .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dao.remove(cgi.getKey()).addOnSuccessListener(suc->{
+
+                            String imagePath = null;
+                            if(cgi.getImage() != null){
+                                imagePath = cgi.getImage();
+                            }
+
+                            dao.remove(cgi.getKey(), imagePath).addOnSuccessListener(suc->{
                                 Toast.makeText(getActivity(), "Item Deleted", Toast.LENGTH_SHORT).show();
                             }).addOnFailureListener(er->{
                                 Toast.makeText(getActivity(), "Error: Deletion Failed", Toast.LENGTH_SHORT).show();
@@ -100,23 +104,12 @@ public class CurrentGroceryListFragment extends Fragment {
         });
 
 
-
         btnCompleteGrocery = view.findViewById(R.id.fabtn_completeGrocery);
         btnCompleteGrocery.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.nav_finalizeGroceryList);
         });
 
 
-
-
-
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                loadData();
-//                Toast.makeText(getContext(), "List Refreshed", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
     }
 
