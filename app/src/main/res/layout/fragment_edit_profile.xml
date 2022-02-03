@@ -1,128 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".manageprofiles.EditProfileFragment">
+    tools:context=".manageprofiles.AddProfileFragment">
 
-    <ImageView
-        android:id="@+id/IVProfile"
-        android:layout_width="136dp"
-        android:layout_height="143dp"
-        android:layout_marginStart="137dp"
-        android:layout_marginTop="82dp"
-        android:layout_marginEnd="138dp"
-        android:background="@color/light_gray"
-        android:src="@drawable/ic_baseline_account_circle_24"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TILUsername"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="354dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="28dp"
+        android:hint="Enter username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/ETName"
-        android:layout_width="345dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="36dp"
-        android:inputType="textPersonName"
-        android:text="@string/member1"
-        app:layout_constraintBottom_toTopOf="@+id/TVRoles_lbl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IVProfile" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ETUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/TVRoles_lbl"
-        style="@style/household_cards.label"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="36dp"
+        android:id="@+id/TVLabelRoles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="35dp"
         android:text="Roles"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ETName" />
+        app:layout_constraintTop_toBottomOf="@+id/TILUsername" />
 
-    <RadioButton
-        android:id="@+id/RBAdmin"
+    <CheckBox
+        android:id="@+id/CBAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="304dp"
+        android:layout_marginStart="28dp"
         android:text="@string/RB1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVRoles_lbl" />
+        app:layout_constraintTop_toBottomOf="@+id/TVLabelRoles" />
 
-    <RadioButton
-        android:id="@+id/radioButton2"
+    <CheckBox
+        android:id="@+id/CBRep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="206dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
         android:text="@string/RB2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RBAdmin" />
+        app:layout_constraintTop_toBottomOf="@+id/CBAdmin" />
 
     <TextView
-        android:id="@+id/TVLock"
-        style="@style/household_cards.label"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="205dp"
-        android:text="Lock Profile"
-        app:layout_constraintEnd_toStartOf="@+id/SWLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/lock_txt"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/CBRep" />
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/SWLock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:layout_marginEnd="31dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ETName"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/editTextNumberPassword"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
         android:layout_marginTop="5dp"
-        android:ems="4"
-        android:hint="Enter pin"
-        android:inputType="numberPassword"
+        android:layout_marginEnd="28dp"
+        android:checked="false"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CBRep" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TILPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="154dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="29dp"
+        android:visibility="gone"
+        android:hint="Enter password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVLock"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/SWLock">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ETPassword"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/BTNDelete"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/remove_btn"
+        android:textColor="@color/red"
+        android:outlineSpotShadowColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/BTNSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="97dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary_green"
         android:text="@string/save_btn"
-        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BTNDelete" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/BTNDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/red"
-        android:text="@string/remove_btn"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

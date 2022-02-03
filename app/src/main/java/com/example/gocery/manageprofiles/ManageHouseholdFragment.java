@@ -51,9 +51,12 @@ public class ManageHouseholdFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
-                //Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
-                //Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
-
+                System.out.println(userProfile);
+                Bundle result = new Bundle();
+                result.putString("PROFILE_KEY", userProfile.getKey());
+                System.out.println("USERPROFILEKEY"+ userProfile.getKey());
+                getParentFragmentManager().setFragmentResult("editProfile", result);
+                Navigation.findNavController(view).navigate(R.id.DestEditProfile);
             }
         });
 
@@ -71,11 +74,12 @@ public class ManageHouseholdFragment extends Fragment {
     }
 
     public void loadData(){
-        daoProfile.get(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+        daoProfile.get().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot data : snapshot.getChildren()){
                     UserProfile userProfile = data.getValue(UserProfile.class);
+                    userProfile.setKey(data.getKey());
                     userProfileArrayList.add(userProfile);
                 }
                 adapter.setUserProfileList(userProfileArrayList);

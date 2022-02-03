@@ -81,11 +81,12 @@ public class SelectProfileFragment extends Fragment {
     }
 
     public void loadData(){
-        daoProfile.get(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+        daoProfile.get().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot data : snapshot.getChildren()){
                     UserProfile userProfile = data.getValue(UserProfile.class);
+                    userProfile.setKey(data.getKey());
                     userProfileArrayList.add(userProfile);
                 }
                 adapter.setUserProfileList(userProfileArrayList);

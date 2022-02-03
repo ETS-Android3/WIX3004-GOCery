@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.gocery.R;
@@ -22,8 +21,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class AddProfileFragment extends Fragment {
@@ -47,6 +44,8 @@ public class AddProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
         ETUsername = view.findViewById(R.id.ETUsername);
         CBAdmin = view.findViewById(R.id.CBAdmin);
         CBRep = view.findViewById(R.id.CBRep);
@@ -54,7 +53,7 @@ public class AddProfileFragment extends Fragment {
         ETPassword = view.findViewById(R.id.ETPassword);
         TILPassword = view.findViewById(R.id.TILPassword);
         BTNSave = view.findViewById(R.id.BTNSave);
-        BTNCancel = view.findViewById(R.id.BTNCancel);
+        BTNCancel = view.findViewById(R.id.BTNDelete);
 
         CBAdmin.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             isAdmin = isChecked;
@@ -86,8 +85,6 @@ public class AddProfileFragment extends Fragment {
     public void createProfile(View view){
         String username = ETUsername.getText().toString();
         String password = ETPassword.getText().toString();
-        System.out.println(isAdmin.toString());
-        System.out.println(isRep.toString());
         if(TextUtils.isEmpty(username)){
             ETUsername.setError("Username cannot be empty");
         }else if(SWLock.isChecked() && TextUtils.isEmpty(password)) {

@@ -1,6 +1,11 @@
 package com.example.gocery.manageprofiles.model;
 
+import com.google.firebase.database.Exclude;
+
 public class UserProfile {
+
+    @Exclude
+    private String key;
 
     private String username;
     private int imgId;
@@ -58,5 +63,13 @@ public class UserProfile {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
