@@ -34,7 +34,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class FinalizeGroceryListFragement extends Fragment {
 

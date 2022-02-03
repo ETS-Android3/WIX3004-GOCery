@@ -140,6 +140,5 @@ public class CurrentGroceryListFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-//        swipeRefreshLayout.setRefreshing(false);
     }
 }

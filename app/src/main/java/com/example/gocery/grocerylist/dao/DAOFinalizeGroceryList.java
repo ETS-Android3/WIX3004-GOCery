@@ -33,16 +33,13 @@ public class DAOFinalizeGroceryList {
 
     public Task<Void> finalizeGrocery(GroceryTrip groceryTrip){
 
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        String tripKey = "TIME"+ts.getTime();
-
         // remove data from current grocery items
         for (GroceryItem groceryItem: groceryTrip.getGroceryItems()) {
             databaseReferenceGroceryItem.child(currentUser).child(groceryItem.getKey()).removeValue();
         }
 
         //save new grocery trip
-        return databaseReferenceGroceryTrip.child(currentUser).child(tripKey).setValue(groceryTrip);
+        return databaseReferenceGroceryTrip.child(currentUser).push().setValue(groceryTrip);
     }
 
 }

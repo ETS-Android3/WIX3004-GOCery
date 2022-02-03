@@ -8,8 +8,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,25 +25,20 @@ import com.example.gocery.R;
 
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 
 public class AddGroceryItemFragment extends Fragment {
 
 
-    final int REQUEST_IMAGE = 1;
+    final int REQUEST_IMAGE = 999;
     Uri imageUri;
     ImageView imageView;
 
@@ -53,6 +51,8 @@ public class AddGroceryItemFragment extends Fragment {
     StorageReference storageReference;
     ProgressDialog progressDialog;
 
+    public AddGroceryItemFragment() {
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -161,7 +161,11 @@ public class AddGroceryItemFragment extends Fragment {
         btnAttachImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+//                selectImage();
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_IMAGE);
             }
         });
 
@@ -195,7 +199,8 @@ public class AddGroceryItemFragment extends Fragment {
 
 
     public void selectImage(){
-        Intent intent = new Intent();
+//        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_IMAGE);
@@ -205,7 +210,7 @@ public class AddGroceryItemFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.e("Image", data.getData().toString()+"|"+requestCode);
         if(requestCode == REQUEST_IMAGE && data != null && data.getData() != null){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
@@ -214,4 +219,6 @@ public class AddGroceryItemFragment extends Fragment {
             imageView.setImageURI(null);
         }
     }
+
+
 }
