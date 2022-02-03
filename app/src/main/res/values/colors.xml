@@ -8,5 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="gocery_theme">#2E7D32</color>
+    <!-- Color scheme -->
+    <color name="goceryPrimary">#2E7D32</color>
+    <color name="gocerySecondary">#60AD5E</color>
+    <color name="goceryTertiary">#C4C4C4</color>
+
 </resources>

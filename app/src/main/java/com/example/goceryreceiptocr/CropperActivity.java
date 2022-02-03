@@ -25,7 +25,7 @@ public class CropperActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cropper);
 
         readIntent();
-        String dest_uri = new StringBuilder(UUID.randomUUID().toString()).append(".jpg").toString();
+        String dest_uri = UUID.randomUUID().toString() + ".jpg";
 
         UCrop.of(fileUri, Uri.fromFile(new File(getCacheDir(), dest_uri)))
                 .withOptions(new UCrop.Options())

@@ -11,13 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -25,9 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.mlkit.vision.common.InputImage;
@@ -37,6 +35,8 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
+
+import java.util.Objects;
 
 // References:
 // https://developers.google.com/ml-kit/vision/text-recognition/android#java
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     // name
     private TextView TVChooseImageFromGallery, TVTakeImageFromCamera, TVOCRResult;
     private ImageView IVSelectedImage;
+    private ImageView IVSelectedImageDialog;
 
     // Defining Permission codes.
     // We can give any value
@@ -68,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 103;
     private static final int SELECT_IMAGE = 104;
 
-    private ActivityResultLauncher<Intent> loadImageFromGallery;
     private ActivityResultLauncher<Intent> takeImageFromCamera;
     private ActivityResultLauncher<String> cropImage;
 
     private InputImage inputImage;
     private TextRecognizer textRecognizer;
-    private Bitmap bitmap;
+
+    private MaterialAlertDialogBuilder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,37 +104,24 @@ public class MainActivity extends AppCompatActivity {
         // Initialise ML Kit's TextRecognizer
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
-//        // Activity Result for loading image from Gallery/File
-//        loadImageFromGallery = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        cropImage.launch("image/*");
-//                    }
-//                }
-//        );
-
         // Activity Result for taking image from camera
         takeImageFromCamera = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        // Handle images
-                        Intent data = result.getData();
+                result -> {
+                    // Handle images
+                    Intent data = result.getData();
 
-                        // Try-catch block to capture if user cancels camera image confirmation
-                        try {
-                            // Get bitmap data
-                            Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                    // Try-catch block to capture if user cancels camera image confirmation
+                    try {
+                        // Get bitmap data
+                        Bitmap selectedImage = (Bitmap) Objects.requireNonNull(data).getExtras().get("data");
 
-                            // Set ImageView with selected image
-                            IVSelectedImage.setImageBitmap(selectedImage);
-                            convertCameraImageToText(selectedImage);
-                        } catch (Exception e) {
-                            Log.d(TAG, "takeImageFromCamera: Error: " + e.getMessage());
-                        }
+                        // Set ImageView with selected image
+                        IVSelectedImage.setImageBitmap(selectedImage);
+                        displaySelectedBitmapImageDialog(selectedImage);
+                        convertCameraImageToText(selectedImage);
+                    } catch (Exception e) {
+                        Log.d(TAG, "takeImageFromCamera: Error: " + e.getMessage());
                     }
                 }
         );
@@ -142,23 +130,53 @@ public class MainActivity extends AppCompatActivity {
         // References:
         // https://www.youtube.com/watch?v=DM8vorNKIFg
         // https://github.com/Yalantis/uCrop
-        cropImage = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-            @Override
-            public void onActivityResult(Uri result) {
-                Intent intent = new Intent(MainActivity.this, CropperActivity.class);
-                intent.putExtra("DATA", result.toString());
-                startActivityForResult(intent, 101);
-            }
+        cropImage = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
+            Intent intent = new Intent(MainActivity.this, CropperActivity.class);
+            intent.putExtra("DATA", result.toString());
+            startActivityForResult(intent, 101);
         });
 
         // Event listener for copying images
-        btnCopyText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String scanned_text = TVOCRResult.getText().toString();
-                copyToClipboard(scanned_text);
+        btnCopyText.setOnClickListener(v -> {
+            String scanned_text = TVOCRResult.getText().toString();
+            copyToClipboard(scanned_text);
+        });
+
+        // On-click listener for viewing image in modal
+        IVSelectedImage.setOnClickListener(v -> {
+            if (dialog != null) {
+                if (IVSelectedImageDialog.getParent() != null)
+                    ((ViewGroup) IVSelectedImageDialog.getParent()).removeView(IVSelectedImageDialog); // <- fix
+                dialog.show();
+            } else {
+                Toast.makeText(MainActivity.this, "Select an image/capture image from camera first.", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    // References:
+    // https://www.youtube.com/watch?v=ZpXOglhCkGE
+    private void displaySelectedBitmapImageDialog(Bitmap imageBitmap) {
+        dialog = new MaterialAlertDialogBuilder(this);
+        IVSelectedImageDialog = new ImageView(this);
+        IVSelectedImageDialog.setImageBitmap(imageBitmap);
+        dialog.setTitle("View Captured Image");
+        dialog.setNegativeButton("CANCEL", null);
+        dialog.setMessage("Captured image:");
+        dialog.setView(IVSelectedImageDialog);
+    }
+
+    // References:
+    // https://www.youtube.com/watch?v=ZpXOglhCkGE
+    private void displaySelectedImageURIDialog(Uri imageUri) {
+        dialog = new MaterialAlertDialogBuilder(this);
+        IVSelectedImageDialog = new ImageView(this);
+        IVSelectedImageDialog.setImageURI(imageUri);
+        dialog.setTitle("View Selected Image");
+        dialog.setMessage("Selected image:");
+        dialog.setNegativeButton("CANCEL", null);
+        dialog.setView(IVSelectedImageDialog);
     }
 
     @Override
@@ -166,13 +184,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == -1 && requestCode == 101) {
             String result = data.getStringExtra("RESULT");
-            Uri resultUri = null;
+            Uri resultUri;
 
             if (result != null) {
                 resultUri = Uri.parse(result);
                 // Set ImageView with selected image
                 // IVSelectedImage.setImageURI(imageUri);
                 Picasso.get().load(resultUri).into(IVSelectedImage);
+                displaySelectedImageURIDialog(resultUri);
                 convertImageToText(resultUri);
             }
 
@@ -217,55 +236,27 @@ public class MainActivity extends AppCompatActivity {
         // we have to handle the Parent FAB button first, by
         // using setOnClickListener you can see below
         btnGetImage.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (!isAllFabsVisible) {
+                view -> {
+                    if (!isAllFabsVisible) {
 
-                            // when isAllFabsVisible becomes
-                            // true make all the action name
-                            // texts and FABs VISIBLE.
-                            btnChooseImageFromGallery.show();
-                            btnTakeImageFromCamera.show();
-                            TVChooseImageFromGallery.setVisibility(View.VISIBLE);
-                            TVTakeImageFromCamera.setVisibility(View.VISIBLE);
+                        // when isAllFabsVisible becomes
+                        // true make all the action name
+                        // texts and FABs VISIBLE.
+                        btnChooseImageFromGallery.show();
+                        btnTakeImageFromCamera.show();
+                        TVChooseImageFromGallery.setVisibility(View.VISIBLE);
+                        TVTakeImageFromCamera.setVisibility(View.VISIBLE);
 
-                            // Now extend the parent FAB, as
-                            // user clicks on the shrinked
-                            // parent FAB
-                            btnGetImage.extend();
+                        // Now extend the parent FAB, as
+                        // user clicks on the shrinked
+                        // parent FAB
+                        btnGetImage.extend();
 
-                            // make the boolean variable true as
-                            // we have set the sub FABs
-                            // visibility to GONE
-                            isAllFabsVisible = true;
-                        } else {
-
-                            // when isAllFabsVisible becomes
-                            // true make all the action name
-                            // texts and FABs GONE.
-                            btnChooseImageFromGallery.hide();
-                            btnTakeImageFromCamera.hide();
-                            TVChooseImageFromGallery.setVisibility(View.GONE);
-                            TVTakeImageFromCamera.setVisibility(View.GONE);
-
-                            // Set the FAB to shrink after user
-                            // closes all the sub FABs
-                            btnGetImage.shrink();
-
-                            // make the boolean variable false
-                            // as we have set the sub FABs
-                            // visibility to GONE
-                            isAllFabsVisible = false;
-                        }
-                    }
-                });
-
-        btnChooseImageFromGallery.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Choose Image from Gallery clicked", Toast.LENGTH_SHORT).show();
+                        // make the boolean variable true as
+                        // we have set the sub FABs
+                        // visibility to GONE
+                        isAllFabsVisible = true;
+                    } else {
 
                         // when isAllFabsVisible becomes
                         // true make all the action name
@@ -283,44 +274,63 @@ public class MainActivity extends AppCompatActivity {
                         // as we have set the sub FABs
                         // visibility to GONE
                         isAllFabsVisible = false;
+                    }
+                });
 
-                        // Create an instance of the
-                        // intent of the type image
+        btnChooseImageFromGallery.setOnClickListener(
+                view -> {
+                    // Toast.makeText(MainActivity.this, "Choose Image from Gallery clicked", Toast.LENGTH_SHORT).show();
+
+                    // when isAllFabsVisible becomes
+                    // true make all the action name
+                    // texts and FABs GONE.
+                    btnChooseImageFromGallery.hide();
+                    btnTakeImageFromCamera.hide();
+                    TVChooseImageFromGallery.setVisibility(View.GONE);
+                    TVTakeImageFromCamera.setVisibility(View.GONE);
+
+                    // Set the FAB to shrink after user
+                    // closes all the sub FABs
+                    btnGetImage.shrink();
+
+                    // make the boolean variable false
+                    // as we have set the sub FABs
+                    // visibility to GONE
+                    isAllFabsVisible = false;
+
+                    // Create an instance of the
+                    // intent of the type image
 //                        Intent intent = new Intent();
 //                        intent.setType("image/*");
 //                        intent.setAction(Intent.ACTION_GET_CONTENT);
 //                        // startActivityForResult(); // DEPRECATED
 //                        loadImageFromGallery.launch(intent);
-                        cropImage.launch("image/*");
-                    }
+                    cropImage.launch("image/*");
                 });
 
         btnTakeImageFromCamera.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                view -> {
 
-                        // when isAllFabsVisible becomes
-                        // true make all the action name
-                        // texts and FABs GONE.
-                        btnChooseImageFromGallery.hide();
-                        btnTakeImageFromCamera.hide();
-                        TVChooseImageFromGallery.setVisibility(View.GONE);
-                        TVTakeImageFromCamera.setVisibility(View.GONE);
+                    // when isAllFabsVisible becomes
+                    // true make all the action name
+                    // texts and FABs GONE.
+                    btnChooseImageFromGallery.hide();
+                    btnTakeImageFromCamera.hide();
+                    TVChooseImageFromGallery.setVisibility(View.GONE);
+                    TVTakeImageFromCamera.setVisibility(View.GONE);
 
-                        // Set the FAB to shrink after user
-                        // closes all the sub FABs
-                        btnGetImage.shrink();
+                    // Set the FAB to shrink after user
+                    // closes all the sub FABs
+                    btnGetImage.shrink();
 
-                        // make the boolean variable false
-                        // as we have set the sub FABs
-                        // visibility to GONE
-                        isAllFabsVisible = false;
+                    // make the boolean variable false
+                    // as we have set the sub FABs
+                    // visibility to GONE
+                    isAllFabsVisible = false;
 
-                        Toast.makeText(MainActivity.this, "Take Image from Camera clicked", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        takeImageFromCamera.launch(intent);
-                    }
+                    // Toast.makeText(MainActivity.this, "Take Image from Camera clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    takeImageFromCamera.launch(intent);
                 });
     }
 
@@ -330,23 +340,21 @@ public class MainActivity extends AppCompatActivity {
 
             // Get Text from Input Image
             Task<Text> result = textRecognizer.process(inputImage)
-                    .addOnSuccessListener(new OnSuccessListener<Text>() {
-                        @Override
-                        public void onSuccess(Text text) {
-                            // Task completed successfully
-                            TVOCRResult.setText(text.getText());
-                            btnCopyText.setVisibility(View.VISIBLE);
-                            Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                        }
+                    .addOnSuccessListener(text -> {
+                        // Task completed successfully
+
+                        // Display extracted text in TextView
+                        TVOCRResult.setText(text.getText());
+
+                        // Display Copy Text button
+                        btnCopyText.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Image text successfully extracted.", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // Task failed with an exception
-                                    TVOCRResult.setText("Error: " + e.getMessage());
-                                    Log.d(TAG, "Error: " + e.getMessage());
-                                }
+                            e -> {
+                                // Task failed with an exception
+                                TVOCRResult.setText("Error: " + e.getMessage());
+                                Log.d(TAG, "Error: " + e.getMessage());
                             });
         } catch (Exception e) {
             Log.d(TAG, "convertImageToText: Error: " + e.getMessage());
@@ -363,22 +371,21 @@ public class MainActivity extends AppCompatActivity {
 
             // Get Text from Input Image
             Task<Text> result = textRecognizer.process(inputImage)
-                    .addOnSuccessListener(new OnSuccessListener<Text>() {
-                        @Override
-                        public void onSuccess(Text text) {
-                            // Task completed successfully
-                            TVOCRResult.setText(text.getText());
-                            Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                        }
+                    .addOnSuccessListener(text -> {
+                        // Task completed successfully
+
+                        // Display extracted text in TextView
+                        TVOCRResult.setText(text.getText());
+
+                        // Display Copy Text button
+                        btnCopyText.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Image text successfully extracted.", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // Task failed with an exception
-                                    TVOCRResult.setText("Error: " + e.getMessage());
-                                    Log.d(TAG, "Error: " + e.getMessage());
-                                }
+                            e -> {
+                                // Task failed with an exception
+                                TVOCRResult.setText("Error: " + e.getMessage());
+                                Log.d(TAG, "Error: " + e.getMessage());
                             });
         } catch (Exception e) {
             Log.d(TAG, "convertImageToText: Error: " + e.getMessage());
