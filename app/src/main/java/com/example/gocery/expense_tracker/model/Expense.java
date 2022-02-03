@@ -2,8 +2,6 @@ package com.example.gocery.expense_tracker.model;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.Date;
-
 public class Expense {
 
     private String expenseName;

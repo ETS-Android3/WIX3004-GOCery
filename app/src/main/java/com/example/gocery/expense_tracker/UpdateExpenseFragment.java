@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.example.gocery.R;
@@ -112,6 +112,10 @@ public class UpdateExpenseFragment extends Fragment {
 
         BtnUpdateExpense.setOnClickListener(v -> {
             saveData(v);
+
+            // Transition animations (https://stackoverflow.com/questions/52794596/how-to-add-animation-to-changing-fragments-using-navigation-component)
+//            NavOptions.Builder navBuilder = new NavOptions.Builder();
+//            navBuilder.setEnterAnim(R.anim.fade_scale_in).setExitAnim(R.anim.fade_scale_out);
             Navigation.findNavController(v).navigate(R.id.expenseHomeFragment);
         });
     }
@@ -131,12 +135,12 @@ public class UpdateExpenseFragment extends Fragment {
             String dateFormatted = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Objects.requireNonNull(dateObject));
             hashMap.put("expenseDate", dateFormatted);
 
+            Toast.makeText(getActivity(), "Expense record added successfully.", Toast.LENGTH_SHORT).show();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         DAOExpense dao = new DAOExpense();
-
         dao.update(this.itemKey, hashMap).addOnFailureListener(er -> Toast.makeText(v.getContext(), "Error", Toast.LENGTH_SHORT).show());
     }
 
@@ -156,6 +160,7 @@ public class UpdateExpenseFragment extends Fragment {
                     ETExpenseTotalCost.setText(String.format("%.2f", expense.getExpenseTotalCost()));
                     ETExpenseDate.setText(expense.getExpenseDate());
                 } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
 

@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -143,8 +144,16 @@ public class MainActivity extends AppCompatActivity {
         // link the selected option to the
         // NavHostFragment in activity_main.xml which is connected to
         // the navigation graph.
+
         try {
-            Navigation.findNavController(this, R.id.NHFMain).navigate(item.getItemId());
+            Navigation.findNavController(this, R.id.NHFMain)
+                    .navigate(item.getItemId(),
+                            null,
+                            new NavOptions.Builder()
+                                    .setEnterAnim(R.anim.slide_from_right)
+                                    .setExitAnim(R.anim.slide_to_right)
+                                    .build()
+                    );
             return true;
         } catch (Exception ex) {
             return super.onOptionsItemSelected(item);
@@ -170,67 +179,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationView sideNav = findViewById(R.id.sideNav);
         NavigationUI.setupWithNavController(sideNav, navController);
     }
-
-//    // creating a variable for
-//    // our Firebase Database.
-//    FirebaseDatabase firebaseDatabase;
-//
-//    // creating a variable for our
-//    // Database Reference for Firebase.
-//    DatabaseReference databaseReference;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        FloatingActionButton fab = (FloatingActionButton)
-//                findViewById(R.id.fabAdd);
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(),
-//                        AddExpenseActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        // below line is used to get the instance
-//        // of our Firebase database.
-//        firebaseDatabase = FirebaseDatabase.getInstance("https://gocery-825ca-default-rtdb.asia-southeast1.firebasedatabase.app/");
-//
-//        // below line is used to get
-//        // reference for our database.
-//        databaseReference = firebaseDatabase.getReference("Data");
-//
-//        // calling method
-//        // for getting data.
-//        getdata();
-//    }
-//
-//    private void getdata() {
-//
-//        // calling add value event listener method
-//        // for getting the values from database.
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                // this method is call to get the realtime
-//                // updates in the data.
-//                // this method is called when the data is
-//                // changed in our Firebase console.
-//                // below line is for getting the data from
-//                // snapshot of our database.
-//                String value = snapshot.getValue(String.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                // calling on cancelled method when we receive
-//                // any error or we are not able to get the data.
-//                Toast.makeText(MainActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 }

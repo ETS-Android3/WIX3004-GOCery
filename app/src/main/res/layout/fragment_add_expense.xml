@@ -32,7 +32,6 @@
             android:id="@+id/ETExpenseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#757575"
             tools:ignore="TextContrastCheck,TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -57,7 +56,6 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="date"
-            android:textColorHint="#757575"
             tools:ignore="TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +102,6 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:inputType="textMultiLine"
-            android:textColorHint="#757575"
             tools:ignore="TextContrastCheck,TextContrastCheck,TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -137,7 +134,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="43dp"
-        android:backgroundTint="@color/gocery_theme"
         android:text="Add Expense" />
 
 </RelativeLayout>

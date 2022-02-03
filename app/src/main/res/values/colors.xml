@@ -9,8 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Color scheme -->
-    <color name="gocery_theme">#2E7D32</color>
-    <color name="gocery_sub_theme">#60AD5E</color>
+    <color name="goceryPrimary">#2E7D32</color>
+    <color name="gocerySecondary">#60AD5E</color>
+    <color name="goceryTertiary">#C4C4C4</color>
 
     <!-- Expense Tracker module  -->
     <color name="R">#FFA726</color>

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -57,6 +56,7 @@ public class ExpenseHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_expense_home, container, false);
     }
@@ -70,8 +70,9 @@ public class ExpenseHomeFragment extends Fragment {
 
         // Transition animations (https://stackoverflow.com/questions/52794596/how-to-add-animation-to-changing-fragments-using-navigation-component)
         NavOptions.Builder navBuilder = new NavOptions.Builder();
-        navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_to_left);
+        navBuilder.setEnterAnim(R.anim.slide_from_right).setExitAnim(R.anim.slide_to_right);
 
+        // Navigation to AddExpenseFragment
         View.OnClickListener OCLAddExpense = v -> Navigation.findNavController(view).navigate(R.id.addExpenseFragment, null, navBuilder.build());
         BtnAddExpense.setOnClickListener(OCLAddExpense);
 
@@ -109,26 +110,43 @@ public class ExpenseHomeFragment extends Fragment {
         loadData();
 
         expensesLV.setLongClickable(true);
-        expensesLV.setOnItemLongClickListener((parent, view1, position, id) -> {
+        expensesLV.setOnItemLongClickListener((parent, childView, position, id) -> {
 
             Expense expense = (Expense) adapter.getItem(position);
             new MaterialAlertDialogBuilder(Objects.requireNonNull(getContext()))
                     .setTitle("Delete Expense Record")
-                    .setMessage("Are you sure you wan to delete " + expense.getExpenseName() + " record?")
+                    .setMessage("Are you sure you want to delete " + expense.getExpenseName() + " record?")
                     .setNegativeButton("CANCEL", null)
-                    .setPositiveButton("DELETE", (dialog, which) -> dao.remove(expense.getKey()).addOnSuccessListener(suc -> Toast.makeText(getActivity(), "Expense Record Deleted", Toast.LENGTH_SHORT).show()).addOnFailureListener(er -> Toast.makeText(getActivity(), "Error: Deletion Failed", Toast.LENGTH_SHORT).show()))
+                    .setPositiveButton("DELETE", (dialog, which) -> dao.remove(expense.getKey()).addOnSuccessListener(suc -> Toast.makeText(getActivity(), "Expense record deleted successfully.", Toast.LENGTH_SHORT).show()).addOnFailureListener(er -> Toast.makeText(getActivity(), "Error: Deletion Failed", Toast.LENGTH_SHORT).show()))
                     .show();
             return true;
         });
 
-        expensesLV.setOnItemClickListener((parent, view12, position, id) -> {
+        expensesLV.setOnItemClickListener((parent, childView, position, id) -> {
             Expense expense = (Expense) adapter.getItem(position);
 
             // Pass data to the update item
             Bundle result = new Bundle();
             result.putString("ITEM_KEY", expense.getKey());
             getParentFragmentManager().setFragmentResult("updateExpenseFragment", result);
-            Navigation.findNavController(view12).navigate(R.id.updateExpenseFragment);
+
+            // References:
+            // https://developer.android.com/guide/navigation/navigation-navigate
+//            Navigation.findNavController(childView).navigate(
+//                    R.id.updateExpenseFragment,
+//                    null,
+//                    new NavOptions.Builder()
+//                             .setEnterAnim(R.anim.fade_scale_in)
+//                             .setExitAnim(R.anim.fade_scale_out)
+//                            .build()
+//            );
+
+            // Transition animations
+            // References:
+            // https://stackoverflow.com/questions/52794596/how-to-add-animation-to-changing-fragments-using-navigation-component
+            // https://developer.android.com/guide/navigation/navigation-navigate
+            // Navigation to UpdateExpenseFragment
+            Navigation.findNavController(childView).navigate(R.id.updateExpenseFragment, null, navBuilder.build());
         });
     }
 
@@ -170,21 +188,29 @@ public class ExpenseHomeFragment extends Fragment {
     // References:
     // https://medium.com/@clyeung0714/using-mpandroidchart-for-android-application-piechart-123d62d4ddc0
     // https://www.android-examples.com/create-bar-chart-graph-using-mpandroidchart-library/
+    // https://weeklycoding.com/mpandroidchart-documentation/animations/
     // https://www.youtube.com/watch?v=C0O9u0jd6nQ
     private void showPieChart(ArrayList<PieEntry> expensePieEntry) {
 
         // Collecting the entries with label name
         PieDataSet pieDataSet = new PieDataSet(expensePieEntry, "Type");
+
         // Setting text size of the value
-        pieDataSet.setValueTextSize(12f);
+        pieDataSet.setValueTextSize(14f);
+
         // Grouping the data set from entry to chart
         PieData pieData = new PieData(pieDataSet);
+
         // Showing the value of the entries, default true if not set
         pieData.setDrawValues(true);
 
         // Set data to percentage
-        pieData.setValueFormatter(new PercentFormatter());
+        pieData.setValueFormatter(new PCExpenseValueFormatter());
 
+        // Change value text color
+        pieData.setValueTextColor(Color.parseColor("#FFFFFF"));
+
+        // Set pie chart colours
         pieDataSet.setColors(
                 Color.parseColor("#6454AC"),
                 Color.parseColor("#FC4444"),
@@ -196,6 +222,7 @@ public class ExpenseHomeFragment extends Fragment {
                 Color.parseColor("#5BC0DE")
         );
 
+        // Set data and refresh pie chart
         PCExpense.setData(pieData);
         PCExpense.invalidate();
     }
@@ -220,7 +247,15 @@ public class ExpenseHomeFragment extends Fragment {
         PCExpense.setHighlightPerTapEnabled(true);
 
         // Setting the color of the hole in the middle, default white
-        PCExpense.setHoleColor(Color.parseColor("#FFFFFF"));
+        PCExpense.setHoleColor(Color.parseColor("#DCDCDC"));
+        PCExpense.setEntryLabelColor(Color.parseColor("#FFFFFF"));
 
+        // Animation
+        // animateX(int durationMillis): Animates the charts values on the horizontal axis, meaning that the chart will build up within the specified time from left to right.
+        // animateY(int durationMillis): Animates the charts values on the vertical axis, meaning that the chart will build up within the specified time from bottom to top.
+        // animateXY(int xDuration, int yDuration): Animates both horizontal and vertical axis, resulting in a left/right bottom/top build-up.
+        PCExpense.animateXY(1400, 1400);
+        // animate both axes with easing
+//        PCExpense.animateY(1400, Easing.EaseOutBack);
     }
 }

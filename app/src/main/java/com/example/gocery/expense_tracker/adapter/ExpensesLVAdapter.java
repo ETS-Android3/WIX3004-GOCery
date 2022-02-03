@@ -2,7 +2,6 @@ package com.example.gocery.expense_tracker.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 // References:
 // https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
@@ -122,7 +122,7 @@ public class ExpensesLVAdapter extends BaseAdapter {
         try {
             Date readDate = formatter.parse(expenseDate);
             Calendar cal = Calendar.getInstance();
-            cal.setTime(readDate);
+            cal.setTime(Objects.requireNonNull(readDate));
 
             String dayOfWeek = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
             String month = monthFormatter.format(readDate).toUpperCase();

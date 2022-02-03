@@ -1,17 +1,13 @@
 package com.example.gocery.expense_tracker;
 
-import static java.util.Calendar.*;
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+import static java.util.Calendar.getInstance;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.transition.TransitionInflater;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +15,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.gocery.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+
 import com.example.gocery.R;
 import com.example.gocery.expense_tracker.dao.DAOExpense;
 import com.example.gocery.expense_tracker.model.Expense;
@@ -94,21 +93,25 @@ public class AddExpenseFragment extends Fragment {
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.expense_type, R.layout.expense_type_dropdown_item);
+
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.expense_type_dropdown_item);
+
         // Apply the adapter to the spinner
         ACTVExpenseType.setAdapter(adapter);
 
         // Initializing DatePickerDialog
-        DatePickerDialog.OnDateSetListener date = (view12, year, month, day) -> {
+        DatePickerDialog.OnDateSetListener date = (v, year, month, day) -> {
             c.set(YEAR, year);
             c.set(MONTH, month);
             c.set(DAY_OF_MONTH, day);
+
+            // Update label appearance in view
             updateLabel();
         };
 
         // On click listener for displaying DatePickerDialog
-        ETExpenseDate.setOnClickListener(view1 -> new DatePickerDialog(getActivity(), date, c.get(YEAR), c.get(MONTH), c.get(DAY_OF_MONTH)).show());
+        ETExpenseDate.setOnClickListener(v -> new DatePickerDialog(getActivity(), date, c.get(YEAR), c.get(MONTH), c.get(DAY_OF_MONTH)).show());
 
         // On click listener for Add Expense button
         BtnAddExpense.setOnClickListener(v -> {
@@ -133,6 +136,7 @@ public class AddExpenseFragment extends Fragment {
                 progressDialog.show();
 
                 try {
+                    // Format date field
                     dateObject = formatter.parse(date1);
                     String dateFormatted = null;
                     if (dateObject != null) {
@@ -151,10 +155,15 @@ public class AddExpenseFragment extends Fragment {
 
                     // Save instance to Firebase Realtime DB using DAO
                     dao.add(expense).addOnSuccessListener(suc -> {
+                        // Dismiss progress dialog
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
+
+                        Toast.makeText(getActivity(), "New expense record added successfully.", Toast.LENGTH_SHORT).show();
+
                     }).addOnFailureListener(er -> {
+                        // Dismiss progress dialog
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
@@ -162,9 +171,20 @@ public class AddExpenseFragment extends Fragment {
                     });
 
                     // Navigate to home module fragment
-                    Navigation.findNavController(view).navigate(R.id.expenseHomeFragment);
+//                     Navigation.findNavController(view).navigate(R.id.expenseHomeFragment);
+
+                    // Transition animations (https://stackoverflow.com/questions/52794596/how-to-add-animation-to-changing-fragments-using-navigation-component)
+                    NavOptions.Builder navBuilder = new NavOptions.Builder();
+                    navBuilder.setEnterAnim(R.anim.slide_from_right).setExitAnim(R.anim.slide_to_right);
+                    Navigation.findNavController(v).navigate(R.id.expenseHomeFragment, null, navBuilder.build());
 
                 } catch (ParseException e) {
+
+                    // Dismiss progress dialog
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+
                     // If the text fields are empty then show the message below.
                     Toast.makeText(getActivity(), "Please ensure all fields are filled.", Toast.LENGTH_SHORT).show();
                 }
