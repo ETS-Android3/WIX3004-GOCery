@@ -53,8 +53,8 @@ public class SelectProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
-//                Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
-                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+                Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
+//                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
 
             }
         });
