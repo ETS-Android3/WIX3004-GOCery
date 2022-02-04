@@ -13,22 +13,60 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/primary_green"
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabtn_completeGrocery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+        android:layout_width="152dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
+
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:contentDescription="Complete Shopping"
         android:src="@android:drawable/btn_star_big_on"
+        android:text="Complete"
+
+        android:textColor="@color/white"
+        app:backgroundTint="@color/primary_green"
+
+        app:icon="@drawable/ic_baseline_check_24"
+
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fabtn_completeGrocery"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:clickable="true"-->
+<!--        app:tint="@android:color/white"-->
+<!--        app:backgroundTint="@color/primary_green"-->
+<!--        android:src="@android:drawable/btn_star_big_on"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
+
+
+
+<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:contentDescription="Complete Shopping"-->
+<!--        android:text="Complete"-->
+<!--        app:icon="@drawable/ic_baseline_location_on_24"-->
+<!--        app:layout_anchorGravity="bottom|right|end"/>-->
 
 <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
 <!--        android:id="@+id/swipe_currentGroceryList"-->

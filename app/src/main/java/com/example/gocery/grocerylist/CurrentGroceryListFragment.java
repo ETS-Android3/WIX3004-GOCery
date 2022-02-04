@@ -21,6 +21,7 @@ import com.example.gocery.grocerylist.adapter.CurrentGroceryListAdapter;
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +32,8 @@ import java.util.ArrayList;
 public class CurrentGroceryListFragment extends Fragment {
 
 
-    FloatingActionButton btnAddItem, btnCompleteGrocery;
+    FloatingActionButton btnAddItem;
+    ExtendedFloatingActionButton btnCompleteGrocery;
 
     ListView listView;
     CurrentGroceryListAdapter adapter;

@@ -8,17 +8,20 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gocery.R;
 
 import com.example.gocery.grocerylist.adapter.CompletedGroceryTripAdapter;
 import com.example.gocery.grocerylist.dao.DAOCompletedGroceryTrip;
+import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
 import com.example.gocery.grocerylist.model.GroceryTrip;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +37,9 @@ public class GroceryHomeFragment extends Fragment {
     ListView listView;
     CompletedGroceryTripAdapter adapter;
     DAOCompletedGroceryTrip dao;
+    DAOCurrentGroceryItem daoCurrentGroceryItem;
+
+    TextView numberOfItems;
 
 
     @Override
@@ -46,6 +52,9 @@ public class GroceryHomeFragment extends Fragment {
             }
         });
 
+        numberOfItems = view.findViewById(R.id.tv_currentItemInList);
+
+        daoCurrentGroceryItem = new DAOCurrentGroceryItem();
         dao = new DAOCompletedGroceryTrip();
         listView = view.findViewById(R.id.lv_completedGroceryTrip);
         ArrayList<GroceryTrip> groceryTrips = new ArrayList<>();
@@ -83,6 +92,21 @@ public class GroceryHomeFragment extends Fragment {
 
                 adapter.setCurrentGroceryTrips(groceryTrips);
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        daoCurrentGroceryItem.get().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getChildrenCount() == 0){
+                    numberOfItems.setText("No Item In List");
+                }else{
+                    numberOfItems.setText(snapshot.getChildrenCount()+" Items In List");
+                }
             }
 
             @Override
