@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "877165986108",
+    "firebase_url": "https://gocery-card-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "gocery-card",
+    "storage_bucket": "gocery-card.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877165986108:android:99d491b27522bf6cc3de39",
+        "android_client_info": {
+          "package_name": "com.example.gocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877165986108-514j79cpsss9rgg9dm5epfs5uoeqnjcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ4sM9EfHOm28tirCCd2ZKMsgK7lt02Jg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877165986108-514j79cpsss9rgg9dm5epfs5uoeqnjcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

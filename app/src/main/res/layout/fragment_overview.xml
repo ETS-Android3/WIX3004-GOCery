@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OverviewFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TV_label_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif"
+            android:text="MEMBER CARDS"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/TV_label_voucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="350dp"
+            android:fontFamily="sans-serif"
+            android:text="DISCOUNTS AND VOUCHERS"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <ListView
+                android:id="@+id/LV_voucher_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                />
+        </LinearLayout>
+
+        <!--  List of Expense  -->
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!--This will be the parent Floating Action Button-->
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/Btn_ExtendedAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Add"
+            android:text="Add"
+            android:textColor="@color/white"
+            android:tint="@color/white"
+            app:backgroundTint="@color/primary"
+            app:icon="@drawable/plus_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!--Floating action button for btn-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Btn_AddNewCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Add Voucher"
+            app:backgroundTint="@color/primary"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/Btn_ExtendedAdd"
+            app:layout_constraintEnd_toEndOf="@+id/Btn_ExtendedAdd"
+            app:srcCompat="@drawable/plus"
+            app:tint="@color/white" />
+
+        <!--Action name text for btn-->
+        <TextView
+            android:id="@+id/TV_AddVoucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Add Voucher"
+            app:layout_constraintBottom_toBottomOf="@+id/Btn_AddNewCard"
+            app:layout_constraintEnd_toStartOf="@+id/Btn_AddNewCard"
+            app:layout_constraintTop_toTopOf="@+id/Btn_AddNewCard" />
+
+        <!--Floating action button for btnChooseImageFromGallery-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Btn_AddCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Add Card"
+            app:backgroundTint="@color/primary"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/Btn_AddNewCard"
+            app:layout_constraintEnd_toEndOf="@+id/Btn_AddNewCard"
+            app:layout_constraintStart_toStartOf="@+id/Btn_AddNewCard"
+            app:srcCompat="@drawable/plus"
+            app:tint="@color/white" />
+
+        <!--Action name text for btnChooseImageFromGallery-->
+        <TextView
+            android:id="@+id/TV_AddCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Add Card"
+            app:layout_constraintBottom_toBottomOf="@+id/Btn_AddCard"
+            app:layout_constraintEnd_toStartOf="@+id/Btn_AddCard"
+            app:layout_constraintTop_toTopOf="@+id/Btn_AddCard" />
+
+        <GridLayout
+            android:id="@+id/GL2331"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="59dp"
+            android:alignmentMode="alignMargins"
+            android:columnCount="1"
+            android:columnOrderPreserved="false"
+            android:paddingHorizontal="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical">
+
+                <GridView
+                    android:id="@+id/GV_member_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:horizontalSpacing="20dp"
+                    android:numColumns="2"
+                    android:padding="10dp"
+                    android:verticalSpacing="20dp" />
+            </LinearLayout>
+
+        </GridLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

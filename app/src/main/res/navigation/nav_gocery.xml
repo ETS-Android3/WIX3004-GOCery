@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_gocery"
+    app:startDestination="@id/DestOverview">
+
+    <fragment
+        android:id="@+id/DestOverview"
+        android:name="com.example.gocery.OverviewFragment"
+        android:label="fragment_overview"
+        tools:layout="@layout/fragment_overview" />
+    <fragment
+        android:id="@+id/DestVoucherDetail"
+        android:name="com.example.gocery.VoucherDetailFragment"
+        android:label="fragment_coupon_detail"
+        tools:layout="@layout/fragment_voucher_detail" />
+    <fragment
+        android:id="@+id/DestAddCard"
+        android:name="com.example.gocery.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" />
+    <fragment
+        android:id="@+id/DestAddVoucher"
+        android:name="com.example.gocery.AddVoucherFragment"
+        android:label="fragment_add_coupon"
+        tools:layout="@layout/fragment_add_voucher" />
+    <fragment
+        android:id="@+id/DestCardDetail"
+        android:name="com.example.gocery.CardDetailFragment"
+        android:label="fragment_card_detail"
+        tools:layout="@layout/fragment_card_detail" />
+</navigation>
