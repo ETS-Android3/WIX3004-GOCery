@@ -99,6 +99,10 @@ public class DAOCurrentGroceryItem {
         return databaseReference.child(currentUser).child(item_key);
     }
 
+    public Query getTickedItems(){
+        return databaseReference.child(currentUser).orderByChild("status").equalTo(true);
+    }
+
 
 
 

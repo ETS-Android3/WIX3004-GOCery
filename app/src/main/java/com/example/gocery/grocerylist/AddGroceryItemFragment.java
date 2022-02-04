@@ -149,6 +149,9 @@ public class AddGroceryItemFragment extends Fragment {
                     }
 
                 }else{
+                    if(progressDialog.isShowing()){
+                        progressDialog.dismiss();
+                    }
                     Toast.makeText(getActivity(), "Form Incomplete", Toast.LENGTH_SHORT).show();
                 }
             }

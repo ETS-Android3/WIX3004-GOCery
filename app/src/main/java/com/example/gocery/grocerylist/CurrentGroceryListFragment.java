@@ -40,7 +40,6 @@ public class CurrentGroceryListFragment extends Fragment {
 
     DAOCurrentGroceryItem dao;
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         dao = new DAOCurrentGroceryItem();
@@ -108,7 +107,21 @@ public class CurrentGroceryListFragment extends Fragment {
 
         btnCompleteGrocery = view.findViewById(R.id.fabtn_completeGrocery);
         btnCompleteGrocery.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_finalizeGroceryList);
+            dao.getTickedItems().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.getChildrenCount() == 0){
+                        Toast.makeText(getContext(), "No Item Ticked", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Navigation.findNavController(v).navigate(R.id.nav_finalizeGroceryList);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+
         });
 
 
@@ -121,6 +134,7 @@ public class CurrentGroceryListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_current_grocery_list, container, false);
     }
+
 
     public void loadData(){
 //        swipeRefreshLayout.setRefreshing(true);
