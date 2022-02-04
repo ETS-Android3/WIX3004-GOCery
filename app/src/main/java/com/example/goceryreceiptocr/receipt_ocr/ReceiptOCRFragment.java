@@ -63,8 +63,6 @@ public class ReceiptOCRFragment extends Fragment {
     // but unique for each permission.
     private static final int CAMERA_PERMISSION_CODE = 101;
     private static final int STORAGE_PERMISSION_CODE = 102;
-    private static final int REQUEST_IMAGE_CAPTURE = 103;
-    private static final int SELECT_IMAGE = 104;
 
     private ActivityResultLauncher<Intent> takeImageFromCamera;
     private ActivityResultLauncher<String> cropImage;
@@ -171,7 +169,7 @@ public class ReceiptOCRFragment extends Fragment {
     // References:
     // https://www.youtube.com/watch?v=ZpXOglhCkGE
     private void displaySelectedBitmapImageDialog(Bitmap imageBitmap) {
-        dialog = new MaterialAlertDialogBuilder(getContext());
+        dialog = new MaterialAlertDialogBuilder(Objects.requireNonNull(getContext()));
         IVSelectedImageDialog = new ImageView(getContext());
         IVSelectedImageDialog.setImageBitmap(imageBitmap);
         dialog.setTitle("View Captured Image");
@@ -183,7 +181,7 @@ public class ReceiptOCRFragment extends Fragment {
     // References:
     // https://www.youtube.com/watch?v=ZpXOglhCkGE
     private void displaySelectedImageURIDialog(Uri imageUri) {
-        dialog = new MaterialAlertDialogBuilder(getContext());
+        dialog = new MaterialAlertDialogBuilder(Objects.requireNonNull(getContext()));
         IVSelectedImageDialog = new ImageView(getContext());
         IVSelectedImageDialog.setImageURI(imageUri);
         dialog.setTitle("View Selected Image");
@@ -349,7 +347,7 @@ public class ReceiptOCRFragment extends Fragment {
 
     private void convertImageToText(Uri imageUri) {
         try {
-            inputImage = InputImage.fromFilePath(getContext(), imageUri);
+            inputImage = InputImage.fromFilePath(Objects.requireNonNull(getContext()), imageUri);
 
             // Get Text from Input Image
             Task<Text> result = textRecognizer.process(inputImage)
@@ -408,8 +406,8 @@ public class ReceiptOCRFragment extends Fragment {
     // Function to check and request permission
     public void checkPermission(String permission, int requestCode) {
         // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, requestCode);
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{permission}, requestCode);
         }
     }
 
