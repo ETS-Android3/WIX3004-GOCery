@@ -1,187 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/DLMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!--This will be the parent Floating Action Button-->
-    <!--After the implementation the Floating Action Button at
-         the bottom right corner as we have constrained accordingly-->
-    <!--After clicking the above button the
-        following two buttons will pop up.
-         So this button is considered as parent FAB-->
-    <!--After opening the application it looks like regular
-        FAB but after user clicks it, it extends-->
-    <!--This functionality has been handled in the MainActivity.java-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnGetImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/receipt_ocr_get_image_fab"
-        android:text="@string/receipt_ocr_get_image_fab"
-        android:textColor="@color/white"
-        android:tint="@color/white"
-        app:backgroundTint="@color/goceryPrimary"
-        app:icon="@drawable/ic_baseline_add_white_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!--Floating action button for btnTakeImageFromCamera-->
-    <!--Make sure that you are constraining this
-        button to the parent button-->
-    <!--Make sure to add backgroundTint attribute to match
-         the entire application color-->
-    <!--because after changing the base application theme the color
-         of the FAB is set Blue as default-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnTakeImageFromCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="@string/receipt_ocr_take_image_from_camera_btn"
-        app:backgroundTint="@color/gocerySecondary"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/btnGetImage"
-        app:layout_constraintEnd_toEndOf="@+id/btnGetImage"
-        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
-        app:tint="@color/white" />
-
-    <!--Action name text for btnTakeImageFromCamera-->
-    <!--Make sure that you are constraining this
-        Text to the add Alarm FAB button-->
-    <TextView
-        android:id="@+id/TVTakeImageFromCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/receipt_ocr_take_from_camera_textview"
-        app:layout_constraintBottom_toBottomOf="@+id/btnTakeImageFromCamera"
-        app:layout_constraintEnd_toStartOf="@+id/btnTakeImageFromCamera"
-        app:layout_constraintTop_toTopOf="@+id/btnTakeImageFromCamera" />
-
-    <!--Floating action button for btnChooseImageFromGallery-->
-    <!--Make sure that you are constraining this button
-        to the add Alarm FAB button-->
-    <!--Make sure to add backgroundTint attribute to match
-         the entire application color-->
-    <!--because after changing the base application theme
-         the color of the FAB is set Blue as default-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnChooseImageFromGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="@string/receipt_ocr_choose_image_from_gallery_btn"
-        app:backgroundTint="@color/gocerySecondary"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/btnTakeImageFromCamera"
-        app:layout_constraintEnd_toEndOf="@+id/btnTakeImageFromCamera"
-        app:layout_constraintStart_toStartOf="@+id/btnTakeImageFromCamera"
-        app:srcCompat="@drawable/ic_baseline_image_24"
-        app:tint="@color/white" />
-
-    <!--Action name text for btnChooseImageFromGallery-->
-    <!--Make sure that you are constraining this Text
-         to the add Person FAB button-->
-    <TextView
-        android:id="@+id/TVChooseImageFromGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/receipt_ocr_choose_from_gallery_textview"
-        app:layout_constraintBottom_toBottomOf="@+id/btnChooseImageFromGallery"
-        app:layout_constraintEnd_toStartOf="@+id/btnChooseImageFromGallery"
-        app:layout_constraintTop_toTopOf="@+id/btnChooseImageFromGallery" />
-
-    <ScrollView
-        android:id="@+id/SVOCRResult"
-        android:layout_width="360dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGetImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76">
-
-        <TextView
-            android:id="@+id/TVOCRResult"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/TBMainAct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/receipt_ocr_scrollview"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@color/goceryPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+            app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-        </TextView>
-
-    </ScrollView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/CVSelectedImage"
-        android:layout_width="360dp"
-        android:layout_height="0dp"
-        android:layout_margin="50dp"
-        app:cardElevation="8dp"
-        app:layout_constraintDimensionRatio="16:9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/IVSelectedImage"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/NHFMain"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:contentDescription="@string/receipt_ocr_selected_image"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_baseline_photo_camera_24" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/gocery_navigation" />
 
-    </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_bottom" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/TVOCRTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:text="@string/receipt_ocr_header"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/SVOCRResult"
-        app:layout_constraintTop_toBottomOf="@+id/CVSelectedImage" />
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/sideNav"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/menu_bottom">
 
-    <Button
-        android:id="@+id/btnCopyText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="32dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/receipt_ocr_copy_text_btn"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:backgroundTint="@color/goceryPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SVOCRResult"
-        app:layout_constraintVertical_bias="0.083" />
+    </com.google.android.material.navigation.NavigationView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

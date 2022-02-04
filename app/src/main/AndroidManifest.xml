@@ -32,12 +32,8 @@
             </intent-filter>
         </activity>
 
-<!--        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"-->
-<!--            android:theme="@style/Base.Theme.AppCompat"/>-->
-<!--        <activity android:name="com.canhub.cropper.CropImageActivity"-->
-<!--            android:theme="@style/Base.Theme.AppCompat"/>-->
         <activity
-            android:name=".CropperActivity"
+            android:name=".receipt_ocr.CropperActivity"
             android:exported="false"/>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

@@ -11,5 +11,9 @@
     <string name="receipt_ocr_selected_image_imageview">Selected Image</string>
     <string name="receipt_ocr_header">RECEIPT OCR RESULT</string>
     <string name="receipt_ocr_selected_image">Selected Image</string>
+    <string name="receipt_ocr_selected_image_title">SELECTED IMAGE</string>
     <string name="receipt_ocr_copy_text_btn">Copy Text</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_item_receipt_ocr">Receipt OCR</string>
 </resources>

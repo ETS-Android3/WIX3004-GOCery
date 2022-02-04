@@ -1,4 +1,4 @@
-package com.example.goceryreceiptocr;
+package com.example.goceryreceiptocr.receipt_ocr;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.goceryreceiptocr.R;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
