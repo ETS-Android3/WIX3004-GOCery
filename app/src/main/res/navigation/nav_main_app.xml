@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main_app"
+    app:startDestination="@id/groceryHomeFragment">
+
+    <fragment
+        android:id="@+id/expenseHomeFragment"
+        android:name="com.example.gocery.expense_tracker.ExpenseHomeFragment"
+        android:label="Manage Expenses"
+        tools:layout="@layout/fragment_expense_home" />
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.gocery.expense_tracker.AddExpenseFragment"
+        android:label="Add New Expense"
+        tools:layout="@layout/fragment_add_expense" />
+    <fragment
+        android:id="@+id/updateExpenseFragment"
+        android:name="com.example.gocery.expense_tracker.UpdateExpenseFragment"
+        android:label="Update Expense Record"
+        tools:layout="@layout/fragment_update_expense" />
+
+    <fragment
+        android:id="@+id/groceryHomeFragment"
+        android:name="com.example.gocery.grocerylist.GroceryHomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_grocery_home">
+        <action
+            android:id="@+id/nav_viewCurrentGroceryList"
+            app:destination="@id/currentGroceryListFragment" />
+        <action
+            android:id="@+id/nav_viewCompletedGroceryTrip"
+            app:destination="@id/groceryTripHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroceryItemFragment"
+        android:name="com.example.gocery.grocerylist.AddGroceryItemFragment"
+        android:label="Add Grocery Item"
+        tools:layout="@layout/fragment_add_grocery_item">
+        <action
+            android:id="@+id/nav_groceryItemAdded"
+            app:destination="@id/currentGroceryListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/currentGroceryListFragment"
+        android:name="com.example.gocery.grocerylist.CurrentGroceryListFragment"
+        android:label="Current Grocery List"
+        tools:layout="@layout/fragment_current_grocery_list">
+        <action
+            android:id="@+id/nav_addNewGroceryItem"
+            app:destination="@id/addGroceryItemFragment" />
+        <action
+            android:id="@+id/nav_finalizeGroceryList"
+            app:destination="@id/finalizeGroceryListFragement" />
+        <action
+            android:id="@+id/nav_updateGroceryItem"
+            app:destination="@id/updateGroceryItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finalizeGroceryListFragement"
+        android:name="com.example.gocery.grocerylist.FinalizeGroceryListFragement"
+        android:label="Finalize Grocery List"
+        tools:layout="@layout/fragment_finalize_grocery_list" />
+    <fragment
+        android:id="@+id/groceryTripHistoryFragment"
+        android:name="com.example.gocery.grocerylist.GroceryTripHistoryFragment"
+        android:label="Trip History"
+        tools:layout="@layout/fragment_grocery_trip_history" />
+    <fragment
+        android:id="@+id/updateGroceryItemFragment"
+        android:name="com.example.gocery.grocerylist.UpdateGroceryItemFragment"
+        android:label="Update Grocery Item"
+        tools:layout="@layout/fragment_update_grocery_item">
+        <action
+            android:id="@+id/nav_groceryItemUpdated"
+            app:destination="@id/currentGroceryListFragment" />
+    </fragment>
+</navigation>

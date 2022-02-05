@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GOcery">
         <activity
+            android:name=".MainApp"
+            android:exported="false" />
+        <activity
             android:name=".grocerylist.GroceryMainActivity"
             android:exported="false" />
         <activity

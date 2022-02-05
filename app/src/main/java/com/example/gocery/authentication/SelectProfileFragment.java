@@ -1,6 +1,8 @@
 package com.example.gocery.authentication;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.gocery.MainActivity;
+import com.example.gocery.MainApp;
 import com.example.gocery.R;
 import com.example.gocery.manageprofiles.adapter.UserProfileAdapter;
 import com.example.gocery.manageprofiles.dao.DAOProfile;
@@ -62,7 +65,10 @@ public class SelectProfileFragment extends Fragment {
                 }
                 else{
                     //Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
-                    Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+//                    Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+                    Intent intent = new Intent(getActivity(), MainApp.class);
+                    startActivity(intent);
+                    ((Activity) getActivity()).overridePendingTransition(0, 0);
                     Toast.makeText(getActivity(), "Welcome "+userProfile.getUsername(), Toast.LENGTH_SHORT).show();
                 }
 

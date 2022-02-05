@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GOcery</string>
+    <string name="navigation_drawer_open">GOcery</string>
+    <string name="navigation_drawer_close">GOcery</string>
     <string name="app_tagline">All your groceries in one place</string>
     <string name="logo_desc">GOcery App logo with text</string>
     <string name="bg_desc">Grocery Stock Image by Thomas Lee </string>
@@ -41,6 +43,30 @@
     <string name="ItemInList">Items in list</string>
     <string name="UpdatedBy">Updated By</string>
     <string name="LastUpdatedOn">Last Updated On</string>
+
+    <!-- Expense Tracker module -->
+    <string name="menu_item_expense_home">Manage Expenses</string>
+    <string name="menu_item_add_expense">Add Expense</string>
+    <string name="expenses_list">Expenses List</string>
+    <string name="expense_name">Name</string>
+    <string name="expense_date">Date</string>
+    <string name="expense_type">Type</string>
+    <string name="expense_desc">Description</string>
+    <string name="expense_total_cost">Total Cost</string>
+    <string name="update_expense">Update</string>
+    <string name="expense_type_dropdown_menu">Choose Type</string>
+
+    <string-array name="expense_type">
+        <item>Toiletries &amp; Cosmetics</item>
+        <item>Entertainment</item>
+        <item>Food &amp; Dining</item>
+        <item>Auto &amp; Transport</item>
+        <item>Clothing</item>
+        <item>Health &amp; Fitness</item>
+        <item>Furniture &amp; Appliances</item>
+        <item>Groceries</item>
+        <item>Other</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

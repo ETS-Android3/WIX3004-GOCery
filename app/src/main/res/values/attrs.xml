@@ -3,4 +3,8 @@
         <attr name="fullscreenBackgroundColor" format="color" />
         <attr name="fullscreenTextColor" format="color" />
     </declare-styleable>
+    <attr name="emphasisHighAlpha" format="float"/>
+    <attr name="emphasisMediumAlpha" format="float"/>
+    <attr name="emphasisLowAlpha" format="float"/>
+    <attr name="emphasisDividerAlpha" format="float"/>
 </resources>

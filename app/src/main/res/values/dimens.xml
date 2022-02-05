@@ -6,4 +6,14 @@
     <!-- Grocery Dimensions -->
     <dimen name="ContentMargin">30dp</dimen>
     <dimen name="ItemMargin">10dp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_big">12dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_xlarge">24dp</dimen>
+    <dimen name="spacing_xxlarge">48dp</dimen>
+    <dimen name="divider">1dp</dimen>
+    <dimen name="chip_height">32dp</dimen>
 </resources>
