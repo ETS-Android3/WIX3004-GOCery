@@ -46,6 +46,9 @@
         <action
             android:id="@+id/nav_updateGroceryItem"
             app:destination="@id/updateGroceryItemFragment" />
+        <action
+            android:id="@+id/nav_startMapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/finalizeGroceryListFragement"
