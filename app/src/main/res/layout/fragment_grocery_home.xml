@@ -8,19 +8,21 @@
     tools:context=".grocerylist.GroceryHomeFragment">
 
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fabtn_startShopping"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/primary_green"
-        android:text="Start Shopping"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--        android:id="@+id/fabtn_startShopping"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:clickable="true"-->
+<!--        android:text="Start Shopping"-->
+<!--        app:iconTint="@color/white"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:backgroundTint="@color/primary_green"-->
+<!--        app:icon="@drawable/ic_baseline_shopping_basket_24"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
     <LinearLayout
         android:id="@+id/linearLayout2"

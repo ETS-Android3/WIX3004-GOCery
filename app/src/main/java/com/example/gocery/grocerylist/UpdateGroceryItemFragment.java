@@ -1,12 +1,16 @@
 package com.example.gocery.grocerylist;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
@@ -194,24 +198,32 @@ public class UpdateGroceryItemFragment extends Fragment {
         btnAttachLocation = view.findViewById(R.id.btn_attachLocation);
         btnAttachLocation.setOnClickListener(v -> {
 
-            HashMap<String, Object> tempGroceryItem = new HashMap<>();
+            if(ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 43);
+            }else{
+                HashMap<String, Object> tempGroceryItem = new HashMap<>();
 
-            tempGroceryItem.put("name", itemName.getText().toString());
-            tempGroceryItem.put("quantity", Integer.parseInt(itemQuantity.getText().toString().isEmpty() ? "0" : itemQuantity.getText().toString()));
-            tempGroceryItem.put("desc", itemDesc.getText().toString());
-            tempGroceryItem.put("img", imageUri);
-            tempGroceryItem.put("imageURL", imageURL);
-            tempGroceryItem.put("key", itemKey);
+                tempGroceryItem.put("name", itemName.getText().toString());
+                tempGroceryItem.put("quantity", Integer.parseInt(itemQuantity.getText().toString().isEmpty() ? "0" : itemQuantity.getText().toString()));
+                tempGroceryItem.put("desc", itemDesc.getText().toString());
+                tempGroceryItem.put("img", imageUri);
+                tempGroceryItem.put("imageURL", imageURL);
+                tempGroceryItem.put("key", itemKey);
 
 
-            // to tell where to go next
-            tempGroceryItem.put("PREV_PAGE", (String) "update_item");
+                // to tell where to go next
+                tempGroceryItem.put("PREV_PAGE", (String) "update_item");
 
-            // Pass data to the update item
-            Bundle result = new Bundle();
-            result.putSerializable("GROCERY_HASHMAP", tempGroceryItem);
-            getParentFragmentManager().setFragmentResult("TEMP_GROCERY_ITEM", result);
-            Navigation.findNavController(view).navigate(R.id.nav_selectLocation_update);
+                // Pass data to the update item
+                Bundle result = new Bundle();
+                result.putSerializable("GROCERY_HASHMAP", tempGroceryItem);
+                getParentFragmentManager().setFragmentResult("TEMP_GROCERY_ITEM", result);
+                Navigation.findNavController(view).navigate(R.id.nav_selectLocation_update);
+            }
+
         });
 
         getParentFragmentManager().setFragmentResultListener("SELECTED_LOCATION", this, new FragmentResultListener() {
