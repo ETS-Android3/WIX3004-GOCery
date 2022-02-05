@@ -1,6 +1,7 @@
 package com.example.gocery.grocerylist;
 
 import android.content.DialogInterface;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class CurrentGroceryListFragment extends Fragment {
 
     FloatingActionButton btnAddItem;
     ExtendedFloatingActionButton btnCompleteGrocery;
+    ExtendedFloatingActionButton btnMap;
 
     ListView listView;
     CurrentGroceryListAdapter adapter;
@@ -50,6 +52,36 @@ public class CurrentGroceryListFragment extends Fragment {
         listView.setAdapter(adapter);
         loadData();
 
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (listView.getAdapter().isEmpty())
+                    btnMap.setVisibility(View.INVISIBLE);
+                else
+                    btnMap.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnMap = view.findViewById(R.id.fabtn_map);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
+                ArrayList<String> places_id = new ArrayList<>();
+                for(GroceryItem groceryItem: list){
+                    // Get the list of unpurchased item to be included in the route.
+                    if(!groceryItem.getStatus()){
+                        places_id.add(groceryItem.getLocationID());
+                    }
+                }
+                // Pass data to the update item
+                Bundle result = new Bundle();
+                result.putStringArrayList("LOCATIONS", places_id);
+                getParentFragmentManager().setFragmentResult("locations", result);
+                Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
+            }
+        });
 
         btnAddItem = view.findViewById(R.id.fabtn_addNewItem);
         btnAddItem.setOnClickListener(new View.OnClickListener() {
