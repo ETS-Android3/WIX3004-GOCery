@@ -73,22 +73,55 @@ public class CurrentGroceryListFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
-                ArrayList<String> places_id = new ArrayList<>();
-                for(GroceryItem groceryItem: list){
-                    // Get the list of unpurchased item to be included in the route.
-                    if(!groceryItem.getStatus()){
-                        String place_id = groceryItem.getLocationID();
-                        if(!places_id.contains(place_id)){
-                            places_id.add(place_id);
-                        };
+                if(ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+                }else{
+                    ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
+                    ArrayList<String> places_id = new ArrayList<>();
+                    for(GroceryItem groceryItem: list){
+                        // Get the list of unpurchased item to be included in the route.
+                        if(!groceryItem.getStatus()){
+                            String place_id = groceryItem.getLocationID();
+                            if(!places_id.contains(place_id) && place_id!=null){
+                                places_id.add(place_id);
+                            };
+                        }
                     }
+
+                    Log.e("Places", places_id.toString());
+                    Log.e("Places Size", places_id.size()+"");
+
+                    if (places_id.size() > 0){
+                        // Pass data to the update item
+                        Bundle result = new Bundle();
+                        result.putStringArrayList("LOCATIONS", places_id);
+                        getParentFragmentManager().setFragmentResult("locations", result);
+                        Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
+                    }else{
+                        Toast.makeText(getContext(), "No Item with Location", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
-                // Pass data to the update item
-                Bundle result = new Bundle();
-                result.putStringArrayList("LOCATIONS", places_id);
-                getParentFragmentManager().setFragmentResult("locations", result);
-                Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
+//
+//                ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
+//                ArrayList<String> places_id = new ArrayList<>();
+//                for(GroceryItem groceryItem: list){
+//                    // Get the list of unpurchased item to be included in the route.
+//                    if(!groceryItem.getStatus()){
+//                        String place_id = groceryItem.getLocationID();
+//                        if(!places_id.contains(place_id)){
+//                            places_id.add(place_id);
+//                        };
+//                    }
+//                }
+//                // Pass data to the update item
+//                Bundle result = new Bundle();
+//                result.putStringArrayList("LOCATIONS", places_id);
+//                getParentFragmentManager().setFragmentResult("locations", result);
+//                Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
             }
         });
 

@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class FinalizeGroceryListFragement extends Fragment {
 
-    FloatingActionButton btnSave, btnGoToVoucher;
+    FloatingActionButton btnSave;
 
     ListView listView;
     FinalizeGroceryListAdapter adapter;
@@ -52,7 +52,6 @@ public class FinalizeGroceryListFragement extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
             btnSave = view.findViewById(R.id.fbtn_saveShoppingList);
-            btnGoToVoucher = view.findViewById(R.id.fbtn_goToVoucher);
 
             dao = new DAOFinalizeGroceryList();
 

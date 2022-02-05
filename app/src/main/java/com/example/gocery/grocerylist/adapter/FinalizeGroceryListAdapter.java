@@ -79,11 +79,13 @@ public class FinalizeGroceryListAdapter extends BaseAdapter {
         ImageView itemImage = convertView.findViewById(R.id.iv_imageItem);
         TextView locationName = convertView.findViewById(R.id.tv_locationName);
         ImageView locationIcon = convertView.findViewById(R.id.iv_locationIcon);
+        TextView requesterName = convertView.findViewById(R.id.tv_requestedUser);
 
 
         // Set the items
         itemName.setText(gi.getName());
         itemAmount.setText(gi.getQuantity()+"x");
+        requesterName.setText(gi.getCreatedBy());
 
         if(!gi.getDescription().equalsIgnoreCase("")){
             itemDesc.setText(gi.getDescription());
