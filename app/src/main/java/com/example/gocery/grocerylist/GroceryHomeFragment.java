@@ -63,18 +63,15 @@ public class GroceryHomeFragment extends Fragment {
 
         startTripBtn = view.findViewById(R.id.fabtn_startShopping);
         startTripBtn.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_sstartShopping);
-
-
 
             if(ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            }else{
+                Navigation.findNavController(v).navigate(R.id.nav_sstartShopping);
             }
-
         });
 
 

@@ -1,12 +1,16 @@
 package com.example.gocery.grocerylist;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -177,10 +181,6 @@ public class AddGroceryItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectImage();
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent, REQUEST_IMAGE);
             }
         });
 
@@ -188,21 +188,30 @@ public class AddGroceryItemFragment extends Fragment {
         btnAttachLocation = view.findViewById(R.id.btn_attachLocation);
         btnAttachLocation.setOnClickListener(v -> {
 
-            HashMap<String, Object> tempGroceryItem = new HashMap<>();
+            if(ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 42);
+            }else{
+                HashMap<String, Object> tempGroceryItem = new HashMap<>();
 
-            tempGroceryItem.put("name", itemName.getText().toString());
-            tempGroceryItem.put("quantity", Integer.parseInt(itemQuantity.getText().toString().isEmpty() ? "0" : itemQuantity.getText().toString()));
-            tempGroceryItem.put("desc", itemDesc.getText().toString());
-            tempGroceryItem.put("img", imageUri);
+                tempGroceryItem.put("name", itemName.getText().toString());
+                tempGroceryItem.put("quantity", Integer.parseInt(itemQuantity.getText().toString().isEmpty() ? "0" : itemQuantity.getText().toString()));
+                tempGroceryItem.put("desc", itemDesc.getText().toString());
+                tempGroceryItem.put("img", imageUri);
 
-            // to tell where to go next
-            tempGroceryItem.put("PREV_PAGE", (String) "add_item");
+                // to tell where to go next
+                tempGroceryItem.put("PREV_PAGE", (String) "add_item");
 
-            // Pass data to the update item
-            Bundle result = new Bundle();
-            result.putSerializable("GROCERY_HASHMAP", tempGroceryItem);
-            getParentFragmentManager().setFragmentResult("TEMP_GROCERY_ITEM", result);
-            Navigation.findNavController(view).navigate(R.id.nav_selectLocation_add);
+                // Pass data to the update item
+                Bundle result = new Bundle();
+                result.putSerializable("GROCERY_HASHMAP", tempGroceryItem);
+                getParentFragmentManager().setFragmentResult("TEMP_GROCERY_ITEM", result);
+                Navigation.findNavController(view).navigate(R.id.nav_selectLocation_add);
+            }
+
+
         });
 
         getParentFragmentManager().setFragmentResultListener("SELECTED_LOCATION", this, new FragmentResultListener() {
@@ -258,12 +267,10 @@ public class AddGroceryItemFragment extends Fragment {
 
 
     public void selectImage(){
-
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_IMAGE);
-
     }
 
 
