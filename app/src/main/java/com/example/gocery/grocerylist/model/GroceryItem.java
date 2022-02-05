@@ -37,6 +37,18 @@ public class GroceryItem {
         this.status = status;
     }
 
+    public GroceryItem(String name,
+                       int quantity,
+                       Boolean status,
+                       @Nullable String description,
+                       @Nullable String image) {
+        this.name = name;
+        this.quantity = quantity;
+        this.description = description;
+        this.image = image;
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }

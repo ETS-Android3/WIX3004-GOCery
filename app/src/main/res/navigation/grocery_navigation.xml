@@ -28,6 +28,9 @@
         <action
             android:id="@+id/nav_groceryItemAdded"
             app:destination="@id/currentGroceryListFragment" />
+        <action
+            android:id="@+id/nav_selectLocation_add"
+            app:destination="@id/selectLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/currentGroceryListFragment"
@@ -62,10 +65,18 @@
         <action
             android:id="@+id/nav_groceryItemUpdated"
             app:destination="@id/currentGroceryListFragment" />
+        <action
+            android:id="@+id/nav_selectLocation_update"
+            app:destination="@id/selectLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.gocery.map.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/selectLocationFragment"
+        android:name="com.example.gocery.map.SelectLocationFragment"
+        android:label="fragment_select_location"
+        tools:layout="@layout/fragment_select_location" />
 </navigation>

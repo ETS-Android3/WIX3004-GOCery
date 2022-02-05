@@ -43,7 +43,7 @@ public class AddGroceryItemFragment extends Fragment {
     ImageView imageView;
 
     FloatingActionButton btnSave;
-    Button btnAttachImage;
+    Button btnAttachImage, btnAttachLocation;
     TextInputEditText itemName, itemQuantity, itemDesc;
 
     // database and storage
@@ -94,9 +94,7 @@ public class AddGroceryItemFragment extends Fragment {
                                     Integer.parseInt(itemQuantity.getText().toString()),
                                     false, // set checkbox to false
                                     itemDesc.getText().toString(), //nullable
-                                    fileName,
-                                    null,
-                                    null
+                                    fileName
                             );
                             groceryItem.setCreatedBy(creatorName);
 
@@ -127,8 +125,6 @@ public class AddGroceryItemFragment extends Fragment {
                                 Integer.parseInt(itemQuantity.getText().toString()),
                                 false, // set checkbox to false
                                 itemDesc.getText().toString(), //nullable
-                                null,
-                                null,
                                 null
                         );
 
@@ -170,6 +166,12 @@ public class AddGroceryItemFragment extends Fragment {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, REQUEST_IMAGE);
             }
+        });
+
+
+        btnAttachLocation = view.findViewById(R.id.btn_attachLocation);
+        btnAttachLocation.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.nav_selectLocation_add);
         });
 
     }
