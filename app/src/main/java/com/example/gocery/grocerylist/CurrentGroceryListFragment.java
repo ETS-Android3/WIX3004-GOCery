@@ -1,14 +1,19 @@
 package com.example.gocery.grocerylist;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +72,7 @@ public class CurrentGroceryListFragment extends Fragment {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
                 ArrayList<String> places_id = new ArrayList<>();
                 for(GroceryItem groceryItem: list){
@@ -189,4 +195,36 @@ public class CurrentGroceryListFragment extends Fragment {
             }
         });
     }
+
+//    private void requestPermission(){
+//        if(ContextCompat.checkSelfPermission(getContext(),
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(getContext(),
+//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+//        }else{
+//            ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
+//            ArrayList<String> places_id = new ArrayList<>();
+//            for(GroceryItem groceryItem: list){
+//                // Get the list of unpurchased item to be included in the route.
+//                if(!groceryItem.getStatus()){
+//                    places_id.add(groceryItem.getLocationID());
+//                }
+//            }
+//
+//            Log.e("Places", places_id.toString());
+//            Log.e("Places Size", places_id.size()+"");
+//
+//            if (places_id.size() > 0){
+//                // Pass data to the update item
+//                Bundle result = new Bundle();
+//                result.putStringArrayList("LOCATIONS", places_id);
+//                getParentFragmentManager().setFragmentResult("locations", result);
+////                Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
+//            }else{
+//                Toast.makeText(getContext(), "No Item with Location", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//    }
 }
