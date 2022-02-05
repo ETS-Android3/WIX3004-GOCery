@@ -1,10 +1,14 @@
 package com.example.gocery.grocerylist;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -24,6 +28,7 @@ import com.example.gocery.grocerylist.dao.DAOCompletedGroceryTrip;
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
 import com.example.gocery.grocerylist.model.GroceryTrip;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -39,7 +44,10 @@ public class GroceryHomeFragment extends Fragment {
     DAOCompletedGroceryTrip dao;
     DAOCurrentGroceryItem daoCurrentGroceryItem;
 
+    ExtendedFloatingActionButton startTripBtn;
+
     TextView numberOfItems;
+    private static final int REQUEST_CODE = 99;
 
 
     @Override
@@ -51,6 +59,31 @@ public class GroceryHomeFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.nav_viewCurrentGroceryList);
             }
         });
+
+
+        startTripBtn = view.findViewById(R.id.fabtn_startShopping);
+        startTripBtn.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.nav_sstartShopping);
+
+
+
+            if(ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            }
+
+        });
+
+
+
+
+
+
+
+
 
         numberOfItems = view.findViewById(R.id.tv_currentItemInList);
 

@@ -82,7 +82,7 @@ public class UpdateGroceryItemFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 setItemData(""+result.get("ITEM_KEY"));
-                Toast.makeText(getContext(), "RECEIVED: "+result.get("ITEM_KEY"), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "RECEIVED: "+result.get("ITEM_KEY"), Toast.LENGTH_SHORT).show();
             }
         });
 

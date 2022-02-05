@@ -16,6 +16,9 @@
         <action
             android:id="@+id/nav_viewCompletedGroceryTrip"
             app:destination="@id/groceryTripHistoryFragment" />
+        <action
+            android:id="@+id/nav_sstartShopping"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/addGroceryItemFragment"
@@ -40,9 +43,6 @@
         <action
             android:id="@+id/nav_updateGroceryItem"
             app:destination="@id/updateGroceryItemFragment" />
-        <action
-            android:id="@+id/nav_startMapFragment"
-            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/finalizeGroceryListFragement"

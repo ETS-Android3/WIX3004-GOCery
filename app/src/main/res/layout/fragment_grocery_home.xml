@@ -9,7 +9,7 @@
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fabtn_addNewItem"
+        android:id="@+id/fabtn_startShopping"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

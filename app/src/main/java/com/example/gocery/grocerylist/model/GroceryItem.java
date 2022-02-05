@@ -13,8 +13,8 @@ public class GroceryItem {
     private int quantity;
     private String description;
     private String image;
-    private String locationLat;
-    private String locationLong;
+    private String locationName;
+    private int locationID;
     private String createdBy;
     private Boolean status;
 
@@ -26,14 +26,14 @@ public class GroceryItem {
                        Boolean status,
                        @Nullable String description,
                        @Nullable String image,
-                       @Nullable String locationLat,
-                       @Nullable String locationLong) {
+                       @Nullable String locationName,
+                       @Nullable int locationID) {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
         this.image = image;
-        this.locationLat = locationLat;
-        this.locationLong = locationLong;
+        this.locationName = locationName;
+        this.locationID = locationID;
         this.status = status;
     }
 
@@ -70,19 +70,19 @@ public class GroceryItem {
     }
 
     public String getLocationLat() {
-        return locationLat;
+        return locationName;
     }
 
     public void setLocationLat(String locationLat) {
-        this.locationLat = locationLat;
+        this.locationName = locationLat;
     }
 
-    public String getLocationLong() {
-        return locationLong;
+    public int getLocationLong() {
+        return locationID;
     }
 
-    public void setLocationLong(String locationLong) {
-        this.locationLong = locationLong;
+    public void setLocationLong(int locationLong) {
+        this.locationID = locationLong;
     }
 
     public Boolean getStatus() {
@@ -117,8 +117,8 @@ public class GroceryItem {
                 ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
-                ", locationLat='" + locationLat + '\'' +
-                ", locationLong='" + locationLong + '\'' +
+                ", locationLat='" + locationName + '\'' +
+                ", locationLong='" + locationID + '\'' +
                 ", status=" + status +
                 '}';
     }
