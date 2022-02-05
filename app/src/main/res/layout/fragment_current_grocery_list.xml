@@ -82,10 +82,35 @@
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent" />-->
 
-        <ListView
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabtn_map"
+
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="Complete Shopping"
+
+        android:src="@android:drawable/btn_star_big_on"
+        android:text="Show Map"
+
+        android:textColor="@color/white"
+
+        app:backgroundTint="@color/primary_green"
+        app:icon="@android:drawable/ic_dialog_map"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/fabtn_completeGrocery"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/lv_currentGroceryList"/>
+            android:id="@+id/lv_currentGroceryList">
+
+    </ListView>
 
 <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
