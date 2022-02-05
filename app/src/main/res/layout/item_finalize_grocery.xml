@@ -108,8 +108,8 @@
 
     <ImageView
         android:id="@+id/iv_userIcon"
-        android:layout_width="12dp"
-        android:layout_height="11dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_itemName"
         app:srcCompat="@drawable/ic_baseline_person_24" />
@@ -121,7 +121,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:text="Requested User"
-        android:textSize="8sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_userIcon"
         app:layout_constraintStart_toEndOf="@+id/iv_userIcon"
         app:layout_constraintTop_toTopOf="@+id/iv_userIcon"
@@ -129,8 +129,8 @@
 
     <ImageView
         android:id="@+id/iv_locationIcon"
-        android:layout_width="12dp"
-        android:layout_height="11dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_marginStart="12dp"
         app:layout_constraintStart_toEndOf="@+id/tv_requestedUser"
         app:layout_constraintTop_toTopOf="@+id/iv_userIcon"
@@ -153,7 +153,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:text="Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -178,7 +178,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:text="Location"
-        android:textSize="8sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_locationIcon"
         app:layout_constraintStart_toEndOf="@+id/iv_locationIcon"
         app:layout_constraintTop_toTopOf="@+id/iv_locationIcon"

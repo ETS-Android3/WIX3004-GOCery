@@ -1,6 +1,7 @@
 package com.example.gocery.expense_tracker.dao;
 
 import com.example.gocery.expense_tracker.model.Expense;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.gms.tasks.Task;
@@ -15,8 +16,8 @@ public class DAOExpense {
 
     public DAOExpense() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        currentUser = "user_" + FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = db.getReference(Expense.class.getSimpleName());
+        currentUser = "user_" + FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference = db.getReference(Expense.class.getSimpleName()).child(currentUser);
     }
 
     public Task<Void> add(Expense expenseItem) {
