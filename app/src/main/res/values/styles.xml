@@ -14,18 +14,20 @@
 
     <style name="household_cards">
         <item name="cardCornerRadius">15dp</item>
-        <item name="android:backgroundTint">@color/light_gray</item>
+<!--        <item name="android:backgroundTint">@color/light_gray</item>-->
+        <item name="android:backgroundTint">@color/white</item>
         <item name="android:layout_width">350dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="cardElevation">10dp</item>
         <item name="android:layout_marginBottom">15dp</item>
+<!--        <item name="android:padding">10dp</item>-->
     </style>
 
     <style name="household_cards.text">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">15dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>

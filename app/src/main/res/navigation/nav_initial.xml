@@ -8,26 +8,55 @@
     <fragment
         android:id="@+id/DestLanding"
         android:name="com.example.gocery.authentication.LandingFragment"
-        android:label="fragment_landing_fragement"
+        android:label="Welcome "
         tools:layout="@layout/fragment_landing_fragement" />
     <fragment
         android:id="@+id/DestSignIn"
         android:name="com.example.gocery.authentication.SignInFragment"
-        android:label="fragment_sign_in"
+        android:label="Sign In"
         tools:layout="@layout/fragment_sign_in" />
     <fragment
         android:id="@+id/DestSignUp"
         android:name="com.example.gocery.authentication.SignUpFragment"
-        android:label="fragment_sign_up"
+        android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up" />
     <include app:graph="@navigation/grocery_navigation" />
     <fragment
         android:id="@+id/DestSelectProfile"
         android:name="com.example.gocery.authentication.SelectProfileFragment"
-        android:label="fragment_select_profile"
-        tools:layout="@layout/fragment_select_profile" >
+        android:label="Select Profile"
+        tools:layout="@layout/fragment_select_profile">
         <action
             android:id="@+id/action_auth_to_home"
             app:destination="@id/grocery_navigation" />
+        <action
+            android:id="@+id/action_to_household_temp"
+            app:destination="@id/DestHousehold"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/DestHousehold"
+        android:name="com.example.gocery.manageprofiles.ManageHouseholdFragment"
+        android:label="Manage Household"
+        tools:layout="@layout/fragment_manage_household">
+        <action
+            android:id="@+id/action_manage_to_add"
+            app:destination="@id/DestAddProfile" />
+        <action
+            android:id="@+id/action_manage_to_edit"
+            app:destination="@id/DestEditProfile"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/DestAddProfile"
+        android:name="com.example.gocery.manageprofiles.AddProfileFragment"
+        android:label="Add Member"
+        tools:layout="@layout/fragment_add_profile" />
+    <fragment
+        android:id="@+id/DestEditProfile"
+        android:name="com.example.gocery.manageprofiles.EditProfileFragment"
+        android:label="Edit Member"
+        tools:layout="@layout/fragment_edit_profile" />
 </navigation>
