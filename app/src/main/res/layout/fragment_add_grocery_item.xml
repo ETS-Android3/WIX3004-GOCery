@@ -76,22 +76,6 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:layout_gravity="center"
-            android:backgroundTint="@color/primary_green"
-            android:id="@+id/iv_itemImagePreview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            tools:src="@drawable/ic_baseline_image_24" />
-        <Button
-            android:id="@+id/btn_attachImage"
-            android:layout_gravity="center"
-            android:text="Select Image"
-            android:backgroundTint="@color/primary_green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
         <TextView
             android:textSize="16sp"
             android:layout_marginTop="12dp"
@@ -110,6 +94,23 @@
             android:backgroundTint="@color/primary_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:backgroundTint="@color/primary_green"
+            android:id="@+id/iv_itemImagePreview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            tools:src="@drawable/ic_baseline_image_24" />
+        <Button
+            android:id="@+id/btn_attachImage"
+            android:layout_gravity="center"
+            android:text="Select Image"
+            android:backgroundTint="@color/primary_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
 
     </LinearLayout>
 

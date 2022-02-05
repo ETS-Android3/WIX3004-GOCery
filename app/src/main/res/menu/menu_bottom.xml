@@ -12,6 +12,11 @@
         android:title="@string/menu_item_expense_home"
         android:icon="@android:drawable/ic_menu_manage"
     />
+    <item
+        android:id="@id/DestOverview"
+        android:title="@string/card_voucher_menu_title"
+        android:icon="@android:drawable/ic_menu_manage"
+    />
 <!--    <item-->
 <!--        android:id="@id/addExpenseFragment"-->
 <!--        android:title="@string/menu_item_add_expense"-->

@@ -68,6 +68,9 @@
         <item>Other</item>
     </string-array>
 
+    <!-- Card and vouchers   -->
+    <string name="card_voucher_menu_title">Cards &amp; Vouchers</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dummy_address">No. 8, Jalan Joran Empat 19/24D, 40300, Shah Alam, Selangor</string>
