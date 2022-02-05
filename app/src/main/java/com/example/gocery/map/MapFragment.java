@@ -94,30 +94,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Places.initialize(getActivity(), getString(R.string.google_maps_key));
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         PlacesClient placesClient = Places.createClient(getActivity());
-        // SAMPLE CODE FOR FETCHING PLACE FROM PLACE ID BELOW!!!!
-        // UNTESTED!!!!
-
-//        // Fetching places from ID alone
-//        // Define a Place ID. (Taken from data passed via intent)
-//        // Assuming the previous intent was parsed this way:
-//        Bundle args = getIntent().getBundleExtra("BUNDLE");
-//        ArrayList<String> placeIDList = new ArrayList<>();
-//
-//        Bundle extras = getIntent().getBundleExtra("BUNDLE");
-//        if (args != null) {
-//            placeIDList = (ArrayList<String>) args.getSerializable("ARRAYLIST");
-//            //The key argument here must match that used in the other activity
-//        }
-//        // Specify the fields to return.
-//        final List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
-//
-//        for(String placeID: placeIDList){
-//            FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeID, placeFields);
-//            placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-//                Place place = response.getPlace();
-//                Log.i("Success:", "Place found: " + place.getName());
-//            });
-//        }
 
         getParentFragmentManager().setFragmentResultListener("locations", this, new FragmentResultListener() {
             @Override
@@ -134,7 +110,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         });
                     }
                 }
-//                Toast.makeText(getContext(), "RECEIVED: "+ result.get("LOCATIONS"), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -149,28 +124,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         }
                     }
                 });
-//
-//        Button BTNSetLocation = (Button) getView().findViewById(R.id.BTNSetLocation);
-//        BTNSetLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                // Set the fields to specify which types of place data to
-//                // return after the user has made a selection.
-//                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
-//
-//                // Start the autocomplete intent.
-//                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-//                        .build(getActivity());
-//                autoCompleteActivityResultLauncher.launch(intent);
-//            }
-//        });
         getLastLocation();
-
-        // Create the two listviews, one for getting the list of location, another for the directions.
-//        ListView LVLocations = (ListView) getView().findViewById(R.id.LVLocations);
-//        LocationListAdapter locationListAdapter = new LocationListAdapter(getActivity(), R.layout.location_list, placeArrayList, this);
-//        LVLocations.setAdapter(locationListAdapter);
 
         ListView LVDistance = (ListView) getView().findViewById(R.id.LVDistance);
         directionListAdapter = new DirectionListAdapter(getActivity(), R.layout.direction_list, routeArrayList);
@@ -181,8 +135,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-//        SupportMapFragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-//        mMapFragment.getMapAsync(this);
         return v;
     }
 
@@ -332,7 +284,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             public void onSuccess(Location location) {
                 if (location != null) {
                     currentLocation = location;
-                    Toast.makeText(getActivity().getApplicationContext(), currentLocation.getLatitude() + ", " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     if (supportMapFragment != null) {
                         supportMapFragment.getMapAsync(MapFragment.this);
