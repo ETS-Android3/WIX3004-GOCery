@@ -72,7 +72,10 @@ public class CurrentGroceryListFragment extends Fragment {
                 for(GroceryItem groceryItem: list){
                     // Get the list of unpurchased item to be included in the route.
                     if(!groceryItem.getStatus()){
-                        places_id.add(groceryItem.getLocationID());
+                        String place_id = groceryItem.getLocationID();
+                        if(!places_id.contains(place_id)){
+                            places_id.add(place_id);
+                        };
                     }
                 }
                 // Pass data to the update item
