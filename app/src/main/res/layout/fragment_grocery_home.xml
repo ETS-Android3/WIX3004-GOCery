@@ -15,9 +15,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:text="Start Shopping"
+        app:iconTint="@color/white"
         android:textColor="@color/white"
         app:backgroundTint="@color/primary_green"
-        android:text="Start Shopping"
+        app:icon="@drawable/ic_baseline_shopping_basket_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
