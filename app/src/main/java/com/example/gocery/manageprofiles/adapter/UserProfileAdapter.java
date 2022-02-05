@@ -62,9 +62,16 @@ public class UserProfileAdapter extends BaseAdapter {
 
         TextView TVProfile = convertView.findViewById(R.id.TVProfile);
         ImageView IVProfile = convertView.findViewById(R.id.IVProfile);
+        ImageView IVLock = convertView.findViewById(R.id.IVLock);
 
         TVProfile.setText(userProfile.getUsername());
         IVProfile.setImageResource(userProfile.getImgId());
+        if(userProfile.getPassword() == null){
+            IVLock.setVisibility(convertView.GONE);
+        }else{
+            IVLock.setVisibility(convertView.VISIBLE);
+        }
+
         return convertView;
     }
 

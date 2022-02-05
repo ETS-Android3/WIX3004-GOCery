@@ -52,9 +52,11 @@ public class ManageHouseholdFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
                 System.out.println(userProfile);
+
                 Bundle result = new Bundle();
                 result.putString("PROFILE_KEY", userProfile.getKey());
                 System.out.println("USERPROFILEKEY"+ userProfile.getKey());
+
                 getParentFragmentManager().setFragmentResult("editProfile", result);
                 Navigation.findNavController(view).navigate(R.id.DestEditProfile);
             }

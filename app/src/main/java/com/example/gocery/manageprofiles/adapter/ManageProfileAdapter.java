@@ -65,6 +65,13 @@ public class ManageProfileAdapter extends BaseAdapter {
 
         TVProfile.setText(userProfile.getUsername());
         IVProfile.setImageResource(userProfile.getImgId());
+        ImageView IVLock = convertView.findViewById(R.id.IVLock);
+
+        if(userProfile.getPassword() == null){
+            IVLock.setVisibility(convertView.GONE);
+        }else{
+            IVLock.setVisibility(convertView.VISIBLE);
+        }
         return convertView;
     }
 

@@ -85,10 +85,13 @@ public class AddProfileFragment extends Fragment {
     public void createProfile(View view){
         String username = ETUsername.getText().toString();
         String password = ETPassword.getText().toString();
+
         if(TextUtils.isEmpty(username)){
             ETUsername.setError("Username cannot be empty");
+            ETUsername.requestFocus();
         }else if(SWLock.isChecked() && TextUtils.isEmpty(password)) {
-            ETPassword.setError("Password must not be empty");
+            ETPassword.setError("Pin must not be empty");
+            ETPassword.requestFocus();
         }else{
             String userID = mAuth.getCurrentUser().getUid();
 

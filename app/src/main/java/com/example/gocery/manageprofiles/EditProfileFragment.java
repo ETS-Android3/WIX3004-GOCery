@@ -144,7 +144,7 @@ public class EditProfileFragment extends Fragment {
         if(TextUtils.isEmpty(username)){
             ETUsername.setError("Username cannot be empty");
         }else if(SWLock.isChecked() && TextUtils.isEmpty(password)) {
-            ETPassword.setError("Password must not be empty");
+            ETPassword.setError("Pin must not be empty");
         }else{
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Updating profile...");

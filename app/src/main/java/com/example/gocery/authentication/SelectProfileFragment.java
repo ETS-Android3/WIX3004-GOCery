@@ -1,5 +1,6 @@
 package com.example.gocery.authentication;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,18 +9,22 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.gocery.MainActivity;
 import com.example.gocery.R;
 import com.example.gocery.manageprofiles.adapter.UserProfileAdapter;
 import com.example.gocery.manageprofiles.dao.DAOProfile;
 import com.example.gocery.manageprofiles.model.UserProfile;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +35,8 @@ import java.util.ArrayList;
 public class SelectProfileFragment extends Fragment {
     FirebaseAuth mAuth;
     DAOProfile daoProfile = new DAOProfile();
-    ListView profileList;
+//    ListView profileList;
+    GridView profileList;
     UserProfileAdapter adapter;
     ArrayList<UserProfile> userProfileArrayList = new ArrayList<>();
 
@@ -41,9 +47,7 @@ public class SelectProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         mAuth = FirebaseAuth.getInstance();
-        //initializes the profile list recycler view
-//        RecyclerView ProfileList = view.findViewById(R.id.RVProfileList);
-        profileList = view.findViewById(R.id.LVProfiles);
+        profileList = view.findViewById(R.id.GVProfiles);
 
         adapter = new UserProfileAdapter(getContext(),userProfileArrayList);
         profileList.setAdapter(adapter);
@@ -53,8 +57,15 @@ public class SelectProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
-                Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
-//                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+                if(userProfile.getPassword() != null){
+                    showPasswordDialog(view, userProfile);
+                }
+                else{
+                    //Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
+                    Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+                    Toast.makeText(getActivity(), "Welcome "+userProfile.getUsername(), Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -65,7 +76,7 @@ public class SelectProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
-                Toast.makeText(getActivity(), "You have been signed out", Toast.LENGTH_SHORT).show();;
+                Toast.makeText(getActivity(), "You have been signed out", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(view).navigate(R.id.DestLanding);
             }
         });
@@ -91,15 +102,6 @@ public class SelectProfileFragment extends Fragment {
                 }
                 adapter.setUserProfileList(userProfileArrayList);
                 adapter.notifyDataSetChanged();
-                // Adds data from the list to the Adapter class
-//                ProfileDataAdapter adapter = new ProfileDataAdapter(userProfileArrayList, getActivity());
-//                UserProfileAdapter adapter = new UserProfileAdapter(getContext(),userProfileArrayList);
-
-                // Sets grid layout manager to implement grid view
-                GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2); //2 = number of columns in grid view
-
-//                ProfileList.setLayoutManager(layoutManager);
-//                ProfileList.setAdapter(adapter);
             }
 
             @Override
@@ -107,5 +109,31 @@ public class SelectProfileFragment extends Fragment {
 
             }
         });
+    }
+
+    public void showPasswordDialog(View view, UserProfile userProfile){
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.input_password);
+
+        TextInputEditText ETPassword = dialog.findViewById(R.id.ETProfilePassword);
+        Button BTNEnter = dialog.findViewById(R.id.BTNEnter);
+
+        BTNEnter.setOnClickListener(v -> {
+            String password = ETPassword.getText().toString();
+            if(TextUtils.isEmpty(password)){
+                ETPassword.setError("Please enter your pin");
+                ETPassword.requestFocus();
+            }else if(!password.equals(userProfile.getPassword())){
+                ETPassword.setError("Incorrect pin");
+                ETPassword.requestFocus();
+            }else{
+                dialog.dismiss();
+                Toast.makeText(getActivity(), "Welcome "+userProfile.getUsername(), Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+            }
+        });
+
+        dialog.show();
     }
 }

@@ -38,26 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TILUsername" />
 
-    <!--    <RadioGroup-->
-<!--        android:id="@+id/RGRoles"-->
-<!--        android:layout_width="354dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/TVLabelRoles"-->
-<!--    >-->
-<!--        <RadioButton-->
-<!--            android:id="@+id/RBAdmin"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:text="@string/RB1"/>-->
-<!--        <RadioButton-->
-<!--            android:id="@+id/RBRep"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:text="@string/RB2"/>-->
-
-<!--    </RadioGroup>-->
 
     <CheckBox
         android:id="@+id/CBAdmin"
@@ -106,7 +86,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="29dp"
         android:visibility="gone"
-        android:hint="Enter password"
+        android:hint="Enter pin..."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SWLock">
 

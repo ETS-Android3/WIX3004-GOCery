@@ -25,8 +25,8 @@
         app:layout_constraintTop_toTopOf="parent"
     />
 
-    <ListView
-        android:id="@+id/LVProfiles"
+    <GridView
+        android:id="@+id/GVProfiles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -37,6 +37,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TVLandingTitle"
         app:flow_horizontalAlign="center"
+        android:horizontalSpacing="2dp"
+        android:numColumns="2"
+        android:verticalSpacing="2dp"
+        android:gravity="center"
     />
 
     <Button
@@ -52,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LVProfiles"
+        app:layout_constraintTop_toBottomOf="@+id/GVProfiles"
     />
 
 

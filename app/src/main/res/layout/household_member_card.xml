@@ -22,7 +22,6 @@
         android:orientation="horizontal"
         android:textAlignment="center"
     >
-
         <ImageView
             android:id="@+id/IVProfile"
             android:layout_width="80dp"
@@ -33,17 +32,35 @@
             android:layout_marginLeft="10dp"
             android:src="@mipmap/ic_launcher"
         />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+        >
+            <TextView
+                android:id="@+id/TVProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Father"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_gray"
 
-        <TextView
-            android:id="@+id/TVProfile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Father"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            style="@style/household_cards.text"
-        />
+            />
+            <ImageView
+                android:id="@+id/IVLock"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:srcCompat="@drawable/ic_baseline_lock_24"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+            />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
