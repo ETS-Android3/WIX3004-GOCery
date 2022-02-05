@@ -216,7 +216,7 @@ public class ReceiptOCRFragment extends Fragment {
     // References:
     // https://github.com/evanemran/OCR_App_CWE/blob/master/app/src/main/java/com/example/ocrapp/MainActivity.java
     private void copyToClipboard(String text) {
-        ClipboardManager clipBoard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clipBoard = (ClipboardManager) Objects.requireNonNull(getContext()).getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Copied data", text);
         clipBoard.setPrimaryClip(clip);
         Toast.makeText(getContext(), "Copied to clipboard!", Toast.LENGTH_SHORT).show();
@@ -354,12 +354,16 @@ public class ReceiptOCRFragment extends Fragment {
                     .addOnSuccessListener(text -> {
                         // Task completed successfully
 
-                        // Display extracted text in TextView
-                        TVOCRResult.setText(text.getText());
-
-                        // Display Copy Text button
-                        btnCopyText.setVisibility(View.VISIBLE);
-                        Toast.makeText(getContext(), "Image text successfully extracted.", Toast.LENGTH_SHORT).show();
+                        // Capture if uploaded image has no readable text
+                        if (text.getText() == "" || text.getText().length() == 0) {
+                            Toast.makeText(getContext(), "No readable text can be extracted from the uploaded image.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Display extracted text in TextView
+                            TVOCRResult.setText(text.getText());
+                            // Display Copy Text button
+                            btnCopyText.setVisibility(View.VISIBLE);
+                            Toast.makeText(getContext(), "Image text successfully extracted.", Toast.LENGTH_SHORT).show();
+                        }
                     })
                     .addOnFailureListener(
                             e -> {
@@ -385,12 +389,16 @@ public class ReceiptOCRFragment extends Fragment {
                     .addOnSuccessListener(text -> {
                         // Task completed successfully
 
-                        // Display extracted text in TextView
-                        TVOCRResult.setText(text.getText());
-
-                        // Display Copy Text button
-                        btnCopyText.setVisibility(View.VISIBLE);
-                        Toast.makeText(getContext(), "Image text successfully extracted.", Toast.LENGTH_SHORT).show();
+                        // Capture if uploaded image has no readable text
+                        if (text.getText() == "" || text.getText().length() == 0) {
+                            Toast.makeText(getContext(), "No readable text can be extracted from the uploaded image.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Display extracted text in TextView
+                            TVOCRResult.setText(text.getText());
+                            // Display Copy Text button
+                            btnCopyText.setVisibility(View.VISIBLE);
+                            Toast.makeText(getContext(), "Image text successfully extracted.", Toast.LENGTH_SHORT).show();
+                        }
                     })
                     .addOnFailureListener(
                             e -> {
