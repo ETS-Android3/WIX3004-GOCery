@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gocery.R;
@@ -32,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -41,15 +44,19 @@ public class AddGroceryItemFragment extends Fragment {
     final int REQUEST_IMAGE = 999;
     Uri imageUri;
     ImageView imageView;
+    String locationName, locationID;
 
     FloatingActionButton btnSave;
     Button btnAttachImage, btnAttachLocation;
     TextInputEditText itemName, itemQuantity, itemDesc;
+    TextView itemLocation;
 
     // database and storage
     DAOCurrentGroceryItem dao;
     StorageReference storageReference;
     ProgressDialog progressDialog;
+
+    HashMap<String, Object> tempGroceryItem;
 
     public AddGroceryItemFragment() {
     }
@@ -59,7 +66,7 @@ public class AddGroceryItemFragment extends Fragment {
         itemName = view.findViewById(R.id.tiet_itemName);
         itemQuantity = view.findViewById(R.id.tiet_itemQuantity);
         itemDesc = view.findViewById(R.id.tiet_itemDescription);
-//        locationData = view.findViewById(R.id.et_locationData);
+        itemLocation = view.findViewById(R.id.tv_locationName);
 
         btnAttachImage = view.findViewById(R.id.btn_attachImage);
         imageView = view.findViewById(R.id.iv_itemImagePreview);
@@ -96,7 +103,12 @@ public class AddGroceryItemFragment extends Fragment {
                                     itemDesc.getText().toString(), //nullable
                                     fileName
                             );
+
                             groceryItem.setCreatedBy(creatorName);
+                            if(locationID != null){
+                                groceryItem.setLocationID(locationID);
+                                groceryItem.setLocationName(locationName);
+                            }
 
                             dao.add(groceryItem).addOnSuccessListener(succ->{
                                 if(progressDialog.isShowing()){
@@ -171,7 +183,45 @@ public class AddGroceryItemFragment extends Fragment {
 
         btnAttachLocation = view.findViewById(R.id.btn_attachLocation);
         btnAttachLocation.setOnClickListener(v -> {
+
+            HashMap<String, Object> tempGroceryItem = new HashMap<>();
+
+            tempGroceryItem.put("name", itemName.getText().toString());
+            tempGroceryItem.put("quantity", Integer.parseInt(itemQuantity.getText().toString().isEmpty() ? "0" : itemQuantity.getText().toString()));
+            tempGroceryItem.put("desc", itemDesc.getText().toString());
+            tempGroceryItem.put("img", imageUri);
+
+            // to tell where to go next
+            tempGroceryItem.put("PREV_PAGE", (String) "add_item");
+
+            // Pass data to the update item
+            Bundle result = new Bundle();
+            result.putSerializable("GROCERY_HASHMAP", tempGroceryItem);
+            getParentFragmentManager().setFragmentResult("TEMP_GROCERY_ITEM", result);
             Navigation.findNavController(view).navigate(R.id.nav_selectLocation_add);
+        });
+
+        getParentFragmentManager().setFragmentResultListener("SELECTED_LOCATION", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                tempGroceryItem = (HashMap<String, Object>) result.get("GROCERY_HASHMAP");
+
+
+                itemName.setText((String) tempGroceryItem.get("name"));
+                itemQuantity.setText(""+tempGroceryItem.get("quantity"));
+                itemDesc.setText((String) tempGroceryItem.get("desc"));
+                itemLocation.setText((String) tempGroceryItem.get("locationName"));
+                locationID = (String) tempGroceryItem.get("locationID");
+                locationName = (String) tempGroceryItem.get("locationName");
+
+                if (tempGroceryItem.get("img")!=null){
+                    imageUri = (Uri) tempGroceryItem.get("img");
+                    imageView.setImageURI(imageUri);
+                }
+
+
+                Log.e("Passed Data LS",tempGroceryItem.toString());
+            }
         });
 
     }

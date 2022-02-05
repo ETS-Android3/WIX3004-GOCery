@@ -107,6 +107,8 @@
                     android:paddingRight="@dimen/ItemMargin"
                     tools:src="@drawable/ic_baseline_image_24" />
 
+
+
                 <ImageView
                     android:id="@+id/iv_locationImagePreview"
                     android:layout_width="0dp"

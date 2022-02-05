@@ -14,7 +14,7 @@ public class GroceryItem {
     private String description;
     private String image;
     private String locationName;
-    private int locationID;
+    private String locationID;
     private String createdBy;
     private Boolean status;
 
@@ -27,7 +27,7 @@ public class GroceryItem {
                        @Nullable String description,
                        @Nullable String image,
                        @Nullable String locationName,
-                       @Nullable int locationID) {
+                       @Nullable String locationID) {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
@@ -81,20 +81,20 @@ public class GroceryItem {
         this.image = image;
     }
 
-    public String getLocationLat() {
+    public String getLocationName() {
         return locationName;
     }
 
-    public void setLocationLat(String locationLat) {
-        this.locationName = locationLat;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
-    public int getLocationLong() {
+    public String getLocationID() {
         return locationID;
     }
 
-    public void setLocationLong(int locationLong) {
-        this.locationID = locationLong;
+    public void setLocationID(String locationID) {
+        this.locationID = locationID;
     }
 
     public Boolean getStatus() {

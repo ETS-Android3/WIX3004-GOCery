@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +49,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,12 +70,13 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
     private GoogleMap mMap;
 
     FusedLocationProviderClient fusedLocationProviderClient;
-
     TextView tv_LocationName, tv_locationLatLon;
-
-
-
     Place selectedLocation;
+
+    FloatingActionButton checkedBtn;
+
+
+    HashMap<String, Object> tempGroceryItem = new HashMap<>();
 
 
     public SelectLocationFragment() {
@@ -82,6 +86,14 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
+
+        getParentFragmentManager().setFragmentResultListener("TEMP_GROCERY_ITEM", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                tempGroceryItem = (HashMap<String, Object>) result.get("GROCERY_HASHMAP");
+                Log.e("Passed Data",tempGroceryItem.toString());
+            }
+        });
 
         Places.initialize(getActivity(), getString(R.string.google_maps_key));
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -121,6 +133,38 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
             }
         });
 
+
+        checkedBtn = view.findViewById(R.id.fabtn_confirmSelection);
+        checkedBtn.setOnClickListener(v -> {
+            if(selectedLocation == null){
+                Toast.makeText(getContext(), "Please Select A Location", Toast.LENGTH_SHORT).show();
+            }else{
+                String prev = (String) tempGroceryItem.get("PREV_PAGE");
+//                Log.e("PREV", tempGroceryItem.toString());
+                HashMap<String, Object> settItems = tempGroceryItem;
+//                Log.e("tempGroceryItem", tempGroceryItem.toString());
+
+                if (prev.equals("add_item")){
+                    settItems.put("locationID", selectedLocation.getId());
+                    settItems.put("locationName", selectedLocation.getName());
+                    Log.e("sending Data", settItems.toString());
+                    Bundle result = new Bundle();
+                    result.putSerializable("GROCERY_HASHMAP", settItems);
+                    getParentFragmentManager().setFragmentResult("SELECTED_LOCATION", result);
+                    Navigation.findNavController(view).navigate(R.id.nav_LocationSelected_add);
+                }else if(prev.equals("update_item")){
+                    settItems.put("locationID", selectedLocation.getId());
+                    settItems.put("locationName", selectedLocation.getName());
+                    Log.e("sending Data", settItems.toString());
+                    Bundle result = new Bundle();
+                    result.putSerializable("GROCERY_HASHMAP", settItems);
+                    getParentFragmentManager().setFragmentResult("SELECTED_LOCATION", result);
+                    Navigation.findNavController(view).navigate(R.id.nav_LocationSelected_update);
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -155,6 +199,7 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 12));
         }else{
+            selectedLocation = null;
             tv_LocationName.setVisibility(View.GONE);
             tv_locationLatLon.setVisibility(View.GONE);
         }

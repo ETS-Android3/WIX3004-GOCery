@@ -77,84 +77,40 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center"
+            android:backgroundTint="@color/primary_green"
+            android:id="@+id/iv_itemImagePreview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            tools:src="@drawable/ic_baseline_image_24" />
+        <Button
+            android:id="@+id/btn_attachImage"
+            android:layout_gravity="center"
+            android:text="Select Image"
+            android:backgroundTint="@color/primary_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+        <TextView
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/tv_locationName"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="(No Location Selected)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-                <ImageView
-                    android:id="@+id/iv_itemImagePreview"
-                    android:layout_width="0dp"
-                    android:layout_height="103dp"
-                    android:layout_marginBottom="@dimen/ItemMargin"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
-                    android:paddingRight="@dimen/ItemMargin"
-                    tools:src="@drawable/ic_baseline_image_24" />
+        <Button
+            android:id="@+id/btn_attachLocation"
+            android:layout_gravity="center"
+            android:text="Select Location"
+            android:backgroundTint="@color/primary_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-                <ImageView
-                    android:id="@+id/iv_locationImagePreview"
-                    android:layout_width="0dp"
-                    android:layout_height="103dp"
-                    android:layout_marginBottom="@dimen/ItemMargin"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
-                    android:paddingLeft="@dimen/ItemMargin"
-                    tools:src="@drawable/ic_baseline_location_on_24" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <Button
-                    android:id="@+id/btn_attachImage"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/ItemMargin"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
-                    android:backgroundTint="@color/primary_green"
-                    android:text="Image" />
-
-                <Button
-                    android:id="@+id/btn_attachLocation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/ItemMargin"
-                    android:layout_weight="@integer/material_motion_duration_long_1"
-                    android:backgroundTint="@color/primary_green"
-                    android:text="Location" />
-            </TableRow>
-
-            <!--            <TableRow-->
-            <!--                android:layout_width="fill_parent"-->
-            <!--                android:layout_height="fill_parent">-->
-            <!--                <EditText-->
-            <!--                    android:id="@+id/et_imagePath"-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:ems="10"-->
-            <!--                    android:hint="IMAGE PATH"-->
-            <!--                    android:inputType="textPersonName"-->
-            <!--                    android:minHeight="48dp"-->
-            <!--                    android:text="" />-->
-
-            <!--                <EditText-->
-            <!--                    android:id="@+id/et_locationData"-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_weight="@integer/material_motion_duration_long_1"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:ems="10"-->
-            <!--                    android:hint="LOCATION DATA"-->
-            <!--                    android:inputType="textPersonName"-->
-            <!--                    android:minHeight="48dp"-->
-            <!--                    android:text="" />-->
-            <!--            </TableRow>-->
-        </TableLayout>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -170,6 +126,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
