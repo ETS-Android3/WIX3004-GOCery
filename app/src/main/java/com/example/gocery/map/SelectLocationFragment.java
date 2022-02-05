@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -34,6 +35,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
@@ -48,6 +51,7 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
 
     private GoogleMap mMap;
 
+    Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView tv_LocationName, tv_locationLatLon;
     Place selectedLocation;
@@ -143,18 +147,40 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
             }
         });
 
-
+        getLastLocation();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_select_location, container, false);
-        SupportMapFragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mMapFragment.getMapAsync(SelectLocationFragment.this);
+
+//        SupportMapFragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        mMapFragment.getMapAsync(SelectLocationFragment.this);
         return v;
     }
 
+    // Fetch current location of user, not working right for some reason.
+    private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                    if (supportMapFragment != null) {
+                        supportMapFragment.getMapAsync(SelectLocationFragment.this);
+                    }
+                }
+            }
+        });
+    }
 
     private void locationSelected(Place place) {
         if (place != null) {
@@ -176,7 +202,7 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
             MarkerOptions marker = new MarkerOptions().position(latLng).title(place.getName());
             mMap.addMarker(marker);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 12));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15));
         }else{
             selectedLocation = null;
             tv_LocationName.setVisibility(View.GONE);
@@ -187,6 +213,9 @@ public class SelectLocationFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
             return;
