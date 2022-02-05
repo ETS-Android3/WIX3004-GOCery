@@ -71,7 +71,7 @@ public class GroceryHomeFragment extends Fragment {
                 Bundle result = new Bundle();
                 result.putString("TRIP_KEY", groceryTrip.getKey());
                 getParentFragmentManager().setFragmentResult("viewGroceryTrip",result);
-                Toast.makeText(getContext(), "SENT: "+groceryTrip.getKey(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "SENT: "+groceryTrip.getKey(), Toast.LENGTH_SHORT).show();
 
                 Navigation.findNavController(view).navigate(R.id.nav_viewCompletedGroceryTrip);
             }
