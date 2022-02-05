@@ -23,8 +23,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -39,8 +41,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Navigation dependencies
-    implementation 'androidx.navigation:navigation-fragment:2.3.5'
-    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment:2.4.0'
+    implementation 'androidx.navigation:navigation-ui:2.4.0'
 
     //Firebase dependencies
     implementation 'com.google.firebase:firebase-auth:21.0.1'
@@ -66,4 +68,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'com.google.android.libraries.places:places:2.5.0'
+
+    // ML Vision API
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'
+
+    // Image Cropper
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.krokyze:ucropnedit:2.2.6-2'
+
 }

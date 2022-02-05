@@ -126,4 +126,9 @@
         android:id="@+id/DestOverview"
         android:name="com.example.gocery.card_voucher.OverviewFragment"
         android:label="Overview" />
+    <fragment
+        android:id="@+id/receiptOCRFragment"
+        android:name="com.example.gocery.receipt_ocr.ReceiptOCRFragment"
+        android:label="Receipt Scanner"
+        tools:layout="@layout/fragment_receipt_ocr" />
 </navigation>

@@ -73,7 +73,7 @@ public class MainApp extends AppCompatActivity {
 //        };
 //        drawerLayout.addDrawerListener(toggle);
 //        toggle.syncState();
-//        setupSideNavMenu(navController);
+        setupSideNavMenu(navController);
 //
 //
 //        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
