@@ -1,13 +1,19 @@
 package com.example.gocery.grocerylist;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +27,7 @@ import com.example.gocery.grocerylist.adapter.CurrentGroceryListAdapter;
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,13 +38,14 @@ import java.util.ArrayList;
 public class CurrentGroceryListFragment extends Fragment {
 
 
-    FloatingActionButton btnAddItem, btnCompleteGrocery;
+    FloatingActionButton btnAddItem;
+    ExtendedFloatingActionButton btnCompleteGrocery;
+    ExtendedFloatingActionButton btnMap;
 
     ListView listView;
     CurrentGroceryListAdapter adapter;
 
     DAOCurrentGroceryItem dao;
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -49,6 +57,40 @@ public class CurrentGroceryListFragment extends Fragment {
         listView.setAdapter(adapter);
         loadData();
 
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (listView.getAdapter().isEmpty())
+                    btnMap.setVisibility(View.INVISIBLE);
+                else
+                    btnMap.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnMap = view.findViewById(R.id.fabtn_map);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
+                ArrayList<String> places_id = new ArrayList<>();
+                for(GroceryItem groceryItem: list){
+                    // Get the list of unpurchased item to be included in the route.
+                    if(!groceryItem.getStatus()){
+                        String place_id = groceryItem.getLocationID();
+                        if(!places_id.contains(place_id)){
+                            places_id.add(place_id);
+                        };
+                    }
+                }
+                // Pass data to the update item
+                Bundle result = new Bundle();
+                result.putStringArrayList("LOCATIONS", places_id);
+                getParentFragmentManager().setFragmentResult("locations", result);
+                Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
+            }
+        });
 
         btnAddItem = view.findViewById(R.id.fabtn_addNewItem);
         btnAddItem.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +148,21 @@ public class CurrentGroceryListFragment extends Fragment {
 
         btnCompleteGrocery = view.findViewById(R.id.fabtn_completeGrocery);
         btnCompleteGrocery.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_finalizeGroceryList);
+            dao.getTickedItems().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.getChildrenCount() == 0){
+                        Toast.makeText(getContext(), "No Item Ticked", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Navigation.findNavController(v).navigate(R.id.nav_finalizeGroceryList);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+
         });
 
 
@@ -119,6 +175,7 @@ public class CurrentGroceryListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_current_grocery_list, container, false);
     }
+
 
     public void loadData(){
 //        swipeRefreshLayout.setRefreshing(true);
@@ -140,6 +197,37 @@ public class CurrentGroceryListFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-//        swipeRefreshLayout.setRefreshing(false);
     }
+
+//    private void requestPermission(){
+//        if(ContextCompat.checkSelfPermission(getContext(),
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(getContext(),
+//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+//        }else{
+//            ArrayList<GroceryItem> list = (ArrayList<GroceryItem>) adapter.getGroceryItems();
+//            ArrayList<String> places_id = new ArrayList<>();
+//            for(GroceryItem groceryItem: list){
+//                // Get the list of unpurchased item to be included in the route.
+//                if(!groceryItem.getStatus()){
+//                    places_id.add(groceryItem.getLocationID());
+//                }
+//            }
+//
+//            Log.e("Places", places_id.toString());
+//            Log.e("Places Size", places_id.size()+"");
+//
+//            if (places_id.size() > 0){
+//                // Pass data to the update item
+//                Bundle result = new Bundle();
+//                result.putStringArrayList("LOCATIONS", places_id);
+//                getParentFragmentManager().setFragmentResult("locations", result);
+////                Navigation.findNavController(v).navigate(R.id.nav_startMapFragment);
+//            }else{
+//                Toast.makeText(getContext(), "No Item with Location", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//    }
 }

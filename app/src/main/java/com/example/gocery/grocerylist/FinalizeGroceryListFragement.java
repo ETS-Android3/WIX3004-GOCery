@@ -34,7 +34,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class FinalizeGroceryListFragement extends Fragment {
 
@@ -44,7 +43,6 @@ public class FinalizeGroceryListFragement extends Fragment {
     FinalizeGroceryListAdapter adapter;
 
     DAOFinalizeGroceryList dao;
-
 
     //SAVING DATA
     GroceryTrip groceryTrip;
@@ -63,7 +61,6 @@ public class FinalizeGroceryListFragement extends Fragment {
             adapter = new FinalizeGroceryListAdapter(getContext(), gi);
             listView.setAdapter(adapter);
             loadData();
-
 
 
             btnSave.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +84,6 @@ public class FinalizeGroceryListFragement extends Fragment {
         final TextInputEditText tripName = dialog.findViewById(R.id.tiet_tripName);
         final Button cancel = dialog.findViewById(R.id.btn_dialogCancel);
 
-
         cancel.setOnClickListener(v -> {
             Log.e("DIALOG-CANCEL", "Dialog is DISMISS ");
             dialog.dismiss();
@@ -95,31 +91,34 @@ public class FinalizeGroceryListFragement extends Fragment {
 
         final Button save = dialog.findViewById(R.id.btn_dialogSave);
         save.setOnClickListener(v -> {
-            groceryTrip = new GroceryTrip();
-            groceryTrip.setName(tripName.getText().toString());
 
-            groceryTrip.setCompletedBy("USER NAME HERE");
+            if(tripName.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Please Enter Trip Name", Toast.LENGTH_SHORT).show();
+            }else{
+                groceryTrip = new GroceryTrip();
+                groceryTrip.setName(tripName.getText().toString());
 
+                groceryTrip.setCompletedBy("USER NAME HERE");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a, d MMMMM yyyy");
-            groceryTrip.setDatetime(sdf.format(new Timestamp(System.currentTimeMillis())));
+                SimpleDateFormat sdf = new SimpleDateFormat("h:mm a, d MMMM yyyy");
+                groceryTrip.setDatetime(sdf.format(new Timestamp(System.currentTimeMillis())));
 
-            // get data from adapter
-            final ArrayList<GroceryItem> groceryItems = (ArrayList<GroceryItem>) adapter.getList();
-            groceryTrip.setGroceryItems(groceryItems);
+                // get data from adapter
+                final ArrayList<GroceryItem> groceryItems = (ArrayList<GroceryItem>) adapter.getList();
+                groceryTrip.setGroceryItems(groceryItems);
 
-            // SAVE THE DATA
-            saveStatus = false;
-            dao.finalizeGrocery(groceryTrip).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(getContext(), "Trip Saved", Toast.LENGTH_SHORT).show();
-                }
-            });
+                // SAVE THE DATA
+                saveStatus = false;
+                dao.finalizeGrocery(groceryTrip).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(getContext(), "Trip Saved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.dismiss();
+            }
 
-            dialog.dismiss();
         });
-
 
         dialog.show();
     }

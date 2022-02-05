@@ -57,7 +57,7 @@ public class GroceryTripHistoryFragment extends Fragment {
 //                TRIP_KEY = ""+result.get("TRIP_KEY");
                 loadData(""+result.get("TRIP_KEY"));
 
-                Toast.makeText(getContext(), "RECEIVED: "+result.get("TRIP_KEY"), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "RECEIVED: "+result.get("TRIP_KEY"), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -73,7 +73,7 @@ public class GroceryTripHistoryFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<GroceryItem> cgis = new ArrayList<>();
-                Log.e("DATA PULLED", snapshot.getValue(GroceryTrip.class).toString());
+//                Log.e("DATA PULLED", snapshot.getValue(GroceryTrip.class).toString());
                 GroceryTrip groceryTrip = snapshot.getValue(GroceryTrip.class);
                 adapter.setCurrentGroceryItems((ArrayList<GroceryItem>) groceryTrip.getGroceryItems());
                 adapter.notifyDataSetChanged();

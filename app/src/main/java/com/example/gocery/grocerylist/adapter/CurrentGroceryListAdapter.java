@@ -48,6 +48,10 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         this.groceryItems = groceryItems;
     }
 
+    public List<GroceryItem> getGroceryItems() {
+        return groceryItems;
+    }
+
     @Override
     public int getCount() {
         return groceryItems.size();
@@ -85,6 +89,8 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         TextView itemAmount = convertView.findViewById(R.id.tv_itemAmount);
         ImageView itemImage = convertView.findViewById(R.id.iv_imageItem);
         TextView requesterName = convertView.findViewById(R.id.tv_requestedUser);
+        TextView locationName = convertView.findViewById(R.id.tv_locationName);
+        ImageView locationIcon = convertView.findViewById(R.id.iv_locationIcon);
 
 
         // Set the items
@@ -119,6 +125,15 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
                         .into(itemImage);
                 }
             });
+        }
+
+        if(gi.getLocationID()!=null){
+            locationName.setVisibility(View.VISIBLE);
+            locationIcon.setVisibility(View.VISIBLE);
+            locationName.setText(gi.getLocationName());
+        }else{
+            locationName.setVisibility(View.GONE);
+            locationIcon.setVisibility(View.GONE);
         }
 
         holder.checkBox.setOnClickListener(v->{

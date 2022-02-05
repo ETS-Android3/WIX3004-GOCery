@@ -25,11 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.NHFMain);
 //        NavController navController = host.getNavController();
-    }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
+
         NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.NHFMain);
         NavController navController = host.getNavController();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -39,6 +36,21 @@ public class MainActivity extends AppCompatActivity {
         else{
             navController.navigate(R.id.DestLanding);
         }
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+//        NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.NHFMain);
+//        NavController navController = host.getNavController();
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if(user != null){
+//            navController.navigate(R.id.DestSelectProfile);
+//        }
+//        else{
+//            navController.navigate(R.id.DestLanding);
+//        }
     }
 
 

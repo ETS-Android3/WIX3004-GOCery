@@ -16,6 +16,9 @@
         <action
             android:id="@+id/nav_viewCompletedGroceryTrip"
             app:destination="@id/groceryTripHistoryFragment" />
+        <action
+            android:id="@+id/nav_sstartShopping"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/addGroceryItemFragment"
@@ -25,6 +28,9 @@
         <action
             android:id="@+id/nav_groceryItemAdded"
             app:destination="@id/currentGroceryListFragment" />
+        <action
+            android:id="@+id/nav_selectLocation_add"
+            app:destination="@id/selectLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/currentGroceryListFragment"
@@ -40,6 +46,9 @@
         <action
             android:id="@+id/nav_updateGroceryItem"
             app:destination="@id/updateGroceryItemFragment" />
+        <action
+            android:id="@+id/nav_startMapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/finalizeGroceryListFragement"
@@ -59,5 +68,25 @@
         <action
             android:id="@+id/nav_groceryItemUpdated"
             app:destination="@id/currentGroceryListFragment" />
+        <action
+            android:id="@+id/nav_selectLocation_update"
+            app:destination="@id/selectLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.gocery.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/selectLocationFragment"
+        android:name="com.example.gocery.map.SelectLocationFragment"
+        android:label="fragment_select_location"
+        tools:layout="@layout/fragment_select_location" >
+        <action
+            android:id="@+id/nav_LocationSelected_add"
+            app:destination="@id/addGroceryItemFragment" />
+        <action
+            android:id="@+id/nav_LocationSelected_update"
+            app:destination="@id/updateGroceryItemFragment" />
     </fragment>
 </navigation>

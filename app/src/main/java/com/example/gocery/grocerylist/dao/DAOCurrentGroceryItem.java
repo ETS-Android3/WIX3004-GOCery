@@ -72,12 +72,13 @@ public class DAOCurrentGroceryItem {
 
         //update image
         if(imagePath != null){
+            Log.e("UPDATE", "IMAGE PATH != NULL" );
             if(hashMap.get("image") != null){
+                Log.e("UPDATE", "HASHMAP.GET() != NULL" );
                 storageReference.child(hashMap.get("image").toString()).delete();
             }
             hashMap.put("image", imagePath);
         }
-
         return databaseReference.child(currentUser).child(key).updateChildren(hashMap);
     }
 
@@ -97,6 +98,10 @@ public class DAOCurrentGroceryItem {
 
     public Query getSingle(String item_key){
         return databaseReference.child(currentUser).child(item_key);
+    }
+
+    public Query getTickedItems(){
+        return databaseReference.child(currentUser).orderByChild("status").equalTo(true);
     }
 
 

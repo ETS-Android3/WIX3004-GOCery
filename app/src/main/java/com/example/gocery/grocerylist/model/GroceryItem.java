@@ -13,8 +13,8 @@ public class GroceryItem {
     private int quantity;
     private String description;
     private String image;
-    private String locationLat;
-    private String locationLong;
+    private String locationName;
+    private String locationID;
     private String createdBy;
     private Boolean status;
 
@@ -26,14 +26,26 @@ public class GroceryItem {
                        Boolean status,
                        @Nullable String description,
                        @Nullable String image,
-                       @Nullable String locationLat,
-                       @Nullable String locationLong) {
+                       @Nullable String locationName,
+                       @Nullable String locationID) {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
         this.image = image;
-        this.locationLat = locationLat;
-        this.locationLong = locationLong;
+        this.locationName = locationName;
+        this.locationID = locationID;
+        this.status = status;
+    }
+
+    public GroceryItem(String name,
+                       int quantity,
+                       Boolean status,
+                       @Nullable String description,
+                       @Nullable String image) {
+        this.name = name;
+        this.quantity = quantity;
+        this.description = description;
+        this.image = image;
         this.status = status;
     }
 
@@ -69,20 +81,20 @@ public class GroceryItem {
         this.image = image;
     }
 
-    public String getLocationLat() {
-        return locationLat;
+    public String getLocationName() {
+        return locationName;
     }
 
-    public void setLocationLat(String locationLat) {
-        this.locationLat = locationLat;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
-    public String getLocationLong() {
-        return locationLong;
+    public String getLocationID() {
+        return locationID;
     }
 
-    public void setLocationLong(String locationLong) {
-        this.locationLong = locationLong;
+    public void setLocationID(String locationID) {
+        this.locationID = locationID;
     }
 
     public Boolean getStatus() {
@@ -117,8 +129,8 @@ public class GroceryItem {
                 ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
-                ", locationLat='" + locationLat + '\'' +
-                ", locationLong='" + locationLong + '\'' +
+                ", locationLat='" + locationName + '\'' +
+                ", locationLong='" + locationID + '\'' +
                 ", status=" + status +
                 '}';
     }

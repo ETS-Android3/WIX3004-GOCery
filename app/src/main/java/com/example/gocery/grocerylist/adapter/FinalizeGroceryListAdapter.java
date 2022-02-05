@@ -63,7 +63,6 @@ public class FinalizeGroceryListAdapter extends BaseAdapter {
         return 0;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -78,6 +77,8 @@ public class FinalizeGroceryListAdapter extends BaseAdapter {
         TextView itemDesc = convertView.findViewById(R.id.tv_itemDesc);
         TextView itemAmount = convertView.findViewById(R.id.tv_itemAmount);
         ImageView itemImage = convertView.findViewById(R.id.iv_imageItem);
+        TextView locationName = convertView.findViewById(R.id.tv_locationName);
+        ImageView locationIcon = convertView.findViewById(R.id.iv_locationIcon);
 
 
         // Set the items
@@ -88,6 +89,15 @@ public class FinalizeGroceryListAdapter extends BaseAdapter {
             itemDesc.setText(gi.getDescription());
         }else {
             itemDesc.setVisibility(View.GONE);
+        }
+
+        if(gi.getLocationID()!=null){
+            locationName.setVisibility(View.VISIBLE);
+            locationIcon.setVisibility(View.VISIBLE);
+            locationName.setText(gi.getLocationName());
+        }else{
+            locationName.setVisibility(View.GONE);
+            locationIcon.setVisibility(View.GONE);
         }
 
 
