@@ -141,6 +141,10 @@ public class AddGroceryItemFragment extends Fragment {
                         );
 
                         groceryItem.setCreatedBy(creatorName);
+                        if(locationID != null){
+                            groceryItem.setLocationID(locationID);
+                            groceryItem.setLocationName(locationName);
+                        }
 
                         dao.add(groceryItem).addOnSuccessListener(suc->{
                             if(progressDialog.isShowing()){
@@ -172,11 +176,11 @@ public class AddGroceryItemFragment extends Fragment {
         btnAttachImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                selectImage();
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_IMAGE);
+                selectImage();
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(intent, REQUEST_IMAGE);
             }
         });
 
@@ -254,18 +258,18 @@ public class AddGroceryItemFragment extends Fragment {
 
 
     public void selectImage(){
-//        Intent intent = new Intent();
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_IMAGE);
+
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("Image", data.getData().toString()+"|"+requestCode);
         if(requestCode == REQUEST_IMAGE && data != null && data.getData() != null){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);

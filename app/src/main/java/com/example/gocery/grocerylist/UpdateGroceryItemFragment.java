@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -42,23 +43,26 @@ public class UpdateGroceryItemFragment extends Fragment {
 
     FloatingActionButton btnSave;
     FirebaseStorage firebaseStorage;
-    Button btnAttachImage;
+    Button btnAttachImage, btnAttachLocation;
     TextInputEditText itemName, itemQuantity, itemDesc;
+    TextView itemLocation;
 
     GroceryItem groceryItem;
     String itemKey;
 
     final int REQUEST_IMAGE = 1;
     Uri imageUri;
+    String imageURL;
     ImageView imageView;
-    String oldImagePath;
 
+    String locationName, locationID;
 
     // database and storage
     DAOCurrentGroceryItem dao;
     StorageReference storageReference;
     ProgressDialog progressDialog;
 
+    HashMap<String, Object> tempGroceryItem;
 
 
     @Override
@@ -69,7 +73,7 @@ public class UpdateGroceryItemFragment extends Fragment {
         itemName = view.findViewById(R.id.tiet_itemName);
         itemQuantity = view.findViewById(R.id.tiet_itemQuantity);
         itemDesc = view.findViewById(R.id.tiet_itemDescription);
-//        locationData = view.findViewById(R.id.et_locationData);
+        itemLocation = view.findViewById(R.id.tv_locationName);
 
         btnAttachImage = view.findViewById(R.id.btn_attachImage);
         imageView = view.findViewById(R.id.iv_itemImagePreview);
@@ -113,7 +117,14 @@ public class UpdateGroceryItemFragment extends Fragment {
                             hashMap.put("name", itemName.getText().toString());
                             hashMap.put("quantity", Integer.parseInt(itemQuantity.getText().toString()));
                             hashMap.put("description", itemDesc.getText().toString());
-                            hashMap.put("image", groceryItem.getImage());
+                            hashMap.put("image", imageURL);
+
+                            Log.e("HASHMAP", hashMap.toString());
+
+                            if(locationID != null){
+                                hashMap.put("locationName", locationName);
+                                hashMap.put("locationID", locationID);
+                            }
 
                             DAOCurrentGroceryItem dao = new DAOCurrentGroceryItem();
                             dao.update(itemKey, hashMap, fileName).addOnSuccessListener(succ -> {
@@ -141,6 +152,13 @@ public class UpdateGroceryItemFragment extends Fragment {
                         hashMap.put("name", itemName.getText().toString());
                         hashMap.put("quantity", Integer.parseInt(itemQuantity.getText().toString()));
                         hashMap.put("description", itemDesc.getText().toString());
+
+                        Log.e("HASHMAP", hashMap.toString());
+                        if(locationID != null){
+                            hashMap.put("locationName", locationName);
+                            hashMap.put("locationID", locationID);
+                        }
+
 
                         DAOCurrentGroceryItem dao = new DAOCurrentGroceryItem();
                         dao.update(itemKey, hashMap, null).addOnSuccessListener(succ -> {
@@ -173,21 +191,59 @@ public class UpdateGroceryItemFragment extends Fragment {
             }
         });
 
+        btnAttachLocation = view.findViewById(R.id.btn_attachLocation);
+        btnAttachLocation.setOnClickListener(v -> {
+
+            HashMap<String, Object> tempGroceryItem = new HashMap<>();
+
+            tempGroceryItem.put("name", itemName.getText().toString());
+            tempGroceryItem.put("quantity", Integer.parseInt(itemQuantity.getText().toString().isEmpty() ? "0" : itemQuantity.getText().toString()));
+            tempGroceryItem.put("desc", itemDesc.getText().toString());
+            tempGroceryItem.put("img", imageUri);
+            tempGroceryItem.put("imageURL", imageURL);
+            tempGroceryItem.put("key", itemKey);
+
+
+            // to tell where to go next
+            tempGroceryItem.put("PREV_PAGE", (String) "update_item");
+
+            // Pass data to the update item
+            Bundle result = new Bundle();
+            result.putSerializable("GROCERY_HASHMAP", tempGroceryItem);
+            getParentFragmentManager().setFragmentResult("TEMP_GROCERY_ITEM", result);
+            Navigation.findNavController(view).navigate(R.id.nav_selectLocation_update);
+        });
+
+        getParentFragmentManager().setFragmentResultListener("SELECTED_LOCATION", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                tempGroceryItem = (HashMap<String, Object>) result.get("GROCERY_HASHMAP");
+
+
+                itemName.setText((String) tempGroceryItem.get("name"));
+                itemQuantity.setText(""+tempGroceryItem.get("quantity"));
+                itemDesc.setText((String) tempGroceryItem.get("desc"));
+                itemLocation.setText((String) tempGroceryItem.get("locationName"));
+                locationID = (String) tempGroceryItem.get("locationID");
+                locationName = (String) tempGroceryItem.get("locationName");
+                itemKey = (String) tempGroceryItem.get("key");
+
+                if (tempGroceryItem.get("img")!=null){
+                    imageUri = (Uri) tempGroceryItem.get("img");
+                    imageView.setImageURI(imageUri);
+                }else if(tempGroceryItem.get("imageURL")!= null){
+                    loadImage((String) tempGroceryItem.get("imageURL"));
+                }
+
+
+                Log.e("Passed Data LS",tempGroceryItem.toString());
+            }
+        });
+
 
     }
 
-//    private void saveData(View v) {
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//
-//        hashMap.put("name", itemName.getText().toString());
-//        hashMap.put("quantity", Integer.parseInt(itemQuantity.getText().toString()));
-//        hashMap.put("description", itemDesc.getText().toString());
-//
-//        DAOCurrentGroceryItem dao = new DAOCurrentGroceryItem();
-//        dao.update(this.itemKey, hashMap).addOnFailureListener(er->{
-//            Toast.makeText(v.getContext(), "Error", Toast.LENGTH_SHORT).show();
-//        });
-//    }
+
 
     private void setItemData(String item_key) {
         this.itemKey = item_key;
@@ -201,19 +257,13 @@ public class UpdateGroceryItemFragment extends Fragment {
 
                 // firebase image
                 if(groceryItem.getImage() != null){
-                    FirebaseApp firebaseApp = FirebaseApp.initializeApp(getContext());
-                    firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
-                    StorageReference storageReference = firebaseStorage.getReference();
-                    storageReference.child(""+groceryItem.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Glide.with(getContext())
-                                    .load(uri)
-                                    .placeholder(R.drawable.spinning_loading)
-                                    .error(R.drawable.gocery_logo_only)
-                                    .into(imageView);
-                        }
-                    });
+                    loadImage(groceryItem.getImage());
+                }
+
+                if(groceryItem.getLocationID() != null){
+                    locationID = groceryItem.getLocationID();
+                    locationName = groceryItem.getLocationName();
+                    itemLocation.setText(locationName);
                 }
             }
 
@@ -222,9 +272,23 @@ public class UpdateGroceryItemFragment extends Fragment {
 
             }
         });
+    }
 
-
-
+    private void loadImage(String URL){
+        imageURL = URL;
+        FirebaseApp firebaseApp = FirebaseApp.initializeApp(getContext());
+        firebaseStorage = FirebaseStorage.getInstance(firebaseApp);
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child(URL).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext())
+                        .load(uri)
+                        .placeholder(R.drawable.spinning_loading)
+                        .error(R.drawable.gocery_logo_only)
+                        .into(imageView);
+            }
+        });
     }
 
     private boolean validate(View v){
