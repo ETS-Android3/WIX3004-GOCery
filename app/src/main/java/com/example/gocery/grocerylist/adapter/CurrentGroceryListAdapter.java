@@ -48,6 +48,10 @@ public class CurrentGroceryListAdapter extends BaseAdapter {
         this.groceryItems = groceryItems;
     }
 
+    public List<GroceryItem> getGroceryItems() {
+        return groceryItems;
+    }
+
     @Override
     public int getCount() {
         return groceryItems.size();

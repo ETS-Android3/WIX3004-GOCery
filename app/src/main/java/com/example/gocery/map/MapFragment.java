@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,10 +22,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import com.example.gocery.R;
 import com.example.gocery.map.adapter.DirectionListAdapter;
-import com.example.gocery.map.adapter.LocationListAdapter;
 import com.example.gocery.map.object.Route;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -41,9 +41,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,15 +66,10 @@ import java.util.List;
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
 
     private GoogleMap mMap;
-    //    private ActivityMapsBinding binding;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    private static int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     ArrayList<Place> placeArrayList = new ArrayList<Place>();
     ArrayList<Route> routeArrayList = new ArrayList<Route>();
@@ -88,12 +83,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public static MapFragment newInstance(String param1, String param2) {
         MapFragment fragment = new MapFragment();
         Bundle args = new Bundle();
-
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -130,6 +119,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //            });
 //        }
 
+        getParentFragmentManager().setFragmentResultListener("locations", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                // add each places into the arraylist
+                ArrayList<String> placesArrayList = (ArrayList<String>) result.get("LOCATIONS");
+                if(placesArrayList != null || placesArrayList.size() > 0){
+                    for( String placeID: placesArrayList){
+                        final List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+                        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeID, placeFields);
+                        placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
+                            Place place = response.getPlace();
+                            addLocation(place);
+                        });
+                    }
+                }
+//                Toast.makeText(getContext(), "RECEIVED: "+ result.get("LOCATIONS"), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         ActivityResultLauncher<Intent> autoCompleteActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -141,29 +149,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         }
                     }
                 });
-
-        Button BTNSetLocation = (Button) getView().findViewById(R.id.BTNSetLocation);
-        BTNSetLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // Set the fields to specify which types of place data to
-                // return after the user has made a selection.
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
-
-                // Start the autocomplete intent.
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-                        .build(getActivity());
-//                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-                autoCompleteActivityResultLauncher.launch(intent);
-            }
-        });
-//        getLastLocation();
+//
+//        Button BTNSetLocation = (Button) getView().findViewById(R.id.BTNSetLocation);
+//        BTNSetLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                // Set the fields to specify which types of place data to
+//                // return after the user has made a selection.
+//                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+//
+//                // Start the autocomplete intent.
+//                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+//                        .build(getActivity());
+//                autoCompleteActivityResultLauncher.launch(intent);
+//            }
+//        });
+        getLastLocation();
 
         // Create the two listviews, one for getting the list of location, another for the directions.
-        ListView LVLocations = (ListView) getView().findViewById(R.id.LVLocations);
-        LocationListAdapter locationListAdapter = new LocationListAdapter(getActivity(), R.layout.location_list, placeArrayList, this);
-        LVLocations.setAdapter(locationListAdapter);
+//        ListView LVLocations = (ListView) getView().findViewById(R.id.LVLocations);
+//        LocationListAdapter locationListAdapter = new LocationListAdapter(getActivity(), R.layout.location_list, placeArrayList, this);
+//        LVLocations.setAdapter(locationListAdapter);
 
         ListView LVDistance = (ListView) getView().findViewById(R.id.LVDistance);
         directionListAdapter = new DirectionListAdapter(getActivity(), R.layout.direction_list, routeArrayList);
@@ -174,22 +181,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-        SupportMapFragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mMapFragment.getMapAsync(this);
+//        SupportMapFragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        mMapFragment.getMapAsync(this);
         return v;
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-//        markerOne = mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)));
-//        markerTwo = mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)));
-//        markerTwo.setVisible(false);
-//        markerOne.setVisible(false);
 
-//        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+        mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
             return;
@@ -231,16 +235,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     // Call this method to redraw the map anytime the data is updated.
     private void refreshMap(){
         mMap.clear();
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+        mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
         if(!markerOptionsArrayList.isEmpty()){
             for (MarkerOptions markerOptions : markerOptionsArrayList){
                 mMap.addMarker(markerOptions);
             }
             MarkerOptions markerOne = markerOptionsArrayList.get(markerOptionsArrayList.size() - 1);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(markerOne.getPosition()));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerOne.getPosition(), 12));
         }
-        //Make a new route if there's more than 2 locations
-        if(markerOptionsArrayList.size() > 1){
+        //Make a new route if there's at least 1 location.
+        if(markerOptionsArrayList.size() > 0){
             createRoute();
         }
     }
@@ -248,14 +255,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     // Method to prepare URL to get directions from Google Directions API
     private String getRequestUrl(ArrayList<Place> placeArrayList) {
         //Value of origin
-        String str_org = "origin=place_id:" + placeArrayList.get(0).getId();
+        String str_org = "origin=" + currentLocation.getLatitude() + "," + currentLocation.getLongitude();
         //Value of destination
         String str_dest = "destination=place_id:" + placeArrayList.get(placeArrayList.size()-1).getId();
-        //Value of inbetween stops
+        //Value of in between stops
         String str_waypoints = "";
-        if(placeArrayList.size() > 2){
+        if(placeArrayList.size() > 1){
             str_waypoints = "&waypoints=";
-            for (int i = 1; i < placeArrayList.size() - 1; i++){
+            for (int i = 0; i < placeArrayList.size() - 1; i++){
                 str_waypoints += "place_id:" + placeArrayList.get(i).getId();
                 if(i != placeArrayList.size() - 1){
                     str_waypoints += "|";
@@ -325,7 +332,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             public void onSuccess(Location location) {
                 if (location != null) {
                     currentLocation = location;
-                    Toast.makeText(getActivity(), currentLocation.getLatitude() + ", " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), currentLocation.getLatitude() + ", " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                     if (supportMapFragment != null) {
                         supportMapFragment.getMapAsync(MapFragment.this);
@@ -397,7 +404,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             //Replace each destination with the proper one
             for(int i = 0; i < lists.size(); i++){
                 Route route = lists.get(i);
-                route.setDestination(placeArrayList.get(i+1).getName());
+                route.setDestination(placeArrayList.get(i).getName());
                 routeArrayList.add(route);
             }
 
