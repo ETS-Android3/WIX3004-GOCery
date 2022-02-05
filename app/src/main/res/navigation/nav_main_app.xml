@@ -25,8 +25,8 @@
     <fragment
         android:id="@+id/groceryHomeFragment"
         android:name="com.example.gocery.grocerylist.GroceryHomeFragment"
-        android:label="fragment_grocery_home"
-        tools:layout="@layout/fragment_grocery_home" >
+        android:label="Home"
+        tools:layout="@layout/fragment_grocery_home">
         <action
             android:id="@+id/nav_viewCurrentGroceryList"
             app:destination="@id/currentGroceryListFragment" />
@@ -40,8 +40,8 @@
     <fragment
         android:id="@+id/addGroceryItemFragment"
         android:name="com.example.gocery.grocerylist.AddGroceryItemFragment"
-        android:label="fragment_add_grocery_item"
-        tools:layout="@layout/fragment_add_grocery_item" >
+        android:label="Add Grocery Item"
+        tools:layout="@layout/fragment_add_grocery_item">
         <action
             android:id="@+id/nav_groceryItemAdded"
             app:destination="@id/currentGroceryListFragment" />
@@ -52,8 +52,8 @@
     <fragment
         android:id="@+id/currentGroceryListFragment"
         android:name="com.example.gocery.grocerylist.CurrentGroceryListFragment"
-        android:label="fragment_current_grocery_list"
-        tools:layout="@layout/fragment_current_grocery_list" >
+        android:label="Current Grocery List"
+        tools:layout="@layout/fragment_current_grocery_list">
         <action
             android:id="@+id/nav_addNewGroceryItem"
             app:destination="@id/addGroceryItemFragment" />
@@ -70,18 +70,18 @@
     <fragment
         android:id="@+id/finalizeGroceryListFragement"
         android:name="com.example.gocery.grocerylist.FinalizeGroceryListFragement"
-        android:label="fragment_finalize_grocery_list"
+        android:label="Complete Trip"
         tools:layout="@layout/fragment_finalize_grocery_list" />
     <fragment
         android:id="@+id/groceryTripHistoryFragment"
         android:name="com.example.gocery.grocerylist.GroceryTripHistoryFragment"
-        android:label="fragment_grocery_trip_history"
+        android:label="Trip History"
         tools:layout="@layout/fragment_grocery_trip_history" />
     <fragment
         android:id="@+id/updateGroceryItemFragment"
         android:name="com.example.gocery.grocerylist.UpdateGroceryItemFragment"
-        android:label="fragment_update_grocery_item"
-        tools:layout="@layout/fragment_update_grocery_item" >
+        android:label="Update Grocery Item"
+        tools:layout="@layout/fragment_update_grocery_item">
         <action
             android:id="@+id/nav_groceryItemUpdated"
             app:destination="@id/currentGroceryListFragment" />
@@ -92,13 +92,13 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.gocery.map.MapFragment"
-        android:label="fragment_map"
+        android:label="Show Map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/selectLocationFragment"
         android:name="com.example.gocery.map.SelectLocationFragment"
-        android:label="fragment_select_location"
-        tools:layout="@layout/fragment_select_location" >
+        android:label="Select Location"
+        tools:layout="@layout/fragment_select_location">
         <action
             android:id="@+id/nav_LocationSelected_add"
             app:destination="@id/addGroceryItemFragment" />

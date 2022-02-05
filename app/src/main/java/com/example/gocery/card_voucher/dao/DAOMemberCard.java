@@ -2,6 +2,7 @@ package com.example.gocery.card_voucher.dao;
 
 import com.example.gocery.card_voucher.model.MemberCard;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -11,10 +12,12 @@ import java.util.HashMap;
 public class DAOMemberCard {
 
     private DatabaseReference dbRef;
+    private String currentUser;
 
     public DAOMemberCard(){
+        currentUser = "user_"+ FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        dbRef = db.getReference("MemberCard");
+        dbRef = db.getReference("MemberCard").child(currentUser);
     }
 
     public Task<Void> addMemberCard(MemberCard memCd) {

@@ -7,6 +7,116 @@
     android:layout_height="match_parent"
     tools:context=".grocerylist.UpdateGroceryItemFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/ContentMargin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="UPDATE ITEM"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="20dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:textColor="@color/black"/>-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_itemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ItemMargin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Item Name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_itemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_green"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_itemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ItemMargin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Quantity">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_itemQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_green"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_itemDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ItemMargin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Descripton">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_itemDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:backgroundTint="@color/primary_green"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:layout_gravity="center"
+                android:backgroundTint="@color/primary_green"
+                android:id="@+id/iv_itemImagePreview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                tools:src="@drawable/ic_baseline_image_24" />
+            <Button
+                android:id="@+id/btn_attachImage"
+                android:layout_gravity="center"
+                android:text="Select Image"
+                android:backgroundTint="@color/primary_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/tv_locationName"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="(No Location Selected)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_attachLocation"
+                android:layout_gravity="center"
+                android:text="Select Location"
+                android:backgroundTint="@color/primary_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabtn_groceryUpdate_save"
         android:layout_width="wrap_content"
@@ -21,109 +131,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/ContentMargin"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="UPDATE ITEM"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginBottom="15dp"
-            android:textColor="@color/black"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_itemName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ItemMargin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Item Name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_itemName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_green"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_itemQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ItemMargin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Quantity">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_itemQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_green"
-                android:inputType="numberDecimal" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_itemDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ItemMargin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Descripton">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_itemDescription"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:backgroundTint="@color/primary_green"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:layout_gravity="center"
-            android:backgroundTint="@color/primary_green"
-            android:id="@+id/iv_itemImagePreview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            tools:src="@drawable/ic_baseline_image_24" />
-        <Button
-            android:id="@+id/btn_attachImage"
-            android:layout_gravity="center"
-            android:text="Select Image"
-            android:backgroundTint="@color/primary_green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/tv_locationName"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:text="(No Location Selected)"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btn_attachLocation"
-            android:layout_gravity="center"
-            android:text="Select Location"
-            android:backgroundTint="@color/primary_green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,24 +23,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fbtn_goToVoucher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
 
-        android:src="@drawable/ic_voucher_filled"
-
-        app:backgroundTint="#FFC107"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fbtn_saveShoppingList"
-        app:tint="@android:color/white"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
 <!--        android:id="@+id/swipe_finalizeShoppingList"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->

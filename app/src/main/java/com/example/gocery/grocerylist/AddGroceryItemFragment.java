@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.gocery.R;
 
+import com.example.gocery.authentication.CurrentProfile;
 import com.example.gocery.grocerylist.dao.DAOCurrentGroceryItem;
 import com.example.gocery.grocerylist.model.GroceryItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,7 +49,7 @@ public class AddGroceryItemFragment extends Fragment {
     final int REQUEST_IMAGE = 999;
     Uri imageUri;
     ImageView imageView;
-    String locationName, locationID;
+    String locationName, locationID, current_user_profile;
 
     FloatingActionButton btnSave;
     Button btnAttachImage, btnAttachLocation;
@@ -77,9 +78,9 @@ public class AddGroceryItemFragment extends Fragment {
 
         dao = new DAOCurrentGroceryItem();
 
+
+
         btnSave = view.findViewById(R.id.fabtn_groceryAdd_save);
-
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +90,8 @@ public class AddGroceryItemFragment extends Fragment {
                 progressDialog.show();
 
                 if(validate(v)){
-                    String creatorName = "CREATOR_NAME";
+
+                    String creatorName = "CREATOR";
 
                     if(imageUri != null){
                         String currentUser = "user_"+ FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -108,7 +110,10 @@ public class AddGroceryItemFragment extends Fragment {
                                     fileName
                             );
 
-                            groceryItem.setCreatedBy(creatorName);
+
+                            CurrentProfile currentProfile = CurrentProfile.getInstance();
+                            groceryItem.setCreatedBy(currentProfile.getProfileName());
+
                             if(locationID != null){
                                 groceryItem.setLocationID(locationID);
                                 groceryItem.setLocationName(locationName);
@@ -144,7 +149,9 @@ public class AddGroceryItemFragment extends Fragment {
                                 null
                         );
 
-                        groceryItem.setCreatedBy(creatorName);
+                        CurrentProfile currentProfile = CurrentProfile.getInstance();
+                        groceryItem.setCreatedBy(currentProfile.getProfileName());
+
                         if(locationID != null){
                             groceryItem.setLocationID(locationID);
                             groceryItem.setLocationName(locationName);

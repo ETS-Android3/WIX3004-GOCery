@@ -66,7 +66,14 @@ public class SelectProfileFragment extends Fragment {
                 else{
                     //Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
 //                    Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+
+                    //Bundle to save current user's profile
+                    CurrentProfile currentProfile = CurrentProfile.getInstance();
+                    currentProfile.setProfileName(userProfile.getUsername());
+
+
                     Intent intent = new Intent(getActivity(), MainApp.class);
+                    intent.putExtra("CURRENT_PROFILE", userProfile.getUsername());
                     startActivity(intent);
                     ((Activity) getActivity()).overridePendingTransition(0, 0);
                     Toast.makeText(getActivity(), "Welcome "+userProfile.getUsername(), Toast.LENGTH_SHORT).show();
