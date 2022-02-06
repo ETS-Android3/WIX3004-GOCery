@@ -23,9 +23,4 @@
         android:title="OCR"
         android:icon="@drawable/ic_ocr"
     />
-    <item
-        android:id="@id/DestManageHousehold2"
-        android:title="Household"
-        android:icon="@android:drawable/ic_menu_manage"
-    />
 </menu>

@@ -136,7 +136,7 @@ public class EditProfileFragment extends Fragment {
     private void setProfileData(String profileKey){
         this.profileKey = profileKey;
         if(profileKey != null){
-            daoProfile.getSingle(profileKey).addValueEventListener(new ValueEventListener() {
+            daoProfile.getSingle(profileKey).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     userProfile = snapshot.getValue(UserProfile.class);

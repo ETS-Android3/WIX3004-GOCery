@@ -25,6 +25,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.sql.Timestamp;
+
 public class SignUpFragment extends Fragment {
 
     TextInputEditText ETSignUpEmail;
@@ -111,7 +113,7 @@ public class SignUpFragment extends Fragment {
 
     public void createDefaultProfile(String userID){
         DAOProfile daoProfile = new DAOProfile();
-        UserProfile userProfile = new UserProfile("User", "default.jpg", null, false, false);
+        UserProfile userProfile = new UserProfile("User", "member_profile/default.png", "", false, false);
         daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
             Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
         }).addOnFailureListener(err -> {

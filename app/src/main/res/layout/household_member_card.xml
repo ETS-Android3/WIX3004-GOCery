@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/CVHousehold"
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginBottom="20dp"
-    android:layout_marginStart="103dp"
-    android:layout_marginTop="7dp"
-    android:layout_marginEnd="56dp"
+    android:layout_margin="50dp"
+    android:padding="10dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/TVLabelAddress"
-    style="@style/household_cards"
-    >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:textAlignment="center"
-    >
+    app:layout_constraintTop_toBottomOf="@+id/TVLabelAddress">
 
 
         <androidx.cardview.widget.CardView
@@ -30,17 +17,15 @@
             android:layout_height="70dp"
             android:layout_marginLeft="15dp"
             android:elevation="10dp"
-            app:cardCornerRadius="35dp"
-        >
+            app:cardCornerRadius="35dp">
 
             <ImageView
                 android:id="@+id/IVProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
                 android:contentDescription="Profile picture"
-                android:src="@mipmap/ic_launcher"
-            />
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher" />
 
         </androidx.cardview.widget.CardView>
 
@@ -48,33 +33,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-        >
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/TVProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Father"
                 android:gravity="center_vertical"
+                android:text="Father"
+                android:textColor="@color/dark_gray"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/dark_gray"
-
             />
+
             <ImageView
                 android:id="@+id/IVLock"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                app:srcCompat="@drawable/ic_baseline_lock_24"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-            />
+                app:srcCompat="@drawable/ic_baseline_lock_24" />
 
         </LinearLayout>
 
-
-    </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

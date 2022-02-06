@@ -8,8 +8,8 @@
         android:icon="@drawable/ic_home_outline"
         />
     <item
-        android:id="@id/expenseHomeFragment"
-        android:title="Expenses"
+        android:id="@id/DestManageHousehold2"
+        android:title="Manage Household"
         android:icon="@android:drawable/ic_menu_manage"
     />
 </menu>

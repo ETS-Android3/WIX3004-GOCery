@@ -13,10 +13,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,13 +28,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainApp extends AppCompatActivity {
     FirebaseAuth mAuth;
+    Button BTNLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app);
         mAuth = FirebaseAuth.getInstance();
-
+        BTNLogout = findViewById(R.id.BTNLogout);
         //Toolbar Configuration
         Toolbar toolbar = findViewById(R.id.TBMainAct);
         setSupportActionBar(toolbar);
@@ -50,15 +53,15 @@ public class MainApp extends AppCompatActivity {
         // Bind toolbar with navController
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+        setupSideNavMenu(navController);
         // BOTTOM NAVIGATION MENU CONFIGURATION
         // Set up bottom navigation menu
         setupBottomNavMenu(navController);
 
         // HAMBURGER/SIDEBAR CONFIGURATION
-//        DrawerLayout drawerLayout = findViewById(R.id.DLMain);
+        DrawerLayout drawerLayout = findViewById(R.id.DLMain);
         // This code adds a drawer listener to open and close the
-//        // drawer when the hamburger icon is clicked
+        // drawer when the hamburger icon is clicked
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 //            @Override
 //            public void onDrawerOpened(View drawerView) {
@@ -73,7 +76,13 @@ public class MainApp extends AppCompatActivity {
 //        };
 //        drawerLayout.addDrawerListener(toggle);
 //        toggle.syncState();
-        setupSideNavMenu(navController);
+
+        BTNLogout.setOnClickListener(v-> {
+            mAuth.signOut();
+            Toast.makeText(this, "You have been signed out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainApp.this, MainActivity.class);
+            startActivity(intent);
+        });
 //
 //
 //        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
