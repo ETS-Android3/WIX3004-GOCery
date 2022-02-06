@@ -7,6 +7,15 @@
     tools:context=".grocerylist.CurrentGroceryListFragment">
 
 
+    <ListView
+        android:id="@+id/lv_currentGroceryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ListView>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabtn_actions"
         android:layout_width="wrap_content"
@@ -99,14 +108,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/fabtn_map"
         app:layout_constraintEnd_toStartOf="@+id/fabtn_map"
         app:layout_constraintTop_toTopOf="@+id/fabtn_map"/>
-
-
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/lv_currentGroceryList">
-    </ListView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
