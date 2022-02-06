@@ -124,7 +124,7 @@ public class AddExpenseFragment extends Fragment {
             String totalCostString = Objects.requireNonNull(ETExpenseTotalCost.getText()).toString().trim();
 
             // Checking whether fields are empty or not (server-side validation)
-            if (TextUtils.isEmpty(name) && TextUtils.isEmpty(type) && TextUtils.isEmpty(desc) && TextUtils.isEmpty(date1) && TextUtils.isEmpty(totalCostString)) {
+            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(type) || TextUtils.isEmpty(desc) || TextUtils.isEmpty(date1) || TextUtils.isEmpty(totalCostString)) {
                 // If the text fields are empty then show the below message.
                 Toast.makeText(getActivity(), "Please ensure all fields are filled.", Toast.LENGTH_SHORT).show();
             } else {
