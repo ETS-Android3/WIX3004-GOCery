@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,12 +19,10 @@ import com.example.gocery.R;
 import com.example.gocery.expense_tracker.adapter.ExpensesLVAdapter;
 import com.example.gocery.expense_tracker.dao.DAOExpense;
 import com.example.gocery.expense_tracker.model.Expense;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +39,7 @@ public class ExpenseHomeFragment extends Fragment {
     ListView expensesLV;
     DAOExpense dao;
     ExpensesLVAdapter adapter;
+    TextView TVNoExpenseRecord;
 
     // For pie chart
     PieChart PCExpense;
@@ -65,12 +65,14 @@ public class ExpenseHomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        TVNoExpenseRecord = view.findViewById(R.id.TVNoExpenseRecord);
+
         // METHOD 1: Navigate Fragment using ID
         FloatingActionButton BtnAddExpense = view.findViewById(R.id.fabAddExpense);
 
         // Transition animations (https://stackoverflow.com/questions/52794596/how-to-add-animation-to-changing-fragments-using-navigation-component)
         NavOptions.Builder navBuilder = new NavOptions.Builder();
-        navBuilder.setEnterAnim(R.anim.slide_from_right).setExitAnim(R.anim.slide_to_right);
+        navBuilder.setEnterAnim(R.anim.nav_default_enter_anim).setExitAnim(R.anim.nav_default_exit_anim);
 
         // Navigation to AddExpenseFragment
         View.OnClickListener OCLAddExpense = v -> Navigation.findNavController(view).navigate(R.id.addExpenseFragment, null, navBuilder.build());
@@ -119,6 +121,7 @@ public class ExpenseHomeFragment extends Fragment {
                     .setNegativeButton("CANCEL", null)
                     .setPositiveButton("DELETE", (dialog, which) -> dao.remove(expense.getKey()).addOnSuccessListener(suc -> Toast.makeText(getActivity(), "Expense record deleted successfully.", Toast.LENGTH_SHORT).show()).addOnFailureListener(er -> Toast.makeText(getActivity(), "Error: Deletion Failed", Toast.LENGTH_SHORT).show()))
                     .show();
+
             return true;
         });
 
@@ -171,12 +174,25 @@ public class ExpenseHomeFragment extends Fragment {
                     expensePieEntry.add(new PieEntry(Objects.requireNonNull(typeAmountMap.get(type)).floatValue(), type));
                 }
 
-                // Update custom adapter
-                adapter.setExpenses(expensesList);
-                adapter.notifyDataSetChanged();
+                // Capture if no expense record available in Firebase RDB
+                if (expensesList.isEmpty()) {
+                    TVNoExpenseRecord.setVisibility(View.VISIBLE);
+                    expensesLV.setVisibility(View.GONE);
 
-                // Show pie chart
-                showPieChart(expensePieEntry);
+                    // Clear array list and pie chart and refresh
+                    expensesList.clear();
+                    PCExpense.invalidate();
+                    PCExpense.clear();
+                } else {
+                    // Update custom adapter
+                    adapter.setExpenses(expensesList);
+                    adapter.notifyDataSetChanged();
+                    TVNoExpenseRecord.setVisibility(View.GONE);
+                    expensesLV.setVisibility(View.VISIBLE);
+
+                    // Show pie chart
+                    showPieChart(expensePieEntry);
+                }
             }
 
             @Override

@@ -14,6 +14,7 @@
     <string name="expense_total_cost">Total Cost</string>
     <string name="update_expense">Update</string>
     <string name="expense_type_dropdown_menu">Choose Type</string>
+    <string name="expense_type_overview">Expense Type Overview</string>
 
     <string-array name="expense_type">
         <item>Toiletries &amp; Cosmetics</item>

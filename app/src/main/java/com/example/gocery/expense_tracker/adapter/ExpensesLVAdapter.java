@@ -92,6 +92,7 @@ public class ExpensesLVAdapter extends BaseAdapter {
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
+
         if (convertView == null) {
             // If there's no view to re-use, inflate a brand new view for row
             viewHolder = new ViewHolder();
@@ -109,6 +110,7 @@ public class ExpensesLVAdapter extends BaseAdapter {
             // View is being recycled, retrieve the viewHolder object from tag
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         // Populate the data from the data object via the viewHolder object
         // into the template view.
         viewHolder.expenseName.setText(expense.getExpenseName());
@@ -130,6 +132,8 @@ public class ExpensesLVAdapter extends BaseAdapter {
             viewHolder.expenseDateMonth.setText(month);
 
         } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
