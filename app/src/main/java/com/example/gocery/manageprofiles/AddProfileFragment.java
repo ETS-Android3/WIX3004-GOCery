@@ -59,7 +59,7 @@ public class AddProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        ETUsername = view.findViewById(R.id.ETUsername);
+        ETUsername = view.findViewById(R.id.ETAddress);
         CBAdmin = view.findViewById(R.id.CBAdmin);
         CBRep = view.findViewById(R.id.CBRep);
         SWLock = view.findViewById(R.id.SWLock);

@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.gocery.R;
@@ -71,7 +70,7 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ETUsername = view.findViewById(R.id.ETUsername);
+        ETUsername = view.findViewById(R.id.ETAddress);
         CBAdmin = view.findViewById(R.id.CBAdmin);
         CBRep = view.findViewById(R.id.CBRep);
         SWLock = view.findViewById(R.id.SWLock);
@@ -136,7 +135,6 @@ public class EditProfileFragment extends Fragment {
 
     private void setProfileData(String profileKey){
         this.profileKey = profileKey;
-        System.out.println(profileKey);
         if(profileKey != null){
             daoProfile.getSingle(profileKey).addValueEventListener(new ValueEventListener() {
                 @Override

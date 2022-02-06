@@ -31,7 +31,7 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TILUsername"
+        android:id="@+id/TILHousehold"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="354dp"
         android:layout_height="60dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/CVProfile">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ETUsername"
+            android:id="@+id/ETAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -59,7 +59,7 @@
         android:text="Roles"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TILUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/TILHousehold" />
 
 
     <CheckBox

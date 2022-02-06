@@ -5,7 +5,7 @@
     android:id="@+id/CVHousehold"
     android:layout_width="300dp"
     android:layout_height="100dp"
-    android:layout_margin="8dp"
+    android:layout_marginBottom="20dp"
     android:layout_marginStart="103dp"
     android:layout_marginTop="7dp"
     android:layout_marginEnd="56dp"

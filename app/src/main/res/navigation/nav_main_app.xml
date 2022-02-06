@@ -145,4 +145,9 @@
         android:name="com.example.gocery.manageprofiles.AddProfileFragment"
         android:label="Add Profile"
         tools:layout="@layout/fragment_add_profile" />
+    <fragment
+        android:id="@+id/DestEditHousehold"
+        android:name="com.example.gocery.manageprofiles.EditHousehold"
+        android:label="Edit Household"
+        tools:layout="@layout/fragment_edit_household" />
 </navigation>

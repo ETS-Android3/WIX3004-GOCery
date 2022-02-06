@@ -32,6 +32,7 @@
     >
 
         <TextView
+            android:id="@+id/TVAddress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Hello this is the address for the house"
