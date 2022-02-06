@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
         android:text="Expense Type Overview"
-        android:textStyle="bold" />
+        style="@style/section_title" />
 
     <!-- Card View for Pie Chart -->
     <androidx.cardview.widget.CardView
@@ -47,7 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="@string/expenses_list"
-            android:textStyle="bold" />
+            style="@style/section_title"
+            android:textSize="16sp"
+         />
 
         <TextView
             android:id="@+id/TVNoExpenseRecord"

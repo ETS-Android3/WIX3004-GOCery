@@ -13,7 +13,7 @@
         android:layout_marginStart="57dp"
         android:layout_marginTop="30dp"
         android:text="Household Address"
-        android:textSize="16sp"
+        style="@style/section_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +50,7 @@
         android:layout_marginStart="59dp"
         android:layout_marginTop="44dp"
         android:text="Family Members"
-        android:textSize="16sp"
+        style="@style/section_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CVHousehold" />
 

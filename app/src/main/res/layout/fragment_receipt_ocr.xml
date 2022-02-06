@@ -136,8 +136,8 @@
         android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="150dp"
-        android:text="@string/receipt_ocr_selected_image_title"
-        android:textStyle="bold"
+        android:text="@string/receipt_ocr_selected_image"
+        style="@style/section_title"
         app:layout_constraintBottom_toTopOf="@+id/SVOCRResult"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -171,7 +171,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginBottom="32dp"
         android:text="@string/receipt_ocr_header"
-        android:textStyle="bold"
+        style="@style/section_title"
         app:layout_constraintBottom_toTopOf="@+id/SVOCRResult"
         tools:layout_editor_absoluteX="35dp" />
 

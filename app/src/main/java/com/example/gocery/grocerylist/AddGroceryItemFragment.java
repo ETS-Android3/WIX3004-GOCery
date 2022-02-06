@@ -185,7 +185,12 @@ public class AddGroceryItemFragment extends Fragment {
         btnAttachImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                if(ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 43);
+                }else{
+                    selectImage();
+                }
             }
         });
 

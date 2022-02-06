@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.gocery.R;
 
+import com.example.gocery.authentication.CurrentProfile;
 import com.example.gocery.grocerylist.adapter.FinalizeGroceryListAdapter;
 import com.example.gocery.grocerylist.dao.DAOFinalizeGroceryList;
 import com.example.gocery.grocerylist.model.GroceryItem;
@@ -97,7 +98,8 @@ public class FinalizeGroceryListFragement extends Fragment {
                 groceryTrip = new GroceryTrip();
                 groceryTrip.setName(tripName.getText().toString());
 
-                groceryTrip.setCompletedBy("USER NAME HERE");
+                CurrentProfile currentProfile = CurrentProfile.getInstance();
+                groceryTrip.setCompletedBy(currentProfile.getProfileName());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("h:mm a, d MMMM yyyy");
                 groceryTrip.setDatetime(sdf.format(new Timestamp(System.currentTimeMillis())));

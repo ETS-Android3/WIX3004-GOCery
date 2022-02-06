@@ -5,6 +5,12 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
+    <!--  Section Titles  -->
+    <style name="section_title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="household_cards.label">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/dark_gray</item>

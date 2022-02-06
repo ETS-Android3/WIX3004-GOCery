@@ -18,9 +18,9 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:fontFamily="sans-serif"
-            android:text="MEMBER CARDS"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:text="Member Card"
+            style="@style/section_title"
+            />
 
         <TextView
             android:id="@+id/TV_label_voucher"
@@ -29,9 +29,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="350dp"
             android:fontFamily="sans-serif"
-            android:text="DISCOUNTS AND VOUCHERS"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:text="Discounts &amp; Vouchers"
+            style="@style/section_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
