@@ -54,23 +54,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CVHousehold" />
 
-    <ScrollView
+    <ListView
+        android:id="@+id/LVMembers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVLabelMembers"
-    >
-        <ListView
-            android:id="@+id/LVMembers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:orientation="vertical"
-            android:padding="20dp"
-             />
-    </ScrollView>
-
+        app:layout_constraintTop_toBottomOf="@+id/TVLabelMembers" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
