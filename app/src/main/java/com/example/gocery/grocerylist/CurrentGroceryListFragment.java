@@ -188,6 +188,7 @@ public class CurrentGroceryListFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.nav_addNewGroceryItem);
             }
         });
+
         btnCompleteGrocery.setOnClickListener(v -> {
             dao.getTickedItems().addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -203,7 +204,6 @@ public class CurrentGroceryListFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
-
         });
 
     }

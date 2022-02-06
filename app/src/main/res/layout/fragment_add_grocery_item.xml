@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/primary_green"
@@ -21,14 +20,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="15dp"-->
-<!--                android:text="ADD NEW ITEM"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="20dp"-->
-<!--                android:textStyle="bold" />-->
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="15dp"-->
+            <!--                android:text="ADD NEW ITEM"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="20dp"-->
+            <!--                android:textStyle="bold" />-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_itemName"
@@ -83,43 +82,43 @@
 
 
             <ImageView
-                android:layout_gravity="center"
-                android:backgroundTint="@color/primary_green"
                 android:id="@+id/iv_itemImagePreview"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/primary_green"
                 tools:src="@drawable/ic_baseline_image_24" />
+
             <Button
                 android:id="@+id/btn_attachImage"
-                android:layout_gravity="center"
-                android:text="Select Image"
-                android:backgroundTint="@color/primary_green"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/primary_green"
+                android:text="Select Image" />
 
             <TextView
-                android:textSize="16sp"
+                android:id="@+id/tv_locationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="5dp"
-                android:id="@+id/tv_locationName"
-                android:layout_gravity="center"
-                android:textAlignment="center"
                 android:text="(No Location Selected)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_attachLocation"
-                android:layout_gravity="center"
-                android:text="Select Location"
-                android:backgroundTint="@color/primary_green"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/primary_green"
+                android:text="Select Location" />
 
 
         </LinearLayout>
     </ScrollView>
-
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -129,11 +128,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        app:tint="@android:color/white"
-        app:backgroundTint="@color/primary_green"
         android:src="@drawable/ic_baseline_save_24_white"
+        app:backgroundTint="@color/primary_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
