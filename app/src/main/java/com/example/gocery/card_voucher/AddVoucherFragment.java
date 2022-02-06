@@ -144,7 +144,7 @@ public class AddVoucherFragment extends Fragment {
                 String vc_serial_no = et_vc_serial_no.getText().toString();
                 String vc_exp_date = et_vc_exp_date.getText().toString();
                 String vc_desc = et_vc_desc.getText().toString();
-                String vc_applied_product = et_applied_product.toString();
+                String vc_applied_product = et_applied_product.getText().toString();
 
                 String image_url = null;
 

@@ -8,6 +8,7 @@ import static java.util.Calendar.getInstance;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,16 +107,15 @@ public class UpdateExpenseFragment extends Fragment {
 
         getParentFragmentManager().setFragmentResultListener("updateExpenseFragment", this, (requestKey, result) -> {
             setItemData("" + result.get("ITEM_KEY"));
-//                Toast.makeText(getContext(), "RECEIVED: " + result.get("ITEM_KEY"), Toast.LENGTH_SHORT).show();
         });
-
+        
         BtnUpdateExpense.setOnClickListener(v -> {
+
             saveData(v);
 
             // Transition animations (https://stackoverflow.com/questions/52794596/how-to-add-animation-to-changing-fragments-using-navigation-component)
 //            NavOptions.Builder navBuilder = new NavOptions.Builder();
 //            navBuilder.setEnterAnim(R.anim.fade_scale_in).setExitAnim(R.anim.fade_scale_out);
-            Navigation.findNavController(v).navigate(R.id.expenseHomeFragment);
         });
     }
 
@@ -123,24 +123,43 @@ public class UpdateExpenseFragment extends Fragment {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         try {
-            hashMap.put("expenseName", ETExpenseName.getText().toString());
-            hashMap.put("expenseType", ACTVExpenseType.getText().toString());
-            hashMap.put("expenseDesc", ETExpenseDesc.getText().toString());
-            hashMap.put("expenseTotalCost", Float.parseFloat(ETExpenseTotalCost.getText().toString().trim()));
+            // Getting string values from EditText fields
+            String name = Objects.requireNonNull(ETExpenseName.getText()).toString().trim();
+            String type = ACTVExpenseType.getText().toString().trim();
+            String desc = Objects.requireNonNull(ETExpenseDesc.getText()).toString().trim();
+            String date = Objects.requireNonNull(ETExpenseDate.getText()).toString().trim();
+            String totalCostString = Objects.requireNonNull(ETExpenseTotalCost.getText()).toString().trim();
 
-            String date = ETExpenseDate.getText().toString().trim();
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
-            Date dateObject = formatter.parse(date);
-            String dateFormatted = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Objects.requireNonNull(dateObject));
-            hashMap.put("expenseDate", dateFormatted);
+            hashMap.put("expenseName", name);
+            hashMap.put("expenseType", type);
+            hashMap.put("expenseDesc", desc);
+            hashMap.put("expenseTotalCost", Float.parseFloat(totalCostString));
 
-            Toast.makeText(getActivity(), "Expense record updated successfully.", Toast.LENGTH_SHORT).show();
+            // Checking whether fields are empty or not (server-side validation)
+            if ((name == "" || type == "" || desc == "" || date == "" || totalCostString == "") ||
+                    (TextUtils.isEmpty(name) || TextUtils.isEmpty(type) || TextUtils.isEmpty(desc) || TextUtils.isEmpty(date) || TextUtils.isEmpty(totalCostString))) {
+                // If the text fields are empty then show the below message.
+                Toast.makeText(getActivity(), "Please ensure all fields are filled.", Toast.LENGTH_SHORT).show();
+            } else {
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
+                Date dateObject = formatter.parse(date);
+                String dateFormatted = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Objects.requireNonNull(dateObject));
+                hashMap.put("expenseDate", dateFormatted);
+
+                Toast.makeText(getActivity(), "Expense record updated successfully.", Toast.LENGTH_SHORT).show();
+
+                DAOExpense dao = new DAOExpense();
+                dao.update(this.itemKey, hashMap).addOnFailureListener(er -> Toast.makeText(v.getContext(), "Error", Toast.LENGTH_SHORT).show());
+                Navigation.findNavController(v).navigate(R.id.expenseHomeFragment);
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), "Please ensure all fields are filled.", Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException e) {
+            Toast.makeText(getActivity(), "Please ensure all fields are filled.", Toast.LENGTH_SHORT).show();
         }
-
-        DAOExpense dao = new DAOExpense();
-        dao.update(this.itemKey, hashMap).addOnFailureListener(er -> Toast.makeText(v.getContext(), "Error", Toast.LENGTH_SHORT).show());
     }
 
     private void setItemData(String item_key) {
