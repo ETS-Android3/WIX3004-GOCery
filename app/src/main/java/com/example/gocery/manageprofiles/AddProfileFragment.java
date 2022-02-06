@@ -131,11 +131,26 @@ public class AddProfileFragment extends Fragment {
 //                password = null;
 //            }
 
-            storageReference = FirebaseStorage.getInstance().getReference(fileName);
-            storageReference.putFile(imageUri).addOnSuccessListener(suc -> {
+            if(imageUri != null){
+                storageReference = FirebaseStorage.getInstance().getReference(fileName);
+                storageReference.putFile(imageUri).addOnSuccessListener(suc -> {
 
+                    DAOProfile daoProfile = new DAOProfile();
+                    UserProfile userProfile = new UserProfile(username, fileName, password, isRep, isAdmin);
+                    daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
+                        Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
+//                    Navigation.findNavController(view).navigate(R.id.DestHousehold);
+                        Navigation.findNavController(view).navigate(R.id.DestManageHousehold2);
+                    }).addOnFailureListener(err -> {
+                        Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+
+                }).addOnFailureListener(er->{
+                    Toast.makeText(getActivity(), "Upload failed image", Toast.LENGTH_SHORT).show();
+                });
+            }else{
                 DAOProfile daoProfile = new DAOProfile();
-                UserProfile userProfile = new UserProfile(username, fileName, password, isRep, isAdmin);
+                UserProfile userProfile = new UserProfile(username, "member_profile/default.png", password, isRep, isAdmin);
                 daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
                     Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
 //                    Navigation.findNavController(view).navigate(R.id.DestHousehold);
@@ -143,10 +158,8 @@ public class AddProfileFragment extends Fragment {
                 }).addOnFailureListener(err -> {
                     Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+            }
 
-            }).addOnFailureListener(er->{
-                Toast.makeText(getActivity(), "Upload failed image", Toast.LENGTH_SHORT).show();
-            });
         }
 
     }
