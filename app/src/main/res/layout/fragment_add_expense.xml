@@ -5,24 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".expense_tracker.AddExpenseFragment">
 
-    <TextView
-        android:id="@+id/TVAddExpense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="ADD NEW EXPENSE"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TILExpenseName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/TVAddExpense"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"

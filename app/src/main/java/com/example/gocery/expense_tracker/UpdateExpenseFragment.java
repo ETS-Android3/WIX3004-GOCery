@@ -134,7 +134,7 @@ public class UpdateExpenseFragment extends Fragment {
             String dateFormatted = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Objects.requireNonNull(dateObject));
             hashMap.put("expenseDate", dateFormatted);
 
-            Toast.makeText(getActivity(), "Expense record added successfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Expense record updated successfully.", Toast.LENGTH_SHORT).show();
         } catch (ParseException e) {
             e.printStackTrace();
         }

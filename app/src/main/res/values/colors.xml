@@ -25,10 +25,6 @@
     <color name="goceryTertiary">#C4C4C4</color>
 
     <!-- Expense Tracker module  -->
-    <color name="R">#FFA726</color>
-    <color name="Python">#66BB6A</color>
-    <color name="CPP">#EF5350</color>
-    <color name="Java">#29B6F6</color>
     <color name="expenses_blue">#4388E9</color>
     <color name="expenses_blue_dark">#3E76D5</color>
     <color name="expenses_red">#E44343</color>
@@ -56,5 +52,5 @@
     <color name="text_primary_light">#FFF</color>        <!-- 100% - Primary text light on dark background -->
     <color name="text_secondary_light">#B3FFFFFF</color> <!-- 70% - Secondary text -->
     <color name="text_disabled_light">#B3FFFFFF</color>  <!-- 50% - Disabled text, hint text, and icons -->
-    <color name="divider_light">#1FFFFFFF</color>
+    <color name="divider_light">#1FFFFFFF</color>        <!-- 12% - Dividers light on dark background -->
 </resources>

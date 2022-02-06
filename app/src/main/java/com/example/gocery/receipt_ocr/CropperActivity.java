@@ -48,6 +48,8 @@ public class CropperActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // Check if codes match
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             final Uri resultUri = UCrop.getOutput(data);
             Intent returnIntent = new Intent();
@@ -55,8 +57,14 @@ public class CropperActivity extends AppCompatActivity {
             setResult(-1, returnIntent);
             finish();
 
-        } else if (resultCode == UCrop.RESULT_ERROR) {
+        }
+        // Capture UCrop error = throw Throwable
+        else if (resultCode == UCrop.RESULT_ERROR) {
             final Throwable cropError = UCrop.getError(data);
+        }
+        // Capture if user taps 'X' button (cancels cropping) = return to previous fragment
+        else {
+            super.onBackPressed();
         }
     }
 }

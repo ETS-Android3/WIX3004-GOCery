@@ -10,10 +10,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expense Type Overview"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:text="Expense Type Overview"
         android:textStyle="bold" />
 
     <!-- Card View for Pie Chart -->
@@ -22,16 +22,16 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
-        android:elevation="10dp"
+        android:layout_marginRight="30dp"
         android:backgroundTint="@color/goceryTertiary"
+        android:elevation="10dp"
         app:cardCornerRadius="10dp">
 
         <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/PCExpense"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/PCExpense"/>
+            android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
 
@@ -45,9 +45,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/expenses_list"
             android:layout_marginBottom="20dp"
+            android:text="@string/expenses_list"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TVNoExpenseRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:text="No expense record added."
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/LVExpensesList"
