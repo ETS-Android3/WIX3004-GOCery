@@ -60,22 +60,6 @@ public class MainApp extends AppCompatActivity {
 
         // HAMBURGER/SIDEBAR CONFIGURATION
         DrawerLayout drawerLayout = findViewById(R.id.DLMain);
-        // This code adds a drawer listener to open and close the
-        // drawer when the hamburger icon is clicked
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                setDrawerIndicatorEnabled(true);
-//            }
-//
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//                super.onDrawerClosed(drawerView);
-//            }
-//        };
-//        drawerLayout.addDrawerListener(toggle);
-//        toggle.syncState();
 
         BTNLogout.setOnClickListener(v-> {
             mAuth.signOut();
@@ -83,55 +67,8 @@ public class MainApp extends AppCompatActivity {
             Intent intent = new Intent(MainApp.this, MainActivity.class);
             startActivity(intent);
         });
-//
-//
-//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                if(getSupportFragmentManager().getBackStackEntryCount() == 0){
-//                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                    toggle.setDrawerIndicatorEnabled(true);
-//                }else{
-//                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                    toggle.setDrawerIndicatorEnabled(false);
-//
-//                }
-//            }
-//        });
-
-//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Toast.makeText(MainApp.this, " Back Pressed ", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                } else {
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainApp.this, drawerLayout, toolbar,
-//                            R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//                    drawerLayout.addDrawerListener(toggle);
-//                    toggle.syncState();
-//                }
-//            }
-//        });
-
     }
 
-
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.DLMain);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
 
     @Override
     public void onBackPressed() {
@@ -143,10 +80,12 @@ public class MainApp extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Add options in bottom_menu.xml file to overflow menu
-        getMenuInflater().inflate(R.menu.menu_bottom, menu);
+        // Add options in side_menu.xml file to overflow menu
+        getMenuInflater().inflate(R.menu.menu_side, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

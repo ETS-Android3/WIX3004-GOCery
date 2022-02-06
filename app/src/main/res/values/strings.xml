@@ -2,6 +2,7 @@
     <string name="app_name">GOcery</string>
     <string name="navigation_drawer_open">GOcery</string>
     <string name="navigation_drawer_close">GOcery</string>
+
     <string name="app_tagline">All your groceries in one place</string>
     <string name="logo_desc">GOcery App logo with text</string>
     <string name="bg_desc">Grocery Stock Image by Thomas Lee </string>
