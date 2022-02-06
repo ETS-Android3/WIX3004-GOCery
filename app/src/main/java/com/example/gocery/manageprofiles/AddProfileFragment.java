@@ -1,5 +1,7 @@
 package com.example.gocery.manageprofiles;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.gocery.R;
@@ -20,7 +23,12 @@ import com.example.gocery.manageprofiles.model.UserProfile;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.sql.Timestamp;
 
 
 public class AddProfileFragment extends Fragment {
@@ -33,11 +41,16 @@ public class AddProfileFragment extends Fragment {
     TextInputLayout TILPassword;
     TextInputEditText ETPassword;
 
+    final int REQUEST_IMAGE = 999;
+    Uri imageUri;
+    ImageView IVProfileAdd;
+
     Button BTNSave;
     Button BTNCancel;
     Boolean isAdmin = false;
     Boolean isRep = false;
 
+    StorageReference storageReference;
 
     public AddProfileFragment() {
     }
@@ -54,6 +67,7 @@ public class AddProfileFragment extends Fragment {
         TILPassword = view.findViewById(R.id.TILPassword);
         BTNSave = view.findViewById(R.id.BTNSave);
         BTNCancel = view.findViewById(R.id.BTNDelete);
+        IVProfileAdd = view.findViewById(R.id.IVProfileEdit);
 
         CBAdmin.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             isAdmin = isChecked;
@@ -74,11 +88,19 @@ public class AddProfileFragment extends Fragment {
         });
 
         BTNCancel.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.DestHousehold);
+//            Navigation.findNavController(view).navigate(R.id.DestHousehold);
+            Navigation.findNavController(view).navigate(R.id.DestManageHousehold2);
         });
 
         BTNSave.setOnClickListener(v -> {
             createProfile(v);
+        });
+
+        IVProfileAdd.setOnClickListener(v->{
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, REQUEST_IMAGE);
         });
     }
 
@@ -94,18 +116,27 @@ public class AddProfileFragment extends Fragment {
             ETPassword.requestFocus();
         }else{
             String userID = mAuth.getCurrentUser().getUid();
+            String currentUser = "user_"+userID;
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            String fileName = "member_profile/"+currentUser+"/CREATOR"+ts.getTime();
+//            if(!SWLock.isChecked()){
+//                password = null;
+//            }
 
-            DAOProfile daoProfile = new DAOProfile();
-            if(!SWLock.isChecked()){
-                password = null;
-            }
+            storageReference = FirebaseStorage.getInstance().getReference(fileName);
+            storageReference.putFile(imageUri).addOnSuccessListener(suc -> {
 
-            UserProfile userProfile = new UserProfile(username, R.drawable.ic_baseline_account_circle_24, password, isRep, isAdmin);
-            daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
-                Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigate(R.id.DestHousehold);
-            }).addOnFailureListener(err -> {
-                Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+                DAOProfile daoProfile = new DAOProfile();
+                UserProfile userProfile = new UserProfile(username, fileName, password, isRep, isAdmin);
+                daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
+                    Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(view).navigate(R.id.DestHousehold);
+                }).addOnFailureListener(err -> {
+                    Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+            }).addOnFailureListener(er->{
+                Toast.makeText(getActivity(), "Upload failed image", Toast.LENGTH_SHORT).show();
             });
         }
 
@@ -116,5 +147,18 @@ public class AddProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_profile, container, false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMAGE && data != null && data.getData() != null){
+            imageUri = data.getData();
+            IVProfileAdd.setImageURI(imageUri);
+        }
+//        else{
+//            imageUri = null;
+//            IVProfileAdd.setImageURI(null);
+//        }
     }
 }

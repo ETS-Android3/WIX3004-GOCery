@@ -78,8 +78,6 @@ public class AddGroceryItemFragment extends Fragment {
 
         dao = new DAOCurrentGroceryItem();
 
-
-
         btnSave = view.findViewById(R.id.fabtn_groceryAdd_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +223,6 @@ public class AddGroceryItemFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 tempGroceryItem = (HashMap<String, Object>) result.get("GROCERY_HASHMAP");
-
 
                 itemName.setText((String) tempGroceryItem.get("name"));
                 itemQuantity.setText(""+tempGroceryItem.get("quantity"));

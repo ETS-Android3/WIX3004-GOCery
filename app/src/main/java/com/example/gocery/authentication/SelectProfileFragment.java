@@ -3,6 +3,7 @@ package com.example.gocery.authentication;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,6 +34,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -42,6 +47,7 @@ public class SelectProfileFragment extends Fragment {
     GridView profileList;
     UserProfileAdapter adapter;
     ArrayList<UserProfile> userProfileArrayList = new ArrayList<>();
+    StorageReference storageReference;
 
     public SelectProfileFragment() {
         // Required empty public constructor
@@ -60,13 +66,12 @@ public class SelectProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
-                if(userProfile.getPassword() != null){
+                if(!userProfile.getPassword().isEmpty()){
                     showPasswordDialog(view, userProfile);
                 }
                 else{
                     //Navigation.findNavController(view).navigate(R.id.action_auth_to_home);
 //                    Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
-
                     //Bundle to save current user's profile
                     CurrentProfile currentProfile = CurrentProfile.getInstance();
                     currentProfile.setProfileName(userProfile.getUsername());
@@ -131,6 +136,19 @@ public class SelectProfileFragment extends Fragment {
 
         TextInputEditText ETPassword = dialog.findViewById(R.id.ETProfilePassword);
         Button BTNEnter = dialog.findViewById(R.id.BTNEnter);
+        ImageView IVProfile = dialog.findViewById(R.id.IVProfile);
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child(userProfile.getPath()).getDownloadUrl().addOnSuccessListener(suc-> {
+            Glide.with(getContext())
+                    .load(suc)
+                    .placeholder(R.drawable.spinning_loading)
+                    .error(R.drawable.gocery_logo_only)
+                    .into(IVProfile);
+        }).addOnFailureListener(err -> {
+            System.out.println(err);
+        });
+
 
         BTNEnter.setOnClickListener(v -> {
             String password = ETPassword.getText().toString();
@@ -142,8 +160,12 @@ public class SelectProfileFragment extends Fragment {
                 ETPassword.requestFocus();
             }else{
                 dialog.dismiss();
+//                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
+                Intent intent = new Intent(getActivity(), MainApp.class);
+                intent.putExtra("CURRENT_PROFILE", userProfile.getUsername());
+                startActivity(intent);
+                ((Activity) getActivity()).overridePendingTransition(0, 0);
                 Toast.makeText(getActivity(), "Welcome "+userProfile.getUsername(), Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigate(R.id.action_to_household_temp);
             }
         });
 

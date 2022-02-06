@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+>
+    <item
+        android:id="@id/groceryHomeFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home_outline"
+        />
+    <item
+        android:id="@id/expenseHomeFragment"
+        android:title="Expenses"
+        android:icon="@android:drawable/ic_menu_manage"
+    />
+</menu>

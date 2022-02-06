@@ -12,8 +12,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bumptech.glide.Glide;
 import com.example.gocery.R;
 import com.example.gocery.manageprofiles.model.UserProfile;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class UserProfileAdapter extends BaseAdapter {
@@ -21,6 +23,7 @@ public class UserProfileAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     StorageReference storageReference;
+    FirebaseStorage firebaseStorage;
 
     public UserProfileAdapter(Context context){
         this.context = context;
@@ -31,6 +34,7 @@ public class UserProfileAdapter extends BaseAdapter {
         this.context = context;
         userProfileList = userProfiles;
         inflater = LayoutInflater.from(context);
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     public void setUserProfileList(ArrayList<UserProfile> userProfiles){
@@ -65,8 +69,17 @@ public class UserProfileAdapter extends BaseAdapter {
         ImageView IVLock = convertView.findViewById(R.id.IVLock);
 
         TVProfile.setText(userProfile.getUsername());
-//        IVProfile.setImageResource(userProfile.getImgId());
-        if(userProfile.getPassword() == null){
+        storageReference.child(userProfile.getPath()).getDownloadUrl().addOnSuccessListener(suc-> {
+            Glide.with(context)
+                    .load(suc)
+                    .placeholder(R.drawable.spinning_loading)
+                    .error(R.drawable.gocery_logo_only)
+                    .into(IVProfile);
+        }).addOnFailureListener(err -> {
+            System.out.println(err);
+        });
+
+        if(userProfile.getPassword().isEmpty()){
             IVLock.setVisibility(convertView.GONE);
         }else{
             IVLock.setVisibility(convertView.VISIBLE);

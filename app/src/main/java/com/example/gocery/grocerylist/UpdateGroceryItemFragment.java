@@ -247,7 +247,6 @@ public class UpdateGroceryItemFragment extends Fragment {
                     loadImage((String) tempGroceryItem.get("imageURL"));
                 }
 
-
                 Log.e("Passed Data LS",tempGroceryItem.toString());
             }
         });

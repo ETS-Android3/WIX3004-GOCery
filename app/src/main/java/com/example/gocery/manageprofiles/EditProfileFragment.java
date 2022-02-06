@@ -2,6 +2,8 @@ package com.example.gocery.manageprofiles;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,8 +33,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
+import com.bumptech.glide.Glide;
 
 public class EditProfileFragment extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -45,14 +52,21 @@ public class EditProfileFragment extends Fragment {
     TextInputLayout TILPassword;
     TextInputEditText ETPassword;
 
+    final int REQUEST_IMAGE = 999;
+    Uri imageUri;
+    ImageView IVProfileEdit;
+    String imageURL;
+
     Button BTNSave;
     Button BTNDelete;
     Boolean isAdmin = false;
     Boolean isRep = false;
+    Boolean isChanged;
 
     String profileKey;
 
     ProgressDialog progressDialog;
+    StorageReference storageReference;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,6 +79,9 @@ public class EditProfileFragment extends Fragment {
         TILPassword = view.findViewById(R.id.TILPassword);
         BTNSave = view.findViewById(R.id.BTNSave);
         BTNDelete = view.findViewById(R.id.BTNDelete);
+        IVProfileEdit = view.findViewById(R.id.IVProfileEdit);
+        storageReference = FirebaseStorage.getInstance().getReference();
+        isChanged = false;
 
 
         getParentFragmentManager().setFragmentResultListener("editProfile", this, new FragmentResultListener() {
@@ -100,6 +117,13 @@ public class EditProfileFragment extends Fragment {
             deleteProfile(v);
         });
 
+        IVProfileEdit.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, REQUEST_IMAGE);
+        });
+
     }
 
 
@@ -121,7 +145,17 @@ public class EditProfileFragment extends Fragment {
                     ETUsername.setText(userProfile.getUsername());
                     CBAdmin.setChecked(userProfile.isAdmin());
                     CBRep.setChecked(userProfile.isRepresentative());
-                    if(userProfile.getPassword() != null){
+
+                    storageReference.child(userProfile.getPath()).getDownloadUrl().addOnSuccessListener(suc-> {
+                        Glide.with(getContext())
+                                .load(suc)
+                                .placeholder(R.drawable.spinning_loading)
+                                .error(R.drawable.gocery_logo_only)
+                                .into(IVProfileEdit);
+                    }).addOnFailureListener(err -> {
+                        System.out.println(err);
+                    });
+                    if(!userProfile.getPassword().isEmpty()){
                         SWLock.setChecked(true);
                         ETPassword.setVisibility(getView().VISIBLE);
                         TILPassword.setVisibility(getView().VISIBLE);
@@ -149,31 +183,59 @@ public class EditProfileFragment extends Fragment {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Updating profile...");
             progressDialog.show();
-            if(!SWLock.isChecked()){
-                password = null;
-            }
+            String userID = mAuth.getCurrentUser().getUid();
+            String currentUser = "user_"+userID;
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            String fileName = "member_profile/"+currentUser+"/CREATOR"+ts.getTime();
+
             HashMap<String, Object> hashMap = new HashMap<>();
 
-            hashMap.put("username", username);
-            hashMap.put("password", password);
-            hashMap.put("representative", isRep);
-            hashMap.put("admin", isAdmin);
-
             DAOProfile daoProfile = new DAOProfile();
+            if(isChanged){
+                storageReference = FirebaseStorage.getInstance().getReference(fileName);
+                storageReference.putFile(imageUri).addOnSuccessListener(suc -> {
+                    hashMap.put("username", username);
+                    hashMap.put("password", password);
+                    hashMap.put("representative", isRep);
+                    hashMap.put("admin", isAdmin);
+                    hashMap.put("path", fileName);
 
-            UserProfile userProfile = new UserProfile(username, R.drawable.ic_baseline_account_circle_24, password, isRep, isAdmin);
-            daoProfile.update(profileKey, hashMap).addOnSuccessListener(v -> {
-                if(progressDialog.isShowing()){
-                    progressDialog.dismiss();
-                }
-                Toast.makeText(getActivity(), "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigate(R.id.DestHousehold);
-            }).addOnFailureListener(err -> {
-                if(progressDialog.isShowing()){
-                    progressDialog.dismiss();
-                }
-                Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
-            });
+                    daoProfile.update(profileKey, hashMap).addOnSuccessListener(v -> {
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
+                        Toast.makeText(getActivity(), "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+//                Navigation.findNavController(view).navigate(R.id.DestHousehold);
+                        Navigation.findNavController(view).navigate(R.id.DestManageHousehold2);
+                    }).addOnFailureListener(err -> {
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
+                        Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                }).addOnFailureListener(er -> {
+                    Toast.makeText(getActivity(), "Upload failed image", Toast.LENGTH_SHORT).show();
+                });
+            }else{
+                hashMap.put("username", username);
+                hashMap.put("password", password);
+                hashMap.put("representative", isRep);
+                hashMap.put("admin", isAdmin);
+                daoProfile.update(profileKey, hashMap).addOnSuccessListener(v -> {
+                    if(progressDialog.isShowing()){
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(getActivity(), "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+//                Navigation.findNavController(view).navigate(R.id.DestHousehold);
+                    Navigation.findNavController(view).navigate(R.id.DestManageHousehold2);
+                }).addOnFailureListener(err -> {
+                    if(progressDialog.isShowing()){
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+
         }
     }
 
@@ -195,7 +257,8 @@ public class EditProfileFragment extends Fragment {
                                 }else{
                                     daoProfile.remove(profileKey).addOnSuccessListener(suc -> {
                                         Toast.makeText(getActivity(), "Member removed successfully", Toast.LENGTH_SHORT).show();
-                                        Navigation.findNavController(view).navigate(R.id.DestHousehold);
+//                                        Navigation.findNavController(view).navigate(R.id.DestHousehold);
+                                        Navigation.findNavController(view).navigate(R.id.DestManageHousehold2);
                                     }).addOnFailureListener(err -> {
                                         Toast.makeText(getActivity(), ""+err.getMessage(), Toast.LENGTH_SHORT).show();
                                     });
@@ -211,5 +274,19 @@ public class EditProfileFragment extends Fragment {
 
                     }
                 }).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMAGE && data != null && data.getData() != null){
+            imageUri = data.getData();
+            IVProfileEdit.setImageURI(imageUri);
+            isChanged = true;
+        }
+//        else{
+//            imageUri = null;
+//            IVProfileEdit.setImageURI(null);
+//        }
     }
 }

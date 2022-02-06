@@ -7,18 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".manageprofiles.AddProfileFragment">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="156dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/IVProfileEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:circularflow_radiusInDP="50dp"
+        />
+
+    </androidx.cardview.widget.CardView>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TILUsername"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="354dp"
         android:layout_height="60dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="28dp"
         android:hint="Enter username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/CVProfile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ETUsername"
@@ -123,6 +146,8 @@
         android:text="@string/add_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

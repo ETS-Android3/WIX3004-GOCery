@@ -131,4 +131,18 @@
         android:name="com.example.gocery.receipt_ocr.ReceiptOCRFragment"
         android:label="Receipt Scanner"
         tools:layout="@layout/fragment_receipt_ocr" />
+    <fragment
+        android:id="@+id/DestManageHousehold2"
+        android:name="com.example.gocery.manageprofiles.ManageHouseholdFragment"
+        android:label="Manage Household"
+        tools:layout="@layout/fragment_manage_household" />
+    <fragment
+        android:id="@+id/DestEditProfile2"
+        android:name="com.example.gocery.manageprofiles.EditProfileFragment"
+        android:label="Edit Profile" />
+    <fragment
+        android:id="@+id/DestAddProfile2"
+        android:name="com.example.gocery.manageprofiles.AddProfileFragment"
+        android:label="Add Profile"
+        tools:layout="@layout/fragment_add_profile" />
 </navigation>

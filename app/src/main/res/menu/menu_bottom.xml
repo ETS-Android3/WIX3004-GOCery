@@ -11,16 +11,21 @@
     <item
         android:id="@id/expenseHomeFragment"
         android:title="Expenses"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/ic_expenses"
     />
     <item
         android:id="@id/DestOverview"
         android:title="Cards"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/ic_voucher"
     />
     <item
         android:id="@id/receiptOCRFragment"
-        android:title="Scanner"
+        android:title="OCR"
+        android:icon="@drawable/ic_ocr"
+    />
+    <item
+        android:id="@id/DestManageHousehold2"
+        android:title="Household"
         android:icon="@android:drawable/ic_menu_manage"
     />
 </menu>

@@ -8,7 +8,8 @@ public class UserProfile {
     private String key;
 
     private String username;
-    private int imgId;
+//    private int imgId;
+    private String path;
     private String password;
     boolean isRepresentative;
     boolean isAdmin;
@@ -17,9 +18,11 @@ public class UserProfile {
 
     }
 
-    public UserProfile(String username, int imgId, String password, boolean isRepresentative, boolean isAdmin) {
+//    public UserProfile(String username, int imgId, String password, boolean isRepresentative, boolean isAdmin) {
+    public UserProfile(String username, String path, String password, boolean isRepresentative, boolean isAdmin) {
         this.username = username;
-        this.imgId = imgId;
+//        this.imgId = imgId;
+        this.path = path;
         this.password = password;
         this.isRepresentative = isRepresentative;
         this.isAdmin = isAdmin;
@@ -33,12 +36,19 @@ public class UserProfile {
         this.username = username;
     }
 
-    public int getImgId() {
-        return imgId;
+//    public int getImgId() {
+//        return imgId;
+//    }
+//
+//    public void setImgId(int imgId) {
+//        this.imgId = imgId;
+//    }
+    public String getPath() {
+        return path;
     }
 
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getPassword() {

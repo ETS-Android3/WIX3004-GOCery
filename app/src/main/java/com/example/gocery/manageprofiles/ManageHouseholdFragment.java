@@ -51,19 +51,19 @@ public class ManageHouseholdFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserProfile userProfile = (UserProfile) adapter.getItem(position);
-                System.out.println(userProfile);
 
                 Bundle result = new Bundle();
                 result.putString("PROFILE_KEY", userProfile.getKey());
-                System.out.println("USERPROFILEKEY"+ userProfile.getKey());
 
                 getParentFragmentManager().setFragmentResult("editProfile", result);
-                Navigation.findNavController(view).navigate(R.id.DestEditProfile);
+//                Navigation.findNavController(view).navigate(R.id.DestEditProfile);
+                Navigation.findNavController(view).navigate(R.id.DestEditProfile2);
             }
         });
 
         FABAddMember.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_manage_to_add);
+//            Navigation.findNavController(view).navigate(R.id.action_manage_to_add);
+            Navigation.findNavController(view).navigate(R.id.DestAddProfile2);
         });
 
     }
@@ -86,7 +86,6 @@ public class ManageHouseholdFragment extends Fragment {
                 }
                 adapter.setUserProfileList(userProfileArrayList);
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override

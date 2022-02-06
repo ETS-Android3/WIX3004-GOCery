@@ -111,7 +111,7 @@ public class SignUpFragment extends Fragment {
 
     public void createDefaultProfile(String userID){
         DAOProfile daoProfile = new DAOProfile();
-        UserProfile userProfile = new UserProfile("User", R.drawable.ic_baseline_account_circle_24, null, false, false);
+        UserProfile userProfile = new UserProfile("User", "default.jpg", null, false, false);
         daoProfile.add(userProfile, userID).addOnSuccessListener(v -> {
             Toast.makeText(getActivity(), "Profile added successfully!", Toast.LENGTH_SHORT).show();
         }).addOnFailureListener(err -> {

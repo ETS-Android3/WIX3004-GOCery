@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="57dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="30dp"
         android:text="Household Address"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,8 +41,6 @@
         />
 
     </com.google.android.material.card.MaterialCardView>
-
-
 
     <TextView
         android:id="@+id/TVLabelMembers"
