@@ -2,6 +2,8 @@
 
 ## Introduction
 
+<img width="162" alt="image" src="https://user-images.githubusercontent.com/50654608/152882882-4b4d078d-79b0-4ad2-90d8-8abcc3cc3a9f.png">
+
 This is the repository for our team (JasonDerulo)'s submission for WIX3004 Mobile Application Development group assignment for Semester 1, 2021/2022 session.
 
 With this application, families can easily list down the items to be bought in a virtual manner, and can include the location of the items, and pictures to ensure the correct items are bought (I.e., types of fish, brands of toilet paper, etc.). This will not only be much more convenient for the family representative to refer to but can also ensure that the correct items are bought. This application also enables the list of groceries to be automatically sent to the representatives when they leave the house by referring to the location of the user.
