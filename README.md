@@ -8,6 +8,14 @@ This is the repository for our team (JasonDerulo)'s submission for WIX3004 Mobil
 
 With this application, families can easily list down the items to be bought in a virtual manner, and can include the location of the items, and pictures to ensure the correct items are bought (I.e., types of fish, brands of toilet paper, etc.). This will not only be much more convenient for the family representative to refer to but can also ensure that the correct items are bought. This application also enables the list of groceries to be automatically sent to the representatives when they leave the house by referring to the location of the user.
 
+Team Members:
+
+1. Muhammad Rahiman bin Abdulmanab
+2. Nur Faidz Hazirah binti Nor'Azman
+3. Rezamir bin Rahizar
+4. Ajwad bin Alias
+5. Cheng Wai Jun
+
 ## Modules & Functions
 
 The following are the list of modules and corresponding functions planned for the application:
